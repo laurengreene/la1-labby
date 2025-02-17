@@ -1,13 +1,30 @@
 package music;
 
+import java.util.ArrayList;
+
 public class SongList {
 	
-	// for main song list, fav song list, and added playlists
+	// methods to add: get song by title, artist
 	
-	// arraylist of song objects
+	// instance variables
+	private ArrayList<Song> slist;
 	
-	// add song
-	// get song by title, artist
-	// 
+	// constructor
+	public SongList() {
+		this.slist = new ArrayList<Song>();
+	}
+	
+	// methods
+	public void addSong(Song newSong) {
+		slist.add(newSong);
+	}
+	
+	public String toString() {
+		String result = "";
+		for (Song s : slist) {
+			result += s.getTitle() + "\n";
+		}
+		return result;
+	}
 
 }
