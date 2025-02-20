@@ -38,4 +38,16 @@ public class Album {
 		songlist.addSong(song);
 	}
 	
+	public SongList getSongList() {  // fix escaping reference!
+		return songlist;
+	}
+	
+	public String toString() {
+		String result = "Album: " + this.title + "\nArtist: " + this.artist + "\nYear: " + year + "Genre: " + genre + "\nSongs:";
+		for (Song s : songlist.getSongs()) {
+			result += "\n" + s.getTitle();
+		}
+		return result;
+	}
+	
 }
