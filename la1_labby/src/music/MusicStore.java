@@ -31,29 +31,25 @@ public class MusicStore {
 		albumList.addAlbum(album);
 		
 		while(scanner.hasNextLine()) {
-			Song song = new Song(scanner.nextLine());  // create song object
+			Song song = new Song(scanner.nextLine(), album.getArtist(), album.getTitle());  // create song object
 			album.addToSongList(song);  // add song to album
 			songList.addSong(song);  // add song to overall songlist
 		}
 		
-		scanner.close();;
+		scanner.close();
 	}
 	
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		AlbumList albumList = new AlbumList();
 		SongList songList = new SongList();
+		SongList favSongList = new SongList();
 		
 		ArrayList<String> albumFilenames = readAlbumsFile();  // collects names of individual album names from initial albums.txt file
 		
 		for (String s : albumFilenames) {  // goes through each album file
 			readOneAlbumFile(s, albumList, songList);
-		}
-		
-		System.out.println(songList);  // checks that song objects were passed into songList
-		System.out.println(albumList); // checks that album objects were passed into albumList
-		
-		
+		}	
 	}
 	
 }
