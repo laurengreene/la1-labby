@@ -28,5 +28,28 @@ class TestSong {
 		+ "\nAlbum: " + s.getAlbumTitle();
 		assertEquals(result, s.toString());
 	}
+	
+	@Test
+	void testMakeCopy() {
+		Song c = s.makeCopy();
+		assertNotSame(s, c);
+		assertTrue(s.equals(c));
+	}
+	
+	@Test
+	void testEquals() {
+		Song e = new Song("Hello", "Adele", "25");
+		assertTrue(s.equals(e));
+	}
+	
+	@Test
+	void testNotEquals() {
+		Song difTitle = new Song("Chasing Pavements", "Adele", "25");
+		assertFalse(s.equals(difTitle));
+		Song difArtist = new Song("Hello", "Wallows", "25");
+		assertFalse(s.equals(difArtist));
+		Song difAlbum = new Song("Hello", "Adele", "20");
+		assertFalse(s.equals(difAlbum));
+	}
 
 }
