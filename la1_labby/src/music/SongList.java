@@ -15,35 +15,60 @@ public class SongList {
 	
 	// methods
 	public void addSong(Song newSong) {
-		slist.add(newSong);
+		slist.add(newSong.makeCopy());
 	}
 	
-	public ArrayList<Song> getSongByTitle(String title) { // fix escaping reference!
+	public void removeSong(Song removeSong) {
+		if(slist.contains(removeSong)) slist.remove(removeSong);
+	}
+	
+	public ArrayList<Song> getSongByTitle(String title) { // I think this should fix escaping reference? 
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
 			if (s.getTitle().equals(title)) {
-				songs.add(s);
+				songs.add(s.makeCopy());
 			}
 		}
 		return songs;
 	}
 	
-	public ArrayList<Song> getSongByArtist(String artist) {  // fix escaping reference!
+	public ArrayList<Song> getSongByArtist(String artist) { 
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
 			if (s.getArtist().equals(artist)) {
-				songs.add(s);
+				songs.add(s.makeCopy());
 			}
 		}
 		return songs;
 	}
 	
-	public ArrayList<Song> getSongs() {  // fix escaping reference!
-		return slist;
+	// return deep copy of list
+	public ArrayList<Song> getSongs() {
+		return makeCopyList();
 	}
 	
 	public boolean containsSong(Song song) {
-		return slist.contains(song);
+		for (Song s : slist) {
+			if (s.equals(song)) return true;
+		}
+		return false;
+	}
+	
+	public String getPlaylistName() {
+		return name;
+	}
+	
+	public void setPlaylistName(String n) {
+		this.name = n;
+	}
+	
+	// make deep copy of List
+	public ArrayList<Song> makeCopyList() {
+		ArrayList<Song> cList = new ArrayList<Song>();
+		for (Song s : slist) {
+			cList.add(s.makeCopy());
+		}
+		return cList;
 	}
 	
 	public String toString() {

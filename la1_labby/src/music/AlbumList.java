@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class AlbumList {
 	
-	// methods to add: 
-	// get album object (by title or by artist)
-	
 	// instance variables
 	private ArrayList<Album> alist;
 	
@@ -20,25 +17,38 @@ public class AlbumList {
 		alist.add(newAlbum);
 	}
 	
-	public ArrayList<Album> getAlbumByTitle(String title) { // fix escaping reference!
+	public ArrayList<Album> getAlbumByTitle(String title) { //escaping reference should be fixed
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getTitle().equals(title)) {
-				albums.add(a);
+				albums.add(a.makeCopyAlbum());
 			}
 		}
 		return albums;
 	}
 	
-	public ArrayList<Album> getAlbumByArtist(String artist) { // fix escaping reference!
+	public ArrayList<Album> getAlbumByArtist(String artist) { // escaping reference should be fixed
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getArtist().equals(artist)) {
-				albums.add(a);
+				albums.add(a.makeCopyAlbum());
 			}
 		}
 		return albums;
 	}
+	
+	public ArrayList<Album> getAlbums() {
+		return makeCopyList();
+	}
+	
+	public ArrayList<Album> makeCopyList() {
+		ArrayList<Album> cList = new ArrayList<Album>();
+		for (Album s : alist) {
+			cList.add(s.makeCopyAlbum());
+		}
+		return cList;
+	}
+	
 	
 	public String toString() {
 		String result = "";
