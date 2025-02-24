@@ -1,5 +1,7 @@
 package music;
 
+import java.util.ArrayList;
+
 public class Album {
 	
 	// instance variables
@@ -38,12 +40,28 @@ public class Album {
 		songlist.addSong(song);
 	}
 	
-	public SongList getSongList() {  // fix escaping reference!
-		return songlist;
+	public ArrayList<Song> getSongList() {  // do we need to return songList, or is returning arraylist okay
+		return songlist.makeCopyList();
+	}
+	
+	public Album makeCopyAlbum() {
+		Album cAlbum = new Album(artist, title, genre, year);
+		ArrayList<Song> cSonglist = songlist.getSongs();
+		for (Song s : cSonglist) {
+			cAlbum.addToSongList(s);
+		}
+		return cAlbum;
+	}
+	
+	public boolean equals(Album otherAlbum) {
+		if (otherAlbum.getArtist().equals(artist) && otherAlbum.getTitle()
+				.equals(title) && otherAlbum.getGenre().equals(genre) && 
+				otherAlbum.getYear().equals(year)) return true;
+		return false;
 	}
 	
 	public String toString() {
-		String result = "Album: " + this.title + "\nArtist: " + this.artist + "\nYear: " + year + "Genre: " + genre + "\nSongs:";
+		String result = "Album: " + this.title + "\nArtist: " + this.artist + "\nYear: " + year + "\nGenre: " + genre + "\nSongs: ";
 		for (Song s : songlist.getSongs()) {
 			result += "\n" + s.getTitle();
 		}
