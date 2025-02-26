@@ -24,32 +24,34 @@ public class MusicStore {
 	
 	
 	// creates album and song objects for an album and adds to necessary lists
-	public static void readOneAlbumFile(String filename, AlbumList albumList, SongList songList) throws FileNotFoundException{
+	public static void readOneAlbumFile(String filename, LibraryModel library) throws FileNotFoundException{
 		Scanner scanner = new Scanner(new File("albums/" + filename));
-		String[] albumInfo = scanner.nextLine().split(",");		
-		Album album = new Album(albumInfo[0], albumInfo[1], albumInfo[2], albumInfo[3]);
-		albumList.addAlbum(album);
+		String[] albumInfo = scanner.nextLine().split(",");	
+		String artist = albumInfo[0];
+		String albumTitle = albumInfo[1];
+		String genre = albumInfo[2];
+		String year = albumInfo[3];
 		
+		ArrayList<Song> albumSongList = new ArrayList<Song>();
 		while(scanner.hasNextLine()) {
-			Song song = new Song(scanner.nextLine(), album.getArtist(), album.getTitle());  // create song object
-			album.addToSongList(song);  // add song to album
-			songList.addSong(song);  // add song to overall songlist
+			String songTitle = scanner.nextLine();
+			Song song = new Song(songTitle, artist, albumTitle);
+			albumSongList.add(song);
 		}
-		
+		library.addNewAlbumToStore(artist, albumTitle, genre, year, albumSongList);
 		scanner.close();
 	}
 	
-	
 	public static void main(String[] args) throws FileNotFoundException {
-		AlbumList albumList = new AlbumList();
-		SongList songList = new SongList();
-		SongList favSongList = new SongList();
+		LibraryModel library = new LibraryModel();
 		
 		ArrayList<String> albumFilenames = readAlbumsFile();  // collects names of individual album names from initial albums.txt file
 		
 		for (String s : albumFilenames) {  // goes through each album file
-			readOneAlbumFile(s, albumList, songList);
-		}	
+			readOneAlbumFile(s, library);
+		}
+		
+		// use while loop to call view methods and loop through
 	}
 	
 }
