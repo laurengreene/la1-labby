@@ -7,7 +7,7 @@ public class Album {
 	// instance variables
 	private String artist;
 	private String title;
-	private SongList songlist;  // store songs in album object as a songlist
+	private SongList songlist;
 	private String genre;
 	private String year;
 	
@@ -36,11 +36,17 @@ public class Album {
 		return this.genre;
 	}
 	
+	public void createSongList(ArrayList<Song> songs) {
+		for (Song s : songs) {
+			this.songlist.addNewSong(s);
+		}
+	}
+	
 	public void addToSongList(Song song) {
 		songlist.addSong(song);
 	}
 	
-	public ArrayList<Song> getSongList() {  // do we need to return songList, or is returning arraylist okay
+	public ArrayList<Song> getSongList() {
 		return songlist.makeCopyList();
 	}
 	

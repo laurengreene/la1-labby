@@ -78,5 +78,10 @@ public class SongList {
 		}
 		return result;
 	}
+	
+	public void addNewSong(Song song) {
+		slist.add(song);
+		
+	}
 
 }

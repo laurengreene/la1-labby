@@ -4,11 +4,25 @@ import java.util.ArrayList;
 
 public class LibraryModel {
 	
-	// stores all the objects / lists
-	private AlbumList libAlbums = new AlbumList();
-	private SongList libSongs = new SongList();
-	private SongList favorites = new SongList();
-	private ArrayList<SongList> playlists = new ArrayList<SongList>();
+	// instance variables - library/user
+	private AlbumList libAlbums;
+	private SongList libSongs;
+	private ArrayList<SongList> playlists;
+	
+	// instance variables - store
+	private AlbumList storeAlbums;
+	private SongList storeSongs;
+	
+	public LibraryModel() {
+		// library/user
+		this.libAlbums = new AlbumList();
+		this.libSongs = new SongList();
+		this.playlists = new ArrayList<SongList>();	
+		
+		// store
+		this.storeAlbums = new AlbumList();
+		this.storeSongs = new SongList();
+	}
 	
 	// search Library
 	// need to print message if nothing found
@@ -30,7 +44,7 @@ public class LibraryModel {
 	
 	// add song to library
 	public void addSongToLib(Song song) {
-		libSongs.addSong(song);
+		libSongs.addSong(song.makeCopy());
 	}
 	
 	// add album to library, add all songs in album to song library
@@ -74,9 +88,25 @@ public class LibraryModel {
 		return cList;
 	}
 	
+	// search for a specific playlist
+	public String getPlaylist(String playlistName) {
+		for (SongList slist : this.playlists) {
+			if (slist.getPlaylistName().equals(playlistName)) {
+				return slist.toString();
+			}
+		}
+		return "Not found";
+	}
+	
 	// return list of favorites
-	public ArrayList<Song> getFavorites() {
-		return favorites.getSongs();
+	public String getFavorites() {
+		String result = "";
+
+		for (Song s : this.libSongs.getSongs()) {
+			if (s.getRating()==5) result += s.toString();
+		}
+		
+		return result;
 	}
 	
 	// create playlist given name
@@ -99,9 +129,31 @@ public class LibraryModel {
 		}
 	}
 	
-	public void setSongToFavorite(Song s) {
-		favorites.addSong(s.makeCopy());
-		// set song rating
+	public void setSongToFavorite(Song songName) {
+		// find the song
+		// set rating to five
+		for (Song s : this.libSongs.getSongs()) {
+			if (s.getTitle().equals(songName)) {
+				s.setRating(5);
+			}
+		}
 	}
+	
+	// store methods
+	public void addNewAlbumToStore(String artist, String albumTitle, String genre, String year,
+			ArrayList<Song> songList) {
+		
+		ArrayList<Song> copySongList = new ArrayList<Song>();
+		for (Song s : songList) {
+			copySongList.add(s.makeCopy());
+		}
+		
+		Album album = new Album(artist, albumTitle, genre, year);
+		album.createSongList(copySongList);
 
+		for (Song s : copySongList) {
+			storeSongs.addNewSong(s);
+		}
+		storeAlbums.addAlbum(album.makeCopyAlbum());
+	}
 }

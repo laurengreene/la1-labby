@@ -17,7 +17,7 @@ public class AlbumList {
 		alist.add(newAlbum);
 	}
 	
-	public ArrayList<Album> getAlbumByTitle(String title) { //escaping reference should be fixed
+	public ArrayList<Album> getAlbumByTitle(String title) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getTitle().equals(title)) {
@@ -27,7 +27,7 @@ public class AlbumList {
 		return albums;
 	}
 	
-	public ArrayList<Album> getAlbumByArtist(String artist) { // escaping reference should be fixed
+	public ArrayList<Album> getAlbumByArtist(String artist) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getArtist().equals(artist)) {
