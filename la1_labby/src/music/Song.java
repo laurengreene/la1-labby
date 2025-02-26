@@ -76,6 +76,7 @@ public class Song {
 	// return copy of song
 	public Song makeCopy() {
 		Song cSong = new Song(title, artist, albumTitle);
+		cSong.setRating(this.getRating());
 		return cSong;
 	}
 		
