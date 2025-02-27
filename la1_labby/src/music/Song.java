@@ -1,3 +1,7 @@
+/*
+ * Song.java is a song object that is in playlists, albums,
+ * and songlists.
+ */
 
 package music;
 
