@@ -96,6 +96,9 @@ public class SongList {
 	}
 	
 	public String toString() {
+		if(name != null) {
+			result += "Playlist " + name + ": \n";
+		}
 		String result = "";
 		for (Song s : slist) {
 			result += s.getTitle() + "\n";
