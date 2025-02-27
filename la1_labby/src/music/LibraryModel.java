@@ -38,6 +38,10 @@ public class LibraryModel {
 		return libSongs.getSongByArtist(artist);
 	}
 	
+	public ArrayList<Song> getLibSongbyArtistSong(String artist) {
+		return libSongs.getSongObjectByTitle(artist);
+	}
+	
 	public String getLibAlbumByTitle(String title) {
 		return libAlbums.getAlbumByTitle(title);
 	}
@@ -145,7 +149,7 @@ public class LibraryModel {
 		}
 	}
 	
-	public String getFavoritesString() {
+	public String getFavorites() {
 		String result = "";
 		for (HashMap.Entry<Song, Rating> entry : this.ratedSongs.entrySet()) {
 			if (entry.getValue() == Rating.FIVE) {

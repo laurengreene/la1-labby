@@ -60,6 +60,16 @@ public class SongList {
 		return result.substring(0, result.length()-1);
 	}
 	
+	public ArrayList<Song> getSongObjectByArtist(String artist) {
+		ArrayList<Song> songs = new ArrayList<Song>();
+		for (Song s : slist) {
+			if (s.getArtist().equals(artist)) {
+				songs.add(s);
+			}
+		}
+		return songs;
+	}
+	
 	// return deep copy of list
 	public ArrayList<Song> getSongs() {
 		return makeCopyList();

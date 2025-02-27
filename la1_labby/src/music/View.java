@@ -185,13 +185,19 @@ public class View {
 		System.out.println("Input Name:");
 		String name = scn.nextLine();
 		checkIfDone(name);
+		ArrayList<Song> songs;
 		switch(tOra) {
 		case "a" :
 			System.out.println(libModel.getLibSongByArtist(name));
+			songs = libModel.getLibSongbyTitleSong(name);
 			break;
 		case "t" :
 			System.out.println(libModel.getLibSongByTitle(name));
+			songs = libModel.getLibSongbyArtistSong(name);
 			break;
+		default :
+			System.out.println("Invalid Input");
+			searchLibForSong();
 		}
 	}
 	
