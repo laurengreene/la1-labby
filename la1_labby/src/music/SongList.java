@@ -60,6 +60,16 @@ public class SongList {
 		return result.substring(0, result.length()-1);
 	}
 	
+	public Song getSongByTitleAndArtist(String title, String artist) {
+		for (Song s : slist) {
+			if (s.getArtist().toLowerCase().equals(artist.toLowerCase()) &&
+					s.getTitle().toLowerCase().equals(title.toLowerCase())) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
 	// return deep copy of list
 	public ArrayList<Song> getSongs() {
 		return makeCopyList();
