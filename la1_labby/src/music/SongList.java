@@ -1,9 +1,3 @@
-/*
- * SongList.java is a list of Song objects. This class is used to store songs
- * in an album, for playlists, and for holding the songs in the
- * library and store.
- */
-
 package music;
 
 import java.util.ArrayList;
@@ -21,6 +15,10 @@ public class SongList {
 	
 	// methods
 	public void addSong(Song newSong) {
+		// check if song already in list
+		for(Song s : slist) {
+			if (newSong.equals(s)) return;
+		}
 		slist.add(newSong);
 	}
 	

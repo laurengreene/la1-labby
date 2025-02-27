@@ -73,36 +73,38 @@ public class LibraryModel {
 	
 	// RETURNING METHODS
 	// return titles of songs in library
-	public ArrayList<String> getLibSongTitles() {
-		ArrayList<String> titles = new ArrayList<String>();
+	public String getLibSongTitles() {
+		String titles = "";
 		for(Song s : libSongs.getSongs()) {
-			titles.add(s.getTitle());
+			titles += s.getTitle() + "\n";
 		}
 		return titles;
 	}
 	
 	// return artists of songs in library
-	public ArrayList<String> getLibArtists() {
-		ArrayList<String> artists = new ArrayList<String>();
+	public String getLibArtists() {
+		String artists = "";
 		for(Song s : libSongs.getSongs()) {
-			artists.add(s.getArtist());
+			if (artists.contains(s.getArtist())) {
+				artists += s.getArtist() + "\n";
+			}
 		}
 		return artists;
 	}
 	
-	// PLAYLIST METHODS
-	// return list of albums or strings of album names
-	public ArrayList<Album> getLibAlbums() {
-		return libAlbums.getAlbums();
+
+	// return string of album names
+	public String getLibAlbums() {
+		return libAlbums.getAlbumsString();
 	}
 	
-	// return list of playlists
-	public ArrayList<SongList> getPlaylists() {
-		ArrayList<SongList> cList = new ArrayList<SongList>();
+	// return string of playlists
+	public String getPlaylists() {
+		String plists = "";
 		for (SongList s : playlists) {
-			cList.add(s);
+			plists += s.getPlaylistName() + "\n";
 		}
-		return cList;
+		return plists;
 	}
 	
 	// create playlist given name
