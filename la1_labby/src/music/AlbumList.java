@@ -1,8 +1,3 @@
-/*
- * AlbumList.java is a list of Album objects. This class is used to store
- * Albums in both the library and the store.
- */
-
 package music;
 
 import java.util.ArrayList;
@@ -31,14 +26,15 @@ public class AlbumList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
-		
-//		ArrayList<Album> albums = new ArrayList<Album>();
-//		for (Album a : alist) {
-//			if (a.getTitle().equals(title)) {
-//				albums.add(a.makeCopyAlbum());
-//			}
-//		}
-//		return albums;
+	}	
+	public ArrayList<Album>	getAlbumObjectsByTitle(String title) {
+		ArrayList<Album> albums = new ArrayList<Album>();
+		for (Album a : alist) {
+			if (a.getTitle().equals(title)) {
+				albums.add(a.makeCopyAlbum());
+			}
+		}
+		return albums;
 	}
 	
 	public String getAlbumByArtist(String artist) {
@@ -50,18 +46,28 @@ public class AlbumList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-2);
-		
-//		ArrayList<Album> albums = new ArrayList<Album>();
-//		for (Album a : alist) {
-//			if (a.getArtist().equals(artist)) {
-//				albums.add(a.makeCopyAlbum());
-//			}
-//		}
-//		return albums;
+	}
+	
+	public ArrayList<Album> getAlbumObjectsByArtist(String artist) {
+		ArrayList<Album> albums = new ArrayList<Album>();
+		for (Album a : alist) {
+			if (a.getArtist().equals(artist)) {
+				albums.add(a.makeCopyAlbum());
+			}
+		}
+		return albums;
 	}
 	
 	public ArrayList<Album> getAlbums() {
 		return makeCopyList();
+	}
+	
+	public String getAlbumsString() {
+		String albums = "";
+		for(Album a : alist) {
+			albums += a.getTitle() + "\n";
+		}
+		return albums;
 	}
 	
 	public ArrayList<Album> makeCopyList() {

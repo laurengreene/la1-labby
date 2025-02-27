@@ -1,7 +1,3 @@
-/*
- * Album.java is an album object that holds song objects and
- * is in album lists.
- */
 
 package music;
 
@@ -17,12 +13,13 @@ public class Album {
 	private String year;
 	
 	// constructor
-	public Album(String artist, String title, String genre, String year, ArrayList<Song> newSongs) {
+	public Album(String artist, String title, String genre,
+			String year, ArrayList<Song> newSongs) {
 		this.artist = artist;
 		this.title = title;
 		this.songlist = new SongList();
 		for (Song s : newSongs) {
-			this.songlist.addNewSong(s);
+			this.songlist.addSong(s);
 		}
 		this.genre = genre;
 		this.year = year;
@@ -44,6 +41,9 @@ public class Album {
 		return this.genre;
 	}
 	
+	// maybe get rid of this method because no songs need to be added to it.
+	// need to figure out how to make a deep copy of the list. maybe
+	// make string immutable?
 	public void addToSongList(Song song) {
 		songlist.addSong(song);
 	}

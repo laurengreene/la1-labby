@@ -1,7 +1,3 @@
-/*
- * MusicStore.java is a database of songs and albums.
- */
-
 package music;
 
 import java.io.File;
@@ -20,10 +16,10 @@ public class MusicStore {
 		this.storeAlbums = new AlbumList();
 		this.storeSongs = new SongList();
 		
-		ArrayList<String> albumFilenames = readAlbumsFile();
-		// read in all the albums text files
+		ArrayList<String> albumFilenames = readAlbumsFile();  // read in all the albums text files
 		for (String s : albumFilenames) {  
-			readOneAlbumFile(s); // goes through each album file and adds music to the store
+			// goes through each album file and adds music to the store
+			readOneAlbumFile(s);
 		}
 	}
 	
@@ -60,36 +56,35 @@ public class MusicStore {
 		addMusicToStore(artist, albumTitle, genre, year, albumSongList);
 	}
 	
-	// adds an album and songs from that album to the music store
 	private void addMusicToStore(String artist, String albumTitle, String genre, String year,
 			ArrayList<Song> songlist) {
 		
 		Album album = new Album(artist, albumTitle, genre, year, songlist);
 		storeAlbums.addAlbum(album);
 		for (Song s : songlist) {
-			storeSongs.addNewSong(s);
+			storeSongs.addSong(s);
 		}
 	}
 	
 	// METHODS
 	
 	// search for song by title
-	public ArrayList<Song> searchStoreSongByTitle(String title) {
-		return storeSongs.getSongObjectsByTitle(title);
+	public String searchStoreSongByTitle(String title) {
+		return storeSongs.getSongByTitle(title);
 	}
 
 	// search for song by artist
-	public ArrayList<Song> searchStoreSongByArtist(String artist) {
-		return storeSongs.getSongObjectsByArtist(artist);
+	public String searchStoreSongByArtist(String artist) {
+		return storeSongs.getSongByArtist(artist);
 	}
 	
 	// search for album by title
-	public ArrayList<Album> searchStoreAlbumByTitle(String title) {
-		return storeAlbums.getAlbumObjectsByTitle(title);
+	public String searchStoreAlbumByTitle(String title) {
+		return storeAlbums.getAlbumByTitle(title);
 	}
 	// search for album by artist
-	public ArrayList<Album> searchStoreAlbumByArtist(String artist) {
-		return storeAlbums.getAlbumObjectsByArtist(artist);
+	public String searchStoreAlbumByArtist(String artist) {
+		return storeAlbums.getAlbumByArtist(artist);
 	}
 	
 }
