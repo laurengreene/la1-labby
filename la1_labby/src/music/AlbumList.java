@@ -1,3 +1,8 @@
+/*
+ * AlbumList.java is a list of Album objects. This class is used to store
+ * Albums in both the library and the store.
+ */
+
 package music;
 
 import java.util.ArrayList;

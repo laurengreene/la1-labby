@@ -1,3 +1,7 @@
+/*
+ * MusicStore.java is a database of songs and albums.
+ */
+
 package music;
 
 import java.io.File;
@@ -16,7 +20,8 @@ public class MusicStore {
 		this.storeAlbums = new AlbumList();
 		this.storeSongs = new SongList();
 		
-		ArrayList<String> albumFilenames = readAlbumsFile();  // read in all the albums text files
+		ArrayList<String> albumFilenames = readAlbumsFile();
+		// read in all the albums text files
 		for (String s : albumFilenames) {  
 			readOneAlbumFile(s); // goes through each album file and adds music to the store
 		}
@@ -55,6 +60,7 @@ public class MusicStore {
 		addMusicToStore(artist, albumTitle, genre, year, albumSongList);
 	}
 	
+	// adds an album and songs from that album to the music store
 	private void addMusicToStore(String artist, String albumTitle, String genre, String year,
 			ArrayList<Song> songlist) {
 		

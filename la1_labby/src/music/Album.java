@@ -1,3 +1,8 @@
+/*
+ * Album.java is an album object that holds song objects and
+ * is in album lists.
+ */
+
 package music;
 
 import java.util.ArrayList;

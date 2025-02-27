@@ -1,3 +1,8 @@
+/*
+ * LibraryModel.java is a database of the user's songs,
+ * albums, and playlists.
+ */
+
 package music;
 
 import java.util.ArrayList;
