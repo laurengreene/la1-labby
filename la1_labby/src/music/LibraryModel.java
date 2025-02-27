@@ -112,17 +112,34 @@ public class LibraryModel {
 		playlists.add(playList);
 	}
 	
-	// add song to playlist - Song object can be changes to two strings - artist/title
-	public void addSongToPlaylist(String pName, Song song) {
-		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) s.addSong(song);
+	// add song to playlist
+	public String addSongToPlaylist(String pName, String artist, String title) {
+		ArrayList<Song> songs = libSongs.getSongObjectsByTitle(title);
+		Song toAdd = null;
+		for(Song s : songs) {
+			if (s.getArtist().equals(artist)) {
+				toAdd = s;
+				break;
+			}
 		}
+		if (toAdd != null) {
+			for(SongList p : playlists) {
+				if(p.getPlaylistName().equals(pName)) {
+					p.addSong(toAdd);
+					return("Song added to playlist");
+				}
+			}
+		}
+		return("Song not found");
 	}
 	
-	public void removeSongFromPlaylist(String pName, Song song) {
-		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) s.removeSong(song);
+	public String removeSongFromPlaylist(String pName, String artist, String title) {
+		for(SongList p : playlists) {
+			if(p.getPlaylistName().equals(pName)) {
+				return(p.removeSong(title, artist));
+			}
 		}
+		return("Playlist not found");
 	}
 	
 	public void setSongToFavorite(Song songName) {
