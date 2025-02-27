@@ -74,22 +74,22 @@ public class MusicStore {
 	// METHODS
 	
 	// search for song by title
-	public String searchStoreSongByTitle(String title) {
-		return storeSongs.getSongByTitle(title);
+	public ArrayList<Song> searchStoreSongByTitle(String title) {
+		return storeSongs.getSongObjectsByTitle(title);
 	}
 
 	// search for song by artist
-	public String searchStoreSongByArtist(String artist) {
-		return storeSongs.getSongByArtist(artist);
+	public ArrayList<Song> searchStoreSongByArtist(String artist) {
+		return storeSongs.getSongObjectsByArtist(artist);
 	}
 	
 	// search for album by title
-	public String searchStoreAlbumByTitle(String title) {
-		return storeAlbums.getAlbumByTitle(title);
+	public ArrayList<Album> searchStoreAlbumByTitle(String title) {
+		return storeAlbums.getAlbumObjectsByTitle(title);
 	}
 	// search for album by artist
-	public String searchStoreAlbumByArtist(String artist) {
-		return storeAlbums.getAlbumByArtist(artist);
+	public ArrayList<Album> searchStoreAlbumByArtist(String artist) {
+		return storeAlbums.getAlbumObjectsByArtist(artist);
 	}
 	
 }
