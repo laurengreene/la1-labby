@@ -1,4 +1,5 @@
 
+
 /*
  * LibraryModel.java is a database of the user's songs,
  * albums, and playlists.
@@ -40,7 +41,7 @@ public class LibraryModel {
 	}
 	
 	public ArrayList<Song> getLibSongbyArtistSong(String artist) {
-		return libSongs.getSongObjectByTitle(artist);
+		return libSongs.getSongObjectByArtist(artist);
 	}
 	
 	public String getLibAlbumByTitle(String title) {
@@ -90,11 +91,11 @@ public class LibraryModel {
 	public String getLibArtists() {
 		String artists = "";
 		for(Song s : libSongs.getSongs()) {
-			if (artists.contains(s.getArtist())) {
+			if (!artists.contains(s.getArtist())) {
 				artists += s.getArtist() + "\n";
 			}
 		}
-		return artists;
+		return artists.substring(artists.length()-1);
 	}
 	
 
@@ -160,7 +161,8 @@ public class LibraryModel {
 		}
 	}
 	
-	public void setRatingOfSong(Song songName, Rating rating) {
+	public void setRatingOfSong(Song songName, int rate) {
+		Rating rating = Rating.convert(rate);
 		for (Song s : this.libSongs.getSongs()) {
 			if (s.equals(songName)) {
 				this.ratedSongs.put(s, rating);

@@ -28,6 +28,7 @@ public class AlbumList {
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
 	}	
+	
 	public ArrayList<Album>	getAlbumObjectsByTitle(String title) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
@@ -59,9 +60,9 @@ public class AlbumList {
 		return albums;
 	}
 	
-	public ArrayList<Album> getAlbums() {
-		return makeCopyList();
-	}
+//	public ArrayList<Album> getAlbums() {
+//		return makeCopyList();
+//	}
 	
 	public String getAlbumsString() {
 		String albums = "";
@@ -71,13 +72,13 @@ public class AlbumList {
 		return albums;
 	}
 	
-	public ArrayList<Album> makeCopyList() {
-		ArrayList<Album> cList = new ArrayList<Album>();
-		for (Album s : alist) {
-			cList.add(s.makeCopyAlbum());
-		}
-		return cList;
-	}
+//	public ArrayList<Album> makeCopyList() {
+//		ArrayList<Album> cList = new ArrayList<Album>();
+//		for (Album s : alist) {
+//			cList.add(s.makeCopyAlbum());
+//		}
+//		return cList;
+//	}
 	
 	
 	public String toString() {
