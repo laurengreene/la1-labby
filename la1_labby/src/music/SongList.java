@@ -1,3 +1,4 @@
+
 package music;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class SongList {
 			}
 		}
 		return songs;
+	}
 
 	public Song getSongByTitleAndArtist(String title, String artist) {
 		for (Song s : slist) {
@@ -78,12 +80,15 @@ public class SongList {
 			}
 		}
 		return null;
-
 	}
 	
-	// return deep copy of list
+	// shallow copy of the list
 	public ArrayList<Song> getSongs() {
-		return makeCopyList();
+		ArrayList<Song> cList = new ArrayList<Song>();
+		for (Song s : slist) {
+			cList.add(s);
+		}
+		return cList;
 	}
 	
 	public boolean containsSong(Song song) {
@@ -99,15 +104,6 @@ public class SongList {
 	
 	public void setPlaylistName(String n) {
 		this.name = n;
-	}
-	
-	// make deep copy of List
-	public ArrayList<Song> makeCopyList() {
-		ArrayList<Song> cList = new ArrayList<Song>();
-		for (Song s : slist) {
-			cList.add(s);
-		}
-		return cList;
 	}
 	
 	public String toString() {

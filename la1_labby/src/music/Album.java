@@ -1,4 +1,5 @@
 
+
 package music;
 
 import java.util.ArrayList;
@@ -41,24 +42,13 @@ public class Album {
 		return this.genre;
 	}
 	
-	// maybe get rid of this method because no songs need to be added to it.
-	// need to figure out how to make a deep copy of the list. maybe
-	// make string immutable?
-	public void addToSongList(Song song) {
-		songlist.addSong(song);
-	}
-	
 	public ArrayList<Song> getSongList() {
-		return songlist.makeCopyList();
+		return songlist.getSongs();
 	}
 	
-	public Album makeCopyAlbum() {  // need to make deep copy of songlist and replace the songs
-		Album cAlbum = new Album(artist, title, genre, year, new ArrayList<Song>());
+	public Album makeCopyAlbum() {  // shallow copy
 		ArrayList<Song> cSonglist = songlist.getSongs();
-		for (Song s : cSonglist) {
-			cAlbum.addToSongList(s);
-		}
-		return cAlbum;
+		return new Album(artist, title, genre, year, cSonglist);
 	}
 	
 	public boolean equals(Album otherAlbum) {
