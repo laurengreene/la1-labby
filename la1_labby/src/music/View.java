@@ -114,15 +114,19 @@ public class View {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
+		System.out.println(tOra);
 		System.out.println("Input Name:");
 		String name = scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
+		System.out.println(tOra);
 		switch (tOra) {
 		case "a" :
 			songs = mStore.searchStoreSongByArtist(name);
+			break;
 		case "t" :
 			songs = mStore.searchStoreSongByTitle(name);
+			break;
 		default :
 			System.out.println("Invalid Input");
 			searchStoreForSong();
@@ -175,10 +179,20 @@ public class View {
 	}
 	
 	private static void searchLibForSong() {
-		// im not sure how we wanna do this one, we need to keep the 
-		// song reference to update the rating if needed 
-		// maybe use equals method and look through all objects in
-		// songlist and update the one that is equal, could be easier way
+		System.out.println("Search by Artist(a) or Title(t)?");
+		String tOra = scn.nextLine();
+		checkIfDone(tOra);
+		System.out.println("Input Name:");
+		String name = scn.nextLine();
+		checkIfDone(name);
+		switch(tOra) {
+		case "a" :
+			System.out.println(libModel.getLibSongByArtist(name));
+			break;
+		case "t" :
+			System.out.println(libModel.getLibSongByTitle(name));
+			break;
+		}
 	}
 	
 	private static void searchLibForAlbum() {
@@ -191,8 +205,10 @@ public class View {
 		switch (tOra) {
 		case "a" :
 			System.out.println(libModel.getLibAlbumByArtist(name));
+			break;
 		case "t" :
 			System.out.println(libModel.getLibAlbumByTitle(name));
+			break;
 		default :
 			System.out.println("Invalid Input");
 			searchLibForAlbum();

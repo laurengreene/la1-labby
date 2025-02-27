@@ -1,7 +1,3 @@
-/*
- * Album.java is an album object that holds song objects and
- * is in album lists.
- */
 
 package music;
 
@@ -22,7 +18,7 @@ public class Album {
 		this.title = title;
 		this.songlist = new SongList();
 		for (Song s : newSongs) {
-			this.songlist.addNewSong(s);
+			this.songlist.addSong(s);
 		}
 		this.genre = genre;
 		this.year = year;
