@@ -18,7 +18,8 @@ public class MusicStore {
 		
 		ArrayList<String> albumFilenames = readAlbumsFile();  // read in all the albums text files
 		for (String s : albumFilenames) {  
-			readOneAlbumFile(s); // goes through each album file and adds music to the store
+			// goes through each album file and adds music to the store
+			readOneAlbumFile(s);
 		}
 	}
 	
@@ -68,22 +69,22 @@ public class MusicStore {
 	// METHODS
 	
 	// search for song by title
-	public ArrayList<Song> searchStoreSongByTitle(String title) {
-		return storeSongs.getSongObjectsByTitle(title);
+	public String searchStoreSongByTitle(String title) {
+		return storeSongs.getSongByTitle(title);
 	}
 
 	// search for song by artist
-	public ArrayList<Song> searchStoreSongByArtist(String artist) {
-		return storeSongs.getSongObjectsByArtist(artist);
+	public String searchStoreSongByArtist(String artist) {
+		return storeSongs.getSongByArtist(artist);
 	}
 	
 	// search for album by title
-	public ArrayList<Album> searchStoreAlbumByTitle(String title) {
-		return storeAlbums.getAlbumObjectsByTitle(title);
+	public String searchStoreAlbumByTitle(String title) {
+		return storeAlbums.getAlbumByTitle(title);
 	}
 	// search for album by artist
-	public ArrayList<Album> searchStoreAlbumByArtist(String artist) {
-		return storeAlbums.getAlbumObjectsByArtist(artist);
+	public String searchStoreAlbumByArtist(String artist) {
+		return storeAlbums.getAlbumByArtist(artist);
 	}
 	
 }

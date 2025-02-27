@@ -19,19 +19,12 @@ public class SongList {
 		for(Song s : slist) {
 			if (newSong.equals(s)) return;
 		}
-		slist.add(newSong.makeCopy());
+		slist.add(newSong);
 	}
 	
-	public String removeSong(String rTitle, String rArtist) {
-		for(Song s : slist) {
-			if (s.getArtist().equals(rArtist) && s.getTitle().equals(rTitle)) {
-				slist.remove(s);
-				return(rTitle + " by " + rArtist + " removed.");
-			}
-		}
-		return("Song not found");
+	public void removeSong(Song removeSong) {
+		if(slist.contains(removeSong)) slist.remove(removeSong);
 	}
-	
 	
 	public String getSongByTitle(String title) {
 		String result = "";
@@ -42,13 +35,15 @@ public class SongList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
-	}
 		
-	public ArrayList<Song> getSongObjectsByTitle(String title) {
+
+	}
+	
+	public ArrayList<Song> getSongObjectByTitle(String title) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
 			if (s.getTitle().equals(title)) {
-				songs.add(s.makeCopy());
+				songs.add(s);
 			}
 		}
 		return songs;
@@ -63,16 +58,6 @@ public class SongList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
-	}	
-		
-	public ArrayList<Song> getSongObjectsByArtist(String artist) {
-		ArrayList<Song> songs = new ArrayList<Song>();
-		for (Song s : slist) {
-			if (s.getArtist().equals(artist)) {
-				songs.add(s.makeCopy());
-			}
-		}
-		return songs;
 	}
 	
 	// return deep copy of list
@@ -99,7 +84,7 @@ public class SongList {
 	public ArrayList<Song> makeCopyList() {
 		ArrayList<Song> cList = new ArrayList<Song>();
 		for (Song s : slist) {
-			cList.add(s.makeCopy());
+			cList.add(s);
 		}
 		return cList;
 	}
@@ -115,5 +100,9 @@ public class SongList {
 		return result;
 	}
 	
+	public void addNewSong(Song song) {
+		slist.add(song);
+		
+	}
 
 }
