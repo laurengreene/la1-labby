@@ -8,8 +8,23 @@ import java.util.Scanner;
 
 public class MusicStore {
 	
+	// INSTANCE VARIABLES
+	private AlbumList storeAlbums;
+	private SongList storeSongs;
+	
+	public MusicStore() throws FileNotFoundException {
+		this.storeAlbums = new AlbumList();
+		this.storeSongs = new SongList();
+		
+		ArrayList<String> albumFilenames = readAlbumsFile();  // read in all the albums text files
+		for (String s : albumFilenames) {  
+			readOneAlbumFile(s); // goes through each album file and adds music to the store
+		}
+	}
+	
+	// HELPER METHODS
 	// returns an ArrayList of the album text files that need to be read in
-	public static ArrayList<String> readAlbumsFile() throws FileNotFoundException {
+	private ArrayList<String> readAlbumsFile() throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("albums/albums.txt"));
 		ArrayList<String> albumFilenames = new ArrayList<String>();
 		
@@ -24,13 +39,11 @@ public class MusicStore {
 	
 	
 	// creates album and song objects for an album and adds to necessary lists
-	public static void readOneAlbumFile(String filename, LibraryModel library) throws FileNotFoundException{
+	private void readOneAlbumFile(String filename) throws FileNotFoundException{
 		Scanner scanner = new Scanner(new File("albums/" + filename));
 		String[] albumInfo = scanner.nextLine().split(",");	
-		String artist = albumInfo[0];
-		String albumTitle = albumInfo[1];
-		String genre = albumInfo[2];
-		String year = albumInfo[3];
+		String artist = albumInfo[1]; String albumTitle = albumInfo[0];
+		String genre = albumInfo[2]; String year = albumInfo[3];
 		
 		ArrayList<Song> albumSongList = new ArrayList<Song>();
 		while(scanner.hasNextLine()) {
@@ -38,20 +51,39 @@ public class MusicStore {
 			Song song = new Song(songTitle, artist, albumTitle);
 			albumSongList.add(song);
 		}
-		library.addNewAlbumToStore(artist, albumTitle, genre, year, albumSongList);
 		scanner.close();
+		addMusicToStore(artist, albumTitle, genre, year, albumSongList);
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException {
-		LibraryModel library = new LibraryModel();
+	private void addMusicToStore(String artist, String albumTitle, String genre, String year,
+			ArrayList<Song> songlist) {
 		
-		ArrayList<String> albumFilenames = readAlbumsFile();  // collects names of individual album names from initial albums.txt file
-		
-		for (String s : albumFilenames) {  // goes through each album file
-			readOneAlbumFile(s, library);
+		Album album = new Album(artist, albumTitle, genre, year, songlist);
+		storeAlbums.addAlbum(album);
+		for (Song s : songlist) {
+			storeSongs.addNewSong(s);
 		}
-		
-		// use while loop to call view methods and loop through
+	}
+	
+	// METHODS
+	
+	// search for song by title
+	public String searchStoreSongByTitle(String title) {
+		return storeSongs.getSongByTitle(title);
+	}
+
+	// search for song by artist
+	public String searchStoreSongByArtist(String artist) {
+		return storeSongs.getSongByArtist(artist);
+	}
+	
+	// search for album by title
+	public String searchStoreAlbumByTitle(String title) {
+		return storeAlbums.getAlbumByTitle(title);
+	}
+	// search for album by artist
+	public String searchStoreAlbumByArtist(String artist) {
+		return storeAlbums.getAlbumByArtist(artist);
 	}
 	
 }

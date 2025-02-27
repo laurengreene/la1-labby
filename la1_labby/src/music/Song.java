@@ -90,8 +90,8 @@ public class Song {
 
 	
 	public String toString() {
-		return "Song: " + this.title + "\nArtist: " + this.artist +
-				"\nAlbum: " + this.albumTitle;
+		return "Song: " + this.title + "; Artist: " + this.artist +
+				"; Album: " + this.albumTitle;
 	}
 	
 	
