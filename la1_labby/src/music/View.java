@@ -6,21 +6,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View {
-	private Scanner scn;
-	private MusicStore mStore;
-	private LibraryModel libModel;
+	private static Scanner scn;
+	private static MusicStore mStore;
+	private static LibraryModel libModel;
 	
 	private View() throws FileNotFoundException {
-		mStore = new MusicStore();
-		libModel = new LibraryModel();
-		scn = new Scanner(System.in);
-		start();
+		
 	}
 	
-	private void start() {
+	private static void start() {
 		System.out.println("Welcome to the Labbys Music Store!\n To get to "
 				+ "this page, input 'home'-- To exit the store, input 'done'"
-				+ " \n Would you like to: \nCreate Playlist(c) \nSearch(s)");
+				+ " \nWould you like to: \nCreate Playlist(c) \nSearch(s)");
 		String input = scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
@@ -35,7 +32,7 @@ public class View {
 	}
 	
 	
-	private void createPlaylist() {
+	private static void createPlaylist() {
 		System.out.println("Input Playlist Name:");
 		String pName = scn.nextLine();
 		checkIfDone(pName);
@@ -50,7 +47,7 @@ public class View {
 		}
 	}
 	
-	private void search() {
+	private static void search() {
 		System.out.println("Search Store(s) or Library(l)?");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -65,7 +62,7 @@ public class View {
 		}
 	}
 	
-	private void searchStore() {
+	private static void searchStore() {
 		System.out.println("Search for Song(s) or Album(a)?");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -80,7 +77,7 @@ public class View {
 		}
 	}
 	
-	private void searchStoreForAlbum() {
+	private static void searchStoreForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
@@ -113,7 +110,7 @@ public class View {
 		start();
 	}
 	
-	private void searchStoreForSong() {
+	private static void searchStoreForSong() {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
@@ -145,7 +142,7 @@ public class View {
 		start();
 	}
 	
-	public void searchLib() {
+	public static void searchLib() {
 		System.out.println("Search for Specific Information(s) or Get All(a)");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -160,7 +157,7 @@ public class View {
 		}
 	}
 	
-	public void getOne() {
+	public static void getOne() {
 		System.out.println("Search for: \nSong(s) \nAlbum(a) \nPlaylist(p)");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -177,14 +174,14 @@ public class View {
 		}
 	}
 	
-	private void searchLibForSong() {
+	private static void searchLibForSong() {
 		// im not sure how we wanna do this one, we need to keep the 
 		// song reference to update the rating if needed 
 		// maybe use equals method and look through all objects in
 		// songlist and update the one that is equal, could be easier way
 	}
 	
-	private void searchLibForAlbum() {
+	private static void searchLibForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
@@ -202,7 +199,7 @@ public class View {
 		}
 	}
 	
-	private void searchForPlaylist() {
+	private static void searchForPlaylist() {
 		System.out.println("Playlist name: ");
 		String name = scn.nextLine();
 		checkIfDone(name);
@@ -218,7 +215,7 @@ public class View {
 		else start();
 	}
 	
-	private void editPlaylist(String pName) {
+	private static void editPlaylist(String pName) {
 		System.out.println("Add(a) or Remove(r) song?");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -230,7 +227,7 @@ public class View {
 		}
 	}
 	
-	private void removeSongFromPlaylist(String pName) {
+	private static void removeSongFromPlaylist(String pName) {
 		System.out.println("Song TITLE of song to remove:");
 		String title = scn.nextLine();
 		checkIfDone(title);
@@ -241,7 +238,7 @@ public class View {
 		start();
 	}
 	
-	private void addSongToPlaylist(String pName) {
+	private static void addSongToPlaylist(String pName) {
 		// maybe print out all songs in library so user can read from them and pick?
 		System.out.println("Song TITLE of song to add:");
 		String title = scn.nextLine();
@@ -253,9 +250,39 @@ public class View {
 		start();
 	}
 	
-	private void checkIfDone(String s) {
+	private static void getAll() {
+		System.out.println("What would you like to search? \nSong Titles(s)"
+				+ " \nArists(r) \nAlbums(l) \nPlaylists(p) \nFavorites(f)");
+		String input = scn.nextLine();
+		checkIfDone(input);
+		switch (input) {
+		case "s" :
+			System.out.println(libModel.getLibSongTitles());
+		case "r" :
+			System.out.println(libModel.getLibArtists());
+		case "l" :
+			System.out.println(libModel.getLibAlbums());
+		case "p" :
+			System.out.println(libModel.getPlaylists());
+		case "f" :
+			System.out.println(libModel.getFavorites());
+		default :
+			System.out.println("Invalid Input");
+			getAll();
+		}
+	}
+	
+	
+	private static void checkIfDone(String s) {
 		if(s.equals("done")) System.exit(0);
 		if(s.equals("home")) start();
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		mStore = new MusicStore();
+		libModel = new LibraryModel();
+		scn = new Scanner(System.in);
+		start();
 	}
 
 }
