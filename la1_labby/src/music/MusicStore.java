@@ -70,7 +70,7 @@ public class MusicStore {
 	// METHODS
 	
 	public Song getStoreSongByTandA(String title, String artist){
-		return storeSongs.getSongByTitleAndArtist(title, artist);
+		return storeSongs.getSongByTitleAndArtist(artist, title);
 	}
 	
 	

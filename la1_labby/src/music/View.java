@@ -311,7 +311,6 @@ public class View {
 	}
 	
 	private static void addSongToPlaylist(String pName) {
-		// maybe print out all songs in library so user can read from them and pick?
 		System.out.println("Song TITLE of song to add:");
 		String title = scn.nextLine();
 		checkIfDone(title);

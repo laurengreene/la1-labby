@@ -127,7 +127,7 @@ public class LibraryModel {
 			if (s.getPlaylistName().toLowerCase().equals(pName.toLowerCase())) {
 				// find the song in the library and add it
 				try {
-					libSongs.addSong(s.getSongByTitleAndArtist(title, artist));
+					s.addSong(libSongs.getSongByTitleAndArtist(artist, title));
 					return "Song added";
 				} catch(NullPointerException e) {
 					return "Song not found";
@@ -141,12 +141,7 @@ public class LibraryModel {
 	public String removeSongFromPlaylist(String pName, String artist, String title) {
 		for(SongList s : playlists) {
 			if (s.getPlaylistName().equals(pName)) {
-				try {
-					s.addSong(s.getSongByTitleAndArtist(title, artist));
-					return "Song removed";
-				} catch(NullPointerException e) {
-					return "Song not found";
-				}
+				return(s.removeSong(libSongs.getSongByTitleAndArtist(artist, title)));
 			}
 		}
 		return "Playlist not found";
