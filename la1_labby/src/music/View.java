@@ -2,24 +2,22 @@
 package music;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View {
-	private Scanner scn;
-	private MusicStore mStore;
-	private LibraryModel libModel;
+	private static Scanner scn;
+	private static MusicStore mStore;
+	private static LibraryModel libModel;
 	
 	private View() throws FileNotFoundException {
-		mStore = new MusicStore();
-		libModel = new LibraryModel();
-		scn = new Scanner(System.in);
-		start();
+		
 	}
 	
-	private void start() {
+	private static void start() {
 		System.out.println("Welcome to the Labbys Music Store!\n To get to "
 				+ "this page, input 'home'-- To exit the store, input 'done'"
-				+ " \n Would you like to: \nCreate Playlist(c) \nSearch(s)");
+				+ " \nWould you like to: \nCreate Playlist(c) \nSearch(s)");
 		String input = scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
@@ -34,7 +32,7 @@ public class View {
 	}
 	
 	
-	private void createPlaylist() {
+	private static void createPlaylist() {
 		System.out.println("Input Playlist Name:");
 		String pName = scn.nextLine();
 		checkIfDone(pName);
@@ -49,7 +47,7 @@ public class View {
 		}
 	}
 	
-	private void search() {
+	private static void search() {
 		System.out.println("Search Store(s) or Library(l)?");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -64,7 +62,7 @@ public class View {
 		}
 	}
 	
-	private void searchStore() {
+	private static void searchStore() {
 		System.out.println("Search for Song(s) or Album(a)?");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -79,57 +77,72 @@ public class View {
 		}
 	}
 	
-	private void searchStoreForAlbum() {
+	private static void searchStoreForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
 		String name = scn.nextLine();
 		checkIfDone(name);
+		ArrayList<Album> albums;
 		switch (tOra) {
 		case "a" :
-			// get album by artist from store
+			albums = mStore.searchStoreAlbumByArtist(name);
 		case "t" :
-			// get album by title from store
+			albums = mStore.searchStoreAlbumByTitle(name);
 		default :
 			System.out.println("Invalid Input");
 			searchStoreForAlbum();
+			albums = new ArrayList<Album>();
 		}
-		// save album information
-		// print album information or 'album not in store'
+		if(albums.size() == 0) System.out.println("Album not found"); searchStoreForAlbum();
+		for (Album a : albums) {
+			System.out.println(a);
+		}
 		System.out.println("Add album to library? (y)/(n)");
 		String ifAdd = scn.nextLine();
 		checkIfDone(ifAdd);
-		if(ifAdd.equals("y")) libModel.addAlbumToLib(null); // change null to album information
+		if(ifAdd.equals("y")) {
+			for(Album a : albums) {
+				libModel.addAlbumToLib(a); 
+			}
+		} 
 		start();
 	}
 	
-	private void searchStoreForSong() {
+	private static void searchStoreForSong() {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
 		String name = scn.nextLine();
 		checkIfDone(name);
+		ArrayList<Song> songs;
 		switch (tOra) {
 		case "a" :
-			// get song by artist from store
+			songs = mStore.searchStoreSongByArtist(name);
 		case "t" :
-			// get song by title from store
+			songs = mStore.searchStoreSongByTitle(name);
 		default :
 			System.out.println("Invalid Input");
 			searchStoreForSong();
+			songs = new ArrayList<Song>();
 		}
-		// save song information
-		// print song information or 'song not in store'
+		if(songs.size() == 0) System.out.println("Song not found"); searchStoreForSong();
+		for (Song s : songs) {
+			System.out.println(s);
+		}
 		System.out.println("Add song to library? (y)/(n)");
 		String ifAdd = scn.nextLine();
 		checkIfDone(ifAdd);
-		if(ifAdd.equals("y")) libModel.addSongToLib(null); // change null to song information
+		if(ifAdd.equals("y")) {
+			for(Song s : songs)
+			libModel.addSongToLib(s); 
+		}
 		start();
 	}
 	
-	public void searchLib() {
+	public static void searchLib() {
 		System.out.println("Search for Specific Information(s) or Get All(a)");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -137,14 +150,14 @@ public class View {
 		case "s" :
 			getOne();
 		case "a" :
-			getAll();
+			getAll(); // to return list of all objects
 		default :
 			System.out.println("Invalid Input");
 			searchLib();
 		}
 	}
 	
-	public void getOne() {
+	public static void getOne() {
 		System.out.println("Search for: \nSong(s) \nAlbum(a) \nPlaylist(p)");
 		String input = scn.nextLine();
 		checkIfDone(input);
@@ -161,13 +174,115 @@ public class View {
 		}
 	}
 	
-	private void searchLibForSong() {
-		
+	private static void searchLibForSong() {
+		// im not sure how we wanna do this one, we need to keep the 
+		// song reference to update the rating if needed 
+		// maybe use equals method and look through all objects in
+		// songlist and update the one that is equal, could be easier way
 	}
 	
-	private void checkIfDone(String s) {
+	private static void searchLibForAlbum() {
+		System.out.println("Search by Artist(a) or Title(t)?");
+		String tOra = scn.nextLine();
+		checkIfDone(tOra);
+		System.out.println("Input Name:");
+		String name = scn.nextLine();
+		checkIfDone(name);
+		switch (tOra) {
+		case "a" :
+			System.out.println(libModel.getLibAlbumByArtist(name));
+		case "t" :
+			System.out.println(libModel.getLibAlbumByTitle(name));
+		default :
+			System.out.println("Invalid Input");
+			searchLibForAlbum();
+		}
+	}
+	
+	private static void searchForPlaylist() {
+		System.out.println("Playlist name: ");
+		String name = scn.nextLine();
+		checkIfDone(name);
+		String playlist = libModel.getPlaylist(name);
+		if(playlist == "Not Found") {
+			System.out.println("Playlist Not Found"); 
+			searchForPlaylist(); }
+		System.out.println(playlist);
+		System.out.println("Edit Playlist? (y)/(n)");
+		String ifEdit = scn.nextLine();
+		checkIfDone(ifEdit);
+		if (ifEdit.equals("y")) editPlaylist(name);
+		else start();
+	}
+	
+	private static void editPlaylist(String pName) {
+		System.out.println("Add(a) or Remove(r) song?");
+		String input = scn.nextLine();
+		checkIfDone(input);
+		switch (input) {
+		case "a" :
+			addSongToPlaylist(pName);
+		case "r" :
+			removeSongFromPlaylist(pName);
+		}
+	}
+	
+	private static void removeSongFromPlaylist(String pName) {
+		System.out.println("Song TITLE of song to remove:");
+		String title = scn.nextLine();
+		checkIfDone(title);
+		System.out.println("Song ARTIST of song to remove:");
+		String artist = scn.nextLine();
+		checkIfDone(artist);
+		System.out.println(libModel.removeSongFromPlaylist(pName, artist, title));
+		start();
+	}
+	
+	private static void addSongToPlaylist(String pName) {
+		// maybe print out all songs in library so user can read from them and pick?
+		System.out.println("Song TITLE of song to add:");
+		String title = scn.nextLine();
+		checkIfDone(title);
+		System.out.println("Song ARTIST of song to add:");
+		String artist = scn.nextLine();
+		checkIfDone(artist);
+		System.out.println(libModel.addSongToPlaylist(pName, artist, title));
+		start();
+	}
+	
+	private static void getAll() {
+		System.out.println("What would you like to search? \nSong Titles(s)"
+				+ " \nArists(r) \nAlbums(l) \nPlaylists(p) \nFavorites(f)");
+		String input = scn.nextLine();
+		checkIfDone(input);
+		switch (input) {
+		case "s" :
+			System.out.println(libModel.getLibSongTitles());
+		case "r" :
+			System.out.println(libModel.getLibArtists());
+		case "l" :
+			System.out.println(libModel.getLibAlbums());
+		case "p" :
+			System.out.println(libModel.getPlaylists());
+		case "f" :
+			System.out.println(libModel.getFavorites());
+		default :
+			System.out.println("Invalid Input");
+			getAll();
+		}
+	}
+	
+	
+	private static void checkIfDone(String s) {
 		if(s.equals("done")) System.exit(0);
 		if(s.equals("home")) start();
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		mStore = new MusicStore();
+		libModel = new LibraryModel();
+		scn = new Scanner(System.in);
+		start();
 	}
 
 }
