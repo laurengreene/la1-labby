@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class Album {
 	
+	/*
+	 * @Pre artist != null && title != null && genre != null && year != null
+	 */
+	
 	// instance variables
 	private String artist;
 	private String title;

@@ -2,6 +2,7 @@
 package music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SongList {
 	
@@ -91,12 +92,9 @@ public class SongList {
 		return cList;
 	}
 	
-	public boolean containsSong(Song song) {
-		for (Song s : slist) {
-			if (s.equals(song)) return true;
-		}
-		return false;
-	}
+//	public boolean containsSong(Song song) {
+//		return slist.contains(song);
+//	}
 	
 	public String getPlaylistName() {
 		return name;
@@ -117,9 +115,9 @@ public class SongList {
 		return result;
 	}
 	
-	public void addNewSong(Song song) {
-		slist.add(song);
-		
-	}
+//	public void addNewSong(Song song) {
+//		slist.add(song);
+//		
+//	}
 
 }
