@@ -4,41 +4,32 @@ import java.util.ArrayList;
 
 public class LibraryModel {
 	
-	// instance variables - library/user
+	// INSTANCE VARIABLES
 	private AlbumList libAlbums;
 	private SongList libSongs;
 	private ArrayList<SongList> playlists;
 	
-	// instance variables - store
-	private AlbumList storeAlbums;
-	private SongList storeSongs;
-	
+	// CONSTRUCTOR
 	public LibraryModel() {
-		// library/user
 		this.libAlbums = new AlbumList();
 		this.libSongs = new SongList();
 		this.playlists = new ArrayList<SongList>();	
-		
-		// store
-		this.storeAlbums = new AlbumList();
-		this.storeSongs = new SongList();
 	}
 	
-	// search Library
-	// need to print message if nothing found
-	public ArrayList<Song> getLibSongByTitle(String title) {
+	// METHODS
+	public String getLibSongByTitle(String title) {
 		return libSongs.getSongByTitle(title);
 	}
 	
-	public ArrayList<Song> getLibSongByArtist(String artist) {
+	public String getLibSongByArtist(String artist) {
 		return libSongs.getSongByArtist(artist);
 	}
 	
-	public ArrayList<Album> getLibAlbumByTitle(String title) {
+	public String getLibAlbumByTitle(String title) {
 		return libAlbums.getAlbumByTitle(title);
 	}
 	
-	public ArrayList<Album> getLibAlbumByArtist(String artist) {
+	public String getLibAlbumByArtist(String artist) {
 		return libAlbums.getAlbumByArtist(artist);
 	}
 	
@@ -137,23 +128,5 @@ public class LibraryModel {
 				s.setRating(5);
 			}
 		}
-	}
-	
-	// store methods
-	public void addNewAlbumToStore(String artist, String albumTitle, String genre, String year,
-			ArrayList<Song> songList) {
-		
-		ArrayList<Song> copySongList = new ArrayList<Song>();
-		for (Song s : songList) {
-			copySongList.add(s.makeCopy());
-		}
-		
-		Album album = new Album(artist, albumTitle, genre, year);
-		album.createSongList(copySongList);
-
-		for (Song s : copySongList) {
-			storeSongs.addNewSong(s);
-		}
-		storeAlbums.addAlbum(album.makeCopyAlbum());
 	}
 }

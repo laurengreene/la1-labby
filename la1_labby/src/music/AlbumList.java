@@ -14,27 +14,45 @@ public class AlbumList {
 	
 	// methods
 	public void addAlbum(Album newAlbum) {
-		alist.add(newAlbum);
+		alist.add(newAlbum.makeCopyAlbum());
 	}
 	
-	public ArrayList<Album> getAlbumByTitle(String title) {
-		ArrayList<Album> albums = new ArrayList<Album>();
+	public String getAlbumByTitle(String title) {
+		String result = "";
 		for (Album a : alist) {
-			if (a.getTitle().equals(title)) {
-				albums.add(a.makeCopyAlbum());
+			if (a.getTitle().toLowerCase().equals(title.toLowerCase())) {
+				result += a.toString() + "\n";
 			}
 		}
-		return albums;
+		if (result.length() == 0) return "Not found";
+		return result.substring(0, result.length()-1);
+		
+//		ArrayList<Album> albums = new ArrayList<Album>();
+//		for (Album a : alist) {
+//			if (a.getTitle().equals(title)) {
+//				albums.add(a.makeCopyAlbum());
+//			}
+//		}
+//		return albums;
 	}
 	
-	public ArrayList<Album> getAlbumByArtist(String artist) {
-		ArrayList<Album> albums = new ArrayList<Album>();
+	public String getAlbumByArtist(String artist) {
+		String result = "";
 		for (Album a : alist) {
-			if (a.getArtist().equals(artist)) {
-				albums.add(a.makeCopyAlbum());
+			if (a.getArtist().toLowerCase().equals(artist.toLowerCase())) {
+				result += a.toString() + "\n\n";
 			}
 		}
-		return albums;
+		if (result.length() == 0) return "Not found";
+		return result.substring(0, result.length()-2);
+		
+//		ArrayList<Album> albums = new ArrayList<Album>();
+//		for (Album a : alist) {
+//			if (a.getArtist().equals(artist)) {
+//				albums.add(a.makeCopyAlbum());
+//			}
+//		}
+//		return albums;
 	}
 	
 	public ArrayList<Album> getAlbums() {

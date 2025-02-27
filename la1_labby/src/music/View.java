@@ -1,5 +1,7 @@
+
 package music;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class View {
@@ -7,7 +9,7 @@ public class View {
 	private MusicStore mStore;
 	private LibraryModel libModel;
 	
-	private View() {
+	private View() throws FileNotFoundException {
 		mStore = new MusicStore();
 		libModel = new LibraryModel();
 		scn = new Scanner(System.in);

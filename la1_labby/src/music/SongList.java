@@ -6,7 +6,7 @@ public class SongList {
 	
 	// instance variables
 	private ArrayList<Song> slist;
-	private String name;  // playlists have a name, but some don't need one
+	private String name;
 	
 	// constructor
 	public SongList() {
@@ -22,24 +22,42 @@ public class SongList {
 		if(slist.contains(removeSong)) slist.remove(removeSong);
 	}
 	
-	public ArrayList<Song> getSongByTitle(String title) { // I think this should fix escaping reference? 
-		ArrayList<Song> songs = new ArrayList<Song>();
+	public String getSongByTitle(String title) {
+		String result = "";
 		for (Song s : slist) {
-			if (s.getTitle().equals(title)) {
-				songs.add(s.makeCopy());
+			if (s.getTitle().toLowerCase().equals(title.toLowerCase())) {
+				result += s.toString() + "\n";
 			}
 		}
-		return songs;
+		if (result.length() == 0) return "Not found";
+		return result.substring(0, result.length()-1);
+		
+//		ArrayList<Song> songs = new ArrayList<Song>();
+//		for (Song s : slist) {
+//			if (s.getTitle().equals(title)) {
+//				songs.add(s.makeCopy());
+//			}
+//		}
+//		return songs;
 	}
 	
-	public ArrayList<Song> getSongByArtist(String artist) { 
-		ArrayList<Song> songs = new ArrayList<Song>();
+	public String getSongByArtist(String artist) { 
+		String result = "";
 		for (Song s : slist) {
-			if (s.getArtist().equals(artist)) {
-				songs.add(s.makeCopy());
+			if (s.getArtist().toLowerCase().equals(artist.toLowerCase())) {
+				result += s.toString() + "\n";
 			}
 		}
-		return songs;
+		if (result.length() == 0) return "Not found";
+		return result.substring(0, result.length()-1);
+		
+//		ArrayList<Song> songs = new ArrayList<Song>();
+//		for (Song s : slist) {
+//			if (s.getArtist().equals(artist)) {
+//				songs.add(s.makeCopy());
+//			}
+//		}
+//		return songs;
 	}
 	
 	// return deep copy of list

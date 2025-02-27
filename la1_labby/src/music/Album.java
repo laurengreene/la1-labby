@@ -12,10 +12,13 @@ public class Album {
 	private String year;
 	
 	// constructor
-	public Album(String artist, String title, String genre, String year) {
+	public Album(String artist, String title, String genre, String year, ArrayList<Song> newSongs) {
 		this.artist = artist;
 		this.title = title;
 		this.songlist = new SongList();
+		for (Song s : newSongs) {
+			this.songlist.addNewSong(s);
+		}
 		this.genre = genre;
 		this.year = year;
 	}
@@ -36,12 +39,6 @@ public class Album {
 		return this.genre;
 	}
 	
-	public void createSongList(ArrayList<Song> songs) {
-		for (Song s : songs) {
-			this.songlist.addNewSong(s);
-		}
-	}
-	
 	public void addToSongList(Song song) {
 		songlist.addSong(song);
 	}
@@ -50,8 +47,8 @@ public class Album {
 		return songlist.makeCopyList();
 	}
 	
-	public Album makeCopyAlbum() {
-		Album cAlbum = new Album(artist, title, genre, year);
+	public Album makeCopyAlbum() {  // need to make deep copy of songlist and replace the songs
+		Album cAlbum = new Album(artist, title, genre, year, new ArrayList<Song>());
 		ArrayList<Song> cSonglist = songlist.getSongs();
 		for (Song s : cSonglist) {
 			cAlbum.addToSongList(s);
@@ -67,7 +64,7 @@ public class Album {
 	}
 	
 	public String toString() {
-		String result = "Album: " + this.title + "\nArtist: " + this.artist + "\nYear: " + year + "\nGenre: " + genre + "\nSongs: ";
+		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
 		for (Song s : songlist.getSongs()) {
 			result += "\n" + s.getTitle();
 		}
