@@ -39,6 +39,10 @@ public class LibraryModel {
 		return libSongs.getSongByArtist(artist);
 	}
 	
+	public ArrayList<Song> getLibSongbyArtistSong(String artist) {
+		return libSongs.getSongObjectByTitle(artist);
+	}
+	
 	public String getLibAlbumByTitle(String title) {
 		return libAlbums.getAlbumByTitle(title);
 	}
@@ -164,6 +168,7 @@ public class LibraryModel {
 		}
 	}
 	
+
 	// returns a string of the favorite songs
 	public String getFavorites() {
 		String result = "";
