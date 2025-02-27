@@ -1,3 +1,4 @@
+
 /*
  * LibraryModel.java is a database of the user's songs,
  * albums, and playlists.
@@ -119,16 +120,34 @@ public class LibraryModel {
 	}
 	
 	// add song to playlist - Song object can be changes to two strings - artist/title
-	public void addSongToPlaylist(String pName, Song song) {
+	public String addSongToPlaylist(String pName, String artist, String title) {
 		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) s.addSong(song);
+			if (s.getPlaylistName().equals(pName)) {
+				// find the song in the library and add it
+				try {
+					libSongs.addSong(s.getSongByTitleAndArtist(title, artist));
+					return "Song added";
+				} catch(NullPointerException e) {
+					return "Song not found";
+				}
+					
+			}
 		}
+		return "Playlist not found";
 	}
 	
-	public void removeSongFromPlaylist(String pName, Song song) {
+	public String removeSongFromPlaylist(String pName, String artist, String title) {
 		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) s.removeSong(song);
+			if (s.getPlaylistName().equals(pName)) {
+				try {
+					s.addSong(s.getSongByTitleAndArtist(title, artist));
+					return "Song removed";
+				} catch(NullPointerException e) {
+					return "Song not found";
+				}
+			}
 		}
+		return "Playlist not found";
 	}
 	
 	// RATING/FAVORITE METHODS
@@ -149,6 +168,8 @@ public class LibraryModel {
 		}
 	}
 	
+
+	// returns a string of the favorite songs
 	public String getFavorites() {
 		String result = "";
 		for (HashMap.Entry<Song, Rating> entry : this.ratedSongs.entrySet()) {
