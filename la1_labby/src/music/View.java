@@ -23,8 +23,10 @@ public class View {
 		switch (input) {
 		case "c" :
 			createPlaylist();
+			break;
 		case "s" :
 			search();
+			break;
 		default :
 			System.out.println("Invalid Input");
 			start();
@@ -36,7 +38,7 @@ public class View {
 		System.out.println("Input Playlist Name:");
 		String pName = scn.nextLine();
 		checkIfDone(pName);
-		if (libModel.getPlaylist(pName).equals("Not Found")) {
+		if (!libModel.getPlaylist(pName).equals("Not Found")) {
 			libModel.createPlaylist(pName);
 			System.out.println("Playlist " + pName + " created.");
 			start();
@@ -54,8 +56,10 @@ public class View {
 		switch(input) {
 		case "s" :
 			searchStore();
+			break;
 		case "l" :
 			searchLib();
+			break;
 		default :
 			System.out.println("Invalid Input");
 			search();
@@ -69,8 +73,10 @@ public class View {
 		switch(input) {
 		case "a" :
 			searchStoreForAlbum();
+			break;
 		case "s" :
 			searchStoreForSong();
+			break;
 		default :
 			System.out.println("Invalid Input");
 			searchStore();
@@ -88,14 +94,16 @@ public class View {
 		switch (tOra) {
 		case "a" :
 			albums = mStore.searchStoreAlbumByArtist(name);
+			break;
 		case "t" :
 			albums = mStore.searchStoreAlbumByTitle(name);
+			break;
 		default :
 			System.out.println("Invalid Input");
 			searchStoreForAlbum();
 			albums = new ArrayList<Album>();
 		}
-		if(albums.size() == 0) System.out.println("Album not found"); searchStoreForAlbum();
+		if(albums.size() == 0) { System.out.println("Album not found"); searchStoreForAlbum();}
 		for (Album a : albums) {
 			System.out.println(a);
 		}
@@ -106,6 +114,7 @@ public class View {
 			for(Album a : albums) {
 				libModel.addAlbumToLib(a); 
 			}
+			System.out.println("Album added");
 		} 
 		start();
 	}
@@ -114,12 +123,10 @@ public class View {
 		System.out.println("Search by Artist(a) or Title(t)?");
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
-		System.out.println(tOra);
 		System.out.println("Input Name:");
 		String name = scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
-		System.out.println(tOra);
 		switch (tOra) {
 		case "a" :
 			songs = mStore.searchStoreSongByArtist(name);
@@ -132,7 +139,7 @@ public class View {
 			searchStoreForSong();
 			songs = new ArrayList<Song>();
 		}
-		if(songs.size() == 0) System.out.println("Song not found"); searchStoreForSong();
+		if(songs.size() == 0) { System.out.println("Song not found"); searchStoreForSong();}
 		for (Song s : songs) {
 			System.out.println(s);
 		}
@@ -140,8 +147,20 @@ public class View {
 		String ifAdd = scn.nextLine();
 		checkIfDone(ifAdd);
 		if(ifAdd.equals("y")) {
-			for(Song s : songs)
-			libModel.addSongToLib(s); 
+			Song toAdd;
+			if(tOra.equals("a")) {
+				System.out.println("Song title to add:");
+				String title = scn.nextLine();
+				toAdd = mStore.getStoreSongByTandA(title, name);
+			}
+			else if (tOra.equals("t")) {
+				System.out.println("Song artist to add:");
+				String artist = scn.nextLine();
+				toAdd = mStore.getStoreSongByTandA(name, artist);
+			}
+			else{toAdd = null;}
+			if(toAdd != null) {libModel.addSongToLib(toAdd); System.out.println("Song added to Library");}
+			else System.out.println("Song not found");
 		}
 		start();
 	}
@@ -153,8 +172,10 @@ public class View {
 		switch (input) {
 		case "s" :
 			getOne();
+			break;
 		case "a" :
 			getAll(); // to return list of all objects
+			break;
 		default :
 			System.out.println("Invalid Input");
 			searchLib();
@@ -168,10 +189,13 @@ public class View {
 		switch(input) {
 		case "s" :
 			searchLibForSong();
+			break;
 		case "a" :
 			searchLibForAlbum();
+			break;
 		case "p" :
 			searchForPlaylist();
+			break;
 		default :
 			System.out.println("Invalid Input");
 			getOne();
@@ -188,17 +212,41 @@ public class View {
 		ArrayList<Song> songs;
 		switch(tOra) {
 		case "a" :
-			System.out.println(libModel.getLibSongByArtist(name));
-			songs = libModel.getLibSongbyTitleSong(name);
+			songs = libModel.getLibSongbyArtistSong(name);
 			break;
 		case "t" :
-			System.out.println(libModel.getLibSongByTitle(name));
-			songs = libModel.getLibSongbyArtistSong(name);
+			songs = libModel.getLibSongbyTitleSong(name);
 			break;
 		default :
 			System.out.println("Invalid Input");
 			searchLibForSong();
+			songs = new ArrayList<Song>();
 		}
+		if(songs.size() == 0) {
+			System.out.println("No Songs Found");
+			searchLibForSong();
+		}
+		for(int i = 0; i < songs.size(); i++) {
+			String str = "";
+			str += (i + 1) + ": " + songs.get(i).toString();
+			System.out.println(str);
+		}
+		if(songs.size() == 0) { System.out.println("No songs found"); searchLibForSong();}
+		System.out.println("Would you like to rate the song?(y)/(n)");
+		String toRate = scn.nextLine();
+		checkIfDone(toRate);
+		if(toRate.equals("y")) {
+			System.out.println("What song would you like to rate?(by number)");
+			int sIndex = (scn.nextInt());
+			if(sIndex > songs.size() + 1) {System.out.println("Invalid number"); start();}
+			System.out.println("Rating out of 5: ");
+			int rate = (scn.nextInt());
+			if (rate > 5) {System.out.println("Invalid rating"); start();}
+			libModel.setRatingOfSong(songs.get(sIndex - 1), rate);
+			System.out.println("Rating saved");
+		}
+		start();
+		
 	}
 	
 	private static void searchLibForAlbum() {
@@ -226,7 +274,7 @@ public class View {
 		String name = scn.nextLine();
 		checkIfDone(name);
 		String playlist = libModel.getPlaylist(name);
-		if(playlist == "Not Found") {
+		if(playlist.equals("Not Found")) {
 			System.out.println("Playlist Not Found"); 
 			searchForPlaylist(); }
 		System.out.println(playlist);
@@ -244,8 +292,10 @@ public class View {
 		switch (input) {
 		case "a" :
 			addSongToPlaylist(pName);
+			break;
 		case "r" :
 			removeSongFromPlaylist(pName);
+			break;
 		}
 	}
 	
@@ -280,18 +330,24 @@ public class View {
 		switch (input) {
 		case "s" :
 			System.out.println(libModel.getLibSongTitles());
+			break;
 		case "r" :
 			System.out.println(libModel.getLibArtists());
+			break;
 		case "l" :
 			System.out.println(libModel.getLibAlbums());
+			break;
 		case "p" :
 			System.out.println(libModel.getPlaylists());
+			break;
 		case "f" :
 			System.out.println(libModel.getFavorites());
+			break;
 		default :
 			System.out.println("Invalid Input");
 			getAll();
 		}
+		start();
 	}
 	
 	

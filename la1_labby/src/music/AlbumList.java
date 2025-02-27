@@ -32,7 +32,7 @@ public class AlbumList {
 	public ArrayList<Album>	getAlbumObjectsByTitle(String title) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
-			if (a.getTitle().equals(title)) {
+			if (a.getTitle().toLowerCase().equals(title.toLowerCase())) {
 				albums.add(a.makeCopyAlbum());
 			}
 		}
@@ -53,7 +53,7 @@ public class AlbumList {
 	public ArrayList<Album> getAlbumObjectsByArtist(String artist) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
-			if (a.getArtist().equals(artist)) {
+			if (a.getArtist().toLowerCase().equals(artist.toLowerCase())) {
 				albums.add(a.makeCopyAlbum());
 			}
 		}

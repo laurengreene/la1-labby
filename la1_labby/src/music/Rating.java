@@ -34,4 +34,5 @@ public enum Rating {
 				return UNRATED;
 			}
 		}
+
 }

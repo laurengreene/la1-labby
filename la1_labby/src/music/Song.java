@@ -4,10 +4,6 @@ package music;
 
 public class Song {
 	
-	/*
-	 * @Pre title != null && artist != null && albumTitle != null
-	 */
-	
 	// instance variables
 	private String title;
 	private String artist;
