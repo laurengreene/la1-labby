@@ -69,6 +69,11 @@ public class MusicStore {
 	
 	// METHODS
 	
+	public Song getStoreSongByTandA(String title, String artist){
+		return storeSongs.getSongByTitleAndArtist(title, artist);
+	}
+	
+	
 	// search for song by title
 	public ArrayList<Song> searchStoreSongByTitle(String title) {
 		return storeSongs.getSongObjectByTitle(title);

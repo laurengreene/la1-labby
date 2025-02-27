@@ -79,6 +79,7 @@ public class LibraryModel {
 	
 	// RETURNING METHODS
 	// return titles of songs in library
+	
 	public String getLibSongTitles() {
 		String titles = "";
 		for(Song s : libSongs.getSongs()) {
@@ -123,7 +124,7 @@ public class LibraryModel {
 	// add song to playlist - Song object can be changes to two strings - artist/title
 	public String addSongToPlaylist(String pName, String artist, String title) {
 		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) {
+			if (s.getPlaylistName().toLowerCase().equals(pName.toLowerCase())) {
 				// find the song in the library and add it
 				try {
 					libSongs.addSong(s.getSongByTitleAndArtist(title, artist));

@@ -2,7 +2,6 @@
 package music;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SongList {
 	
@@ -44,7 +43,7 @@ public class SongList {
 	public ArrayList<Song> getSongObjectByTitle(String title) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
-			if (s.getTitle().equals(title)) {
+			if (s.getTitle().toLowerCase().equals(title.toLowerCase())) {
 				songs.add(s);
 			}
 		}
@@ -66,7 +65,7 @@ public class SongList {
 	public ArrayList<Song> getSongObjectByArtist(String artist) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
-			if (s.getArtist().equals(artist)) {
+			if (s.getArtist().toLowerCase().equals(artist.toLowerCase())) {
 				songs.add(s);
 			}
 		}
@@ -92,9 +91,12 @@ public class SongList {
 		return cList;
 	}
 	
-//	public boolean containsSong(Song song) {
-//		return slist.contains(song);
-//	}
+	public boolean containsSong(Song song) {
+		for (Song s : slist) {
+			if (s.equals(song)) return true;
+		}
+		return false;
+	}
 	
 	public String getPlaylistName() {
 		return name;
@@ -115,9 +117,9 @@ public class SongList {
 		return result;
 	}
 	
-//	public void addNewSong(Song song) {
-//		slist.add(song);
-//		
-//	}
+	public void addNewSong(Song song) {
+		slist.add(song);
+		
+	}
 
 }
