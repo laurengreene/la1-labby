@@ -24,9 +24,16 @@ public class SongList {
 		slist.add(newSong.makeCopy());
 	}
 	
-	public void removeSong(Song removeSong) {
-		if(slist.contains(removeSong)) slist.remove(removeSong);
+	public String removeSong(String rTitle, String rArtist) {
+		for(Song s : slist) {
+			if (s.getArtist().equals(rArtist) && s.getTitle().equals(rTitle)) {
+				slist.remove(s);
+				return(rTitle + " by " + rArtist + " removed.");
+			}
+		}
+		return("Song not found");
 	}
+	
 	
 	public String getSongByTitle(String title) {
 		String result = "";
@@ -37,14 +44,16 @@ public class SongList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
+	}
 		
-//		ArrayList<Song> songs = new ArrayList<Song>();
-//		for (Song s : slist) {
-//			if (s.getTitle().equals(title)) {
-//				songs.add(s.makeCopy());
-//			}
-//		}
-//		return songs;
+	public ArrayList<Song> getSongObjectsByTitle(String title) {
+		ArrayList<Song> songs = new ArrayList<Song>();
+		for (Song s : slist) {
+			if (s.getTitle().equals(title)) {
+				songs.add(s.makeCopy());
+			}
+		}
+		return songs;
 	}
 	
 	public String getSongByArtist(String artist) { 
@@ -56,14 +65,16 @@ public class SongList {
 		}
 		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
+	}	
 		
-//		ArrayList<Song> songs = new ArrayList<Song>();
-//		for (Song s : slist) {
-//			if (s.getArtist().equals(artist)) {
-//				songs.add(s.makeCopy());
-//			}
-//		}
-//		return songs;
+	public ArrayList<Song> getSongObjectsByArtist(String artist) {
+		ArrayList<Song> songs = new ArrayList<Song>();
+		for (Song s : slist) {
+			if (s.getArtist().equals(artist)) {
+				songs.add(s.makeCopy());
+			}
+		}
+		return songs;
 	}
 	
 	// return deep copy of list
@@ -96,19 +107,15 @@ public class SongList {
 	}
 	
 	public String toString() {
+		String result = "";
 		if(name != null) {
 			result += "Playlist " + name + ": \n";
 		}
-		String result = "";
 		for (Song s : slist) {
 			result += s.getTitle() + "\n";
 		}
 		return result;
 	}
 	
-	public void addNewSong(Song song) {
-		slist.add(song);
-		
-	}
 
 }
