@@ -1,4 +1,7 @@
-
+/*
+ * Album.java stores a SongList of songs. It is stored in
+ * 
+ */
 
 package music;
 

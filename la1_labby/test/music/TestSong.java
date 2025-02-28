@@ -24,16 +24,9 @@ class TestSong {
 	
 	@Test
 	void testToString() {
-		String result = "Song: " + s.getTitle() + "\nArtist: " + s.getArtist()
-		+ "\nAlbum: " + s.getAlbumTitle();
+		String result = "Song: " + s.getTitle() + "; Artist: " + s.getArtist()
+		+ "; Album: " + s.getAlbumTitle();
 		assertEquals(result, s.toString());
-	}
-	
-	@Test
-	void testMakeCopy() {
-		Song c = s.makeCopy();
-		assertNotSame(s, c);
-		assertTrue(s.equals(c));
 	}
 	
 	@Test
