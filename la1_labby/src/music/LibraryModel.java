@@ -102,7 +102,7 @@ public class LibraryModel {
 
 	// return string of album names
 	public String getLibAlbums() {
-		return libAlbums.getAlbumsString();
+		return libAlbums.toString();
 	}
 	
 	// return string of playlists
