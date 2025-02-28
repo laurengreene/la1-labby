@@ -1,3 +1,8 @@
+/*
+ * SongList.java is an ArrayList of songs. It is used in
+ * MusicStore and LibraryModel for a list of songs
+ */
+
 
 package music;
 
@@ -119,11 +124,6 @@ public class SongList {
 			result += s.getTitle() + "\n";
 		}
 		return result;
-	}
-	
-	public void addNewSong(Song song) {
-		slist.add(song);
-		
 	}
 
 }

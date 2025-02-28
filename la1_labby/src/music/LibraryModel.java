@@ -1,3 +1,8 @@
+/*
+ * LibraryModel.java is a database of the user's songs,
+ * albums, and playlists.
+ */
+
 
 
 /*
@@ -147,15 +152,6 @@ public class LibraryModel {
 		return "Playlist not found";
 	}
 	
-	// RATING/FAVORITE METHODS
-	public void setSongToFavorite(Song songName) {
-		for (Song s : this.libSongs.getSongs()) {
-			if (s.equals(songName)) {
-				this.ratedSongs.put(s, Rating.FIVE);
-				return;
-			}
-		}
-	}
 	
 	public void setRatingOfSong(Song songName, int rate) {
 		Rating rating = Rating.convert(rate);

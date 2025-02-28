@@ -1,3 +1,8 @@
+/*
+ * MusicStore.java is a database of songs and albums.
+ */
+
+
 
 package music;
 
@@ -72,7 +77,6 @@ public class MusicStore {
 	public Song getStoreSongByTandA(String title, String artist){
 		return storeSongs.getSongByTitleAndArtist(artist, title);
 	}
-	
 	
 	// search for song by title
 	public ArrayList<Song> searchStoreSongByTitle(String title) {
