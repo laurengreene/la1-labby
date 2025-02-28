@@ -33,7 +33,7 @@ public class AlbumList {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getTitle().toLowerCase().equals(title.toLowerCase())) {
-				albums.add(a.makeCopyAlbum());
+				albums.add(a);
 			}
 		}
 		return albums;
@@ -60,25 +60,6 @@ public class AlbumList {
 		return albums;
 	}
 	
-//	public ArrayList<Album> getAlbums() {
-//		return makeCopyList();
-//	}
-	
-	public String getAlbumsString() {
-		String albums = "";
-		for(Album a : alist) {
-			albums += a.getTitle() + "\n";
-		}
-		return albums;
-	}
-	
-//	public ArrayList<Album> makeCopyList() {
-//		ArrayList<Album> cList = new ArrayList<Album>();
-//		for (Album s : alist) {
-//			cList.add(s.makeCopyAlbum());
-//		}
-//		return cList;
-//	}
 	
 	
 	public String toString() {

@@ -244,6 +244,7 @@ public class View {
 			if (rate > 5) {System.out.println("Invalid rating"); start();}
 			libModel.setRatingOfSong(songs.get(sIndex - 1), rate);
 			System.out.println("Rating saved");
+			start();
 		}
 		start();
 		
