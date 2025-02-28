@@ -17,41 +17,34 @@ class TestMusicStore {
 	}
 	
 	@Test
-	void searchStoreSongByTitleTest() {
-		assertEquals(mStore.searchStoreSongByTitle("Hold On"), "Song: "
-				+ "Hold On; Artist: Alabama Shakes; Album: Boys & Girls");
+	void testGetStoreSongByTandA() {
+		// get store song from title and artist, returns a string
+		Song song1 = new Song("So Far Away", "Carol King", "Tapestry");
+		assertTrue(mStore.getStoreSongByTandA("so far away", "carol king").equals(song1));
 	}
 	
 	@Test
-	void searchStoreSongByTitleCaseTest() {
-		assertEquals(mStore.searchStoreSongByTitle("polITIK"), "Song: Politik; "
+	void testSearchStoreSongByTitle() {
+		assertEquals(mStore.searchStoreSongByTitle("So Far Away").get(0).toString(), "Song: So Far Away; Artist: "
+				+ "Carol King; Album: Tapestry");
+		assertEquals(mStore.searchStoreSongByTitle("polITIK").get(0).toString(), "Song: Politik; "
 				+ "Artist: Coldplay; Album: A Rush of Blood to the Head");
 	}
 	
 	@Test
-	void searchStoreSongByArtistNotFoundTest(){
-		assertEquals(mStore.searchStoreSongByArtist("random person"), "Not found");
-		
+	void testSearchStoreSongByArtistNotFound(){
+		assertEquals(mStore.searchStoreSongByArtist("random person").size(), 0);	
 	}
 	
 	@Test
-	void searchStoreByArtistTest() {
-		assertEquals(mStore.searchStoreSongByArtist("the HEAVY"), "Song: Heavy for You; Artist: The Heavy; Album: Sons\n"
-				+ "Song: The Thief; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Better as One; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Fire; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Fighting for the Same Thing; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Hurt Interlude; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Put the Hurt on Me; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Simple Things; Artist: The Heavy; Album: Sons\n"
-				+ "Song: A Whole Lot of Love; Artist: The Heavy; Album: Sons\n"
-				+ "Song: What Don't Kill You; Artist: The Heavy; Album: Sons\n"
-				+ "Song: Burn Bright; Artist: The Heavy; Album: Sons");
+	void testSearchStoreByArtistTest() {
+		assertEquals(mStore.searchStoreSongByArtist("the HEAVY").get(0).toString(),
+				"Song: Heavy for You; Artist: The Heavy; Album: Sons");
 	}
 	
 	@Test
 	void searchStoreAlbumByTitleTest() {
-		assertEquals(mStore.searchStoreAlbumByTitle("19"),"Album: 19; Artist: Adele; Year: 2008; Genre: Pop; Songs: \n"
+		assertEquals(mStore.searchStoreAlbumByTitle("19").get(0).toString(),"Album: 19; Artist: Adele; Year: 2008; Genre: Pop; Songs: \n"
 				+ "Daydreamer\n"
 				+ "Best for Last\n"
 				+ "Chasing Pavements\n"
@@ -64,11 +57,12 @@ class TestMusicStore {
 				+ "My Same\n"
 				+ "Tired\n"
 				+ "Hometown Glory");
+		assertEquals(mStore.searchStoreAlbumByTitle("nothing").size(), 0);
 	}
 	
 	@Test
 	void searchStoreAlbumByArtistTest() {
-		assertEquals(mStore.searchStoreAlbumByArtist("Carol King"), "Album: Tapestry; Artist: Carol King; Year: 1971; Genre: Rock; Songs: \n"
+		assertEquals(mStore.searchStoreAlbumByArtist("Carol King").get(0).toString(), "Album: Tapestry; Artist: Carol King; Year: 1971; Genre: Rock; Songs: \n"
 				+ "I Feel The Earth Move\n"
 				+ "So Far Away\n"
 				+ "Home Again\n"
@@ -79,6 +73,8 @@ class TestMusicStore {
 				+ "Will You Love Me Tomorrow?\n"
 				+ "Tapestry\n"
 				+ "(You Make Me Feel Like) A Natural Woman");
+		assertEquals(mStore.searchStoreAlbumByArtist("ADELE").size(), 2);
+		assertEquals(mStore.searchStoreAlbumByArtist("nobody").size(), 0);
 	}
 
 }

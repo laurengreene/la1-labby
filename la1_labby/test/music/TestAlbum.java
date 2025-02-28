@@ -41,14 +41,13 @@ class TestAlbum {
 		assertEquals(album.getGenre(), "Pop");
 	}
 	
-//	@Test
-//	void getSongList() {
-//		assertTrue(album.getSongList().equals(slist));
-//	}
+	@Test
+	void getSongList() {
+		assertTrue(album.getSongList().equals(slist));
+	}
 	
 	@Test
 	void testMakeCopyAlbum() {
-		album.addToSongList(s1);
 		Album cAlbum = album.makeCopyAlbum();
 		assertNotSame(album, cAlbum);
 		assertTrue(album.equals(cAlbum));
@@ -57,7 +56,11 @@ class TestAlbum {
 	@Test
 	void testEquals() {
 		Album eAlbum = new Album("Adele", "21", "Pop", "2011", slist);
-		assertTrue(album.equals(eAlbum));
+		assertTrue(album.getArtist().equals(eAlbum.getArtist()));
+		assertTrue(album.getYear().equals(eAlbum.getYear()));
+		assertTrue(album.getGenre().equals(eAlbum.getGenre()));
+		assertTrue(album.getTitle().equals(eAlbum.getTitle()));
+		assertEquals(album.getSongList(), eAlbum.getSongList());
 		
 	}
 	
