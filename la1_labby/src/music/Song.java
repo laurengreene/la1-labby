@@ -12,12 +12,14 @@ public class Song {
 	private String title;
 	private String artist;
 	private String albumTitle;
+	private String genre;
 	
 	// constructor
-	public Song(String title, String artist, String albumTitle) {
+	public Song(String title, String artist, String albumTitle, String genre) {
 		this.title = title;
 		this.artist = artist;
 		this.albumTitle = albumTitle;
+		this.genre = genre;
 	}
 	
 	// methods
@@ -32,11 +34,25 @@ public class Song {
 	public String getAlbumTitle() {
 		return albumTitle;
 	}
-		
-	public boolean equals(Song otherSong) {
-		if(otherSong.getAlbumTitle().equals(albumTitle) &&
-				otherSong.getArtist().equals(artist) &&
-				otherSong.getTitle().equals(title)) return true;
+	
+	public String getGenre() {
+		return genre;
+	}
+	
+	@Override
+	public int hashCode() {
+		return title.hashCode() + artist.hashCode() + 
+				albumTitle.hashCode() + genre.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object otherSong) {
+		if (otherSong == null) return false;
+		if (otherSong.getClass() != this.getClass()) return false;
+		if(((Song)otherSong).getAlbumTitle().equals(albumTitle) &&
+				((Song)otherSong).getArtist().equals(artist) &&
+				((Song)otherSong).getTitle().equals(title) &&
+				((Song)otherSong).getGenre().equals(genre)) return true;
 		return false;
 	}
 

@@ -55,7 +55,7 @@ public class MusicStore {
 		ArrayList<Song> albumSongList = new ArrayList<Song>();
 		while(scanner.hasNextLine()) {
 			String songTitle = scanner.nextLine();
-			Song song = new Song(songTitle, artist, albumTitle);
+			Song song = new Song(songTitle, artist, albumTitle, genre);
 			albumSongList.add(song);
 		}
 		scanner.close();

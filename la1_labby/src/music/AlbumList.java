@@ -2,10 +2,6 @@
  * AlbumList.java is an ArrayList of Albums.
  */
 
-
-
-
-
 package music;
 
 import java.util.ArrayList;
@@ -78,4 +74,3 @@ public class AlbumList {
 	}
 	
 }
-

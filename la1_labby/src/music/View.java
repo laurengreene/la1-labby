@@ -111,8 +111,15 @@ public class View {
 		String ifAdd = scn.nextLine();
 		checkIfDone(ifAdd);
 		if(ifAdd.equals("y")) {
-			for(Album a : albums) {
-				libModel.addAlbumToLib(a); 
+			if (albums.size() == 1) libModel.addAlbumToLib(albums.get(0)); 
+			else {
+				System.out.println("Enter the name of the album you would like to add");
+				String input = scn.nextLine();
+				for(Album a : albums) {
+					if (input.equalsIgnoreCase(a.getTitle())) {
+						libModel.addAlbumToLib(a);
+					}
+				}
 			}
 			System.out.println("Album added");
 		} 
@@ -236,17 +243,32 @@ public class View {
 		String toRate = scn.nextLine();
 		checkIfDone(toRate);
 		if(toRate.equals("y")) {
-			System.out.println("What song would you like to rate?(by number)");
-			int sIndex = (scn.nextInt());
-			if(sIndex > songs.size() + 1) {System.out.println("Invalid number"); start();}
+			Song songToRate = null;
+			if (songs.size() > 1) {
+				int sIndex = (scn.nextInt());
+				if(sIndex > songs.size() + 1) {
+					System.out.println("Invalid number");  // add try again
+					System.out.println("What song would you like to rate?(by number)");
+					sIndex = (scn.nextInt());
+				}
+				songToRate = songs.get(sIndex - 1);
+			} else {
+				songToRate = songs.get(0);
+			}
+			
 			System.out.println("Rating out of 5: ");
 			int rate = (scn.nextInt());
-			if (rate > 5) {System.out.println("Invalid rating"); start();}
-			libModel.setRatingOfSong(songs.get(sIndex - 1), rate);
+			if (rate > 5) {
+				System.out.println("Invalid rating");
+				System.out.println("Rating out of 5: ");
+				rate = (scn.nextInt());
+			}
+			libModel.setRatingOfSong(songToRate, rate);
 			System.out.println("Rating saved");
 			start();
+		} else {
+			start();
 		}
-		start();
 		
 	}
 	
@@ -322,6 +344,19 @@ public class View {
 		start();
 	}
 	
+	// playlist branch
+	private static void viewPlaylists() {
+		System.out.println(libModel.getPlaylists());
+		System.out.println("Would you like to view a playlist?");
+		String response = scn.nextLine();
+		if (response.equals("y")) {
+			System.out.println("Which one would you like to view? Type in its name");
+			String input = scn.nextLine();
+			System.out.println(libModel.getPlaylist(input));
+		}
+		start();
+	}
+	
 	private static void getAll() {
 		System.out.println("What would you like to search? \nSong Titles(s)"
 				+ " \nArists(r) \nAlbums(l) \nPlaylists(p) \nFavorites(f)");
@@ -338,7 +373,7 @@ public class View {
 			System.out.println(libModel.getLibAlbums());
 			break;
 		case "p" :
-			System.out.println(libModel.getPlaylists());
+			viewPlaylists();
 			break;
 		case "f" :
 			System.out.println(libModel.getFavorites());
@@ -361,6 +396,7 @@ public class View {
 		libModel = new LibraryModel();
 		scn = new Scanner(System.in);
 		start();
+		scn.close();
 	}
 
 }
