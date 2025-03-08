@@ -1,3 +1,4 @@
+
 /*
  * Album.java stores a SongList of songs. It is stored in
  * 
@@ -54,10 +55,19 @@ public class Album {
 		return new Album(artist, title, genre, year, cSonglist);
 	}
 	
-	public boolean equals(Album otherAlbum) {
-		if (otherAlbum.getArtist().equals(artist) && otherAlbum.getTitle()
-				.equals(title) && otherAlbum.getGenre().equals(genre) && 
-				otherAlbum.getYear().equals(year)) return true;
+	@Override
+	public int hashCode() {
+		return artist.hashCode() + title.hashCode() +
+				songlist.hashCode() + genre.hashCode() + year.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object otherAlbum) {
+		if (otherAlbum == null) return false;
+		if (otherAlbum.getClass() != this.getClass()) return false;
+		if (((Album)otherAlbum).getArtist().equals(artist) && ((Album)otherAlbum).getTitle()
+				.equals(title) && ((Album)otherAlbum).getGenre().equals(genre) && 
+				((Album)otherAlbum).getYear().equals(year)) return true;
 		return false;
 	}
 	

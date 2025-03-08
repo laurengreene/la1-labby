@@ -1,9 +1,3 @@
-/*
- * LibraryModel.java is a database of the user's songs,
- * albums, and playlists.
- */
-
-
 
 /*
  * LibraryModel.java is a database of the user's songs,
@@ -20,16 +14,15 @@ public class LibraryModel {
 	// INSTANCE VARIABLES
 	private AlbumList libAlbums;
 	private SongList libSongs;
-	private ArrayList<SongList> playlists;
-	private HashMap<Song, Rating> ratedSongs;
+	private PlaylistList playlists;
 	
 	
 	// CONSTRUCTOR
 	public LibraryModel() {
 		this.libAlbums = new AlbumList();
 		this.libSongs = new SongList();
-		this.playlists = new ArrayList<SongList>();	
-		this.ratedSongs = new HashMap<Song, Rating>();
+		this.playlists = new PlaylistList(this);	
+		
 	}
 	
 	// SEARCH METHODS
@@ -59,18 +52,15 @@ public class LibraryModel {
 	
 	// search for a specific playlist
 	public String getPlaylist(String playlistName) {
-		for (SongList slist : this.playlists) {
-			if (slist.getPlaylistName().equals(playlistName)) {
-				return slist.toString();
-			}
-		}
-		return "Not found";
+		return playlists.getPlaylist(playlistName);
+
 	}
 	
 	// ADDING METHODS
 	// add song to library
 	public void addSongToLib(Song song) {
 		libSongs.addSong(song);
+		playlists.addToGenres(song);
 	}
 	
 	// add album to library, add all songs in album to song library
@@ -78,14 +68,14 @@ public class LibraryModel {
 		libAlbums.addAlbum(album);
 		ArrayList<Song> aSongs = album.getSongList();
 		for(Song s : aSongs) {
-			libSongs.addSong(s);
+			addSongToLib(s);
 		}
 	}
 	
 	// RETURNING METHODS
 	// return titles of songs in library
-	
 	public String getLibSongTitles() {
+		if (libSongs.getSongs().isEmpty()) return "No artists in library\n";
 		String titles = "";
 		for(Song s : libSongs.getSongs()) {
 			titles += s.getTitle() + "\n";
@@ -95,9 +85,10 @@ public class LibraryModel {
 	
 	// return artists of songs in library
 	public String getLibArtists() {
-		String artists = "";
+		if (libSongs.getSongs().isEmpty()) return "No artists in library\n";
+		String artists = " ";
 		for(Song s : libSongs.getSongs()) {
-			if (!artists.contains(s.getArtist())) {
+			if (!artists.toLowerCase().contains(s.getArtist().toLowerCase())) {
 				artists += s.getArtist() + "\n";
 			}
 		}
@@ -107,70 +98,58 @@ public class LibraryModel {
 
 	// return string of album names
 	public String getLibAlbums() {
-		return libAlbums.toString();
+		String result = libAlbums.toString();
+		if (result.length() == 0) return "No albums in library\n";
+		return result;
 	}
 	
 	// return string of playlists
 	public String getPlaylists() {
-		String plists = "";
-		for (SongList s : playlists) {
-			plists += s.getPlaylistName() + "\n";
-		}
-		return plists;
+		return playlists.getPlaylists();
 	}
 	
 	// create playlist given name
 	public void createPlaylist(String name) {
-		SongList playList = new SongList();
-		playList.setPlaylistName(name);
-		playlists.add(playList);
+		this.playlists.createPlaylist(name);
 	}
 	
 	// add song to playlist - Song object can be changes to two strings - artist/title
 	public String addSongToPlaylist(String pName, String artist, String title) {
-		for(SongList s : playlists) {
-			if (s.getPlaylistName().toLowerCase().equals(pName.toLowerCase())) {
-				// find the song in the library and add it
-				try {
-					s.addSong(libSongs.getSongByTitleAndArtist(artist, title));
-					return "Song added";
-				} catch(NullPointerException e) {
-					return "Song not found";
-				}
-					
-			}
-		}
-		return "Playlist not found";
+		Song song = libSongs.getSongByTitleAndArtist(artist, title);
+		return playlists.addSongToPlaylist(pName, song);
 	}
 	
 	public String removeSongFromPlaylist(String pName, String artist, String title) {
-		for(SongList s : playlists) {
-			if (s.getPlaylistName().equals(pName)) {
-				return(s.removeSong(libSongs.getSongByTitleAndArtist(artist, title)));
-			}
-		}
-		return "Playlist not found";
+		Song song = libSongs.getSongByTitleAndArtist(artist, title);
+		return playlists.removeSongFromPlaylist(pName, song);
 	}
 	
 	
 	public void setRatingOfSong(Song songName, int rate) {
-		Rating rating = Rating.convert(rate);
-		for (Song s : this.libSongs.getSongs()) {
-			if (s.equals(songName)) {
-				this.ratedSongs.put(s, rating);
-			}
-		}
+		this.playlists.setRatingOfSong(songName, rate);
 	}
 	
 
 	// returns a string of the favorite songs
 	public String getFavorites() {
-		String result = "";
-		for (HashMap.Entry<Song, Rating> entry : this.ratedSongs.entrySet()) {
-			if (entry.getValue() == Rating.FIVE) {
-				result += entry.getKey().toString() + "\n";
+			String result = "";
+			SongList favs = playlists.getFavoritePlaylist();
+			for (Song s : favs.getSongs()) {
+				result += s.toString() + "\n";
 			}
-		}
 		return result;
+	}
+	
+	public String getTopRatedSongs() {
+		String result = "";
+		SongList topSongs = playlists.getTopRatedSongs();
+		for (Song s : topSongs.getSongs()) {
+			result += s.toString() + "\n";
+		}
+	return result;
+	}
+	
+	public ArrayList<Song> getLibrarySongs() {
+		return new ArrayList<Song>(this.libSongs.getSongs());
 	}
 }
