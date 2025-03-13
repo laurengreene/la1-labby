@@ -13,18 +13,24 @@ public class Song {
 	private String artist;
 	private String albumTitle;
 	private String genre;
+	private String year;
 	
 	// constructor
-	public Song(String title, String artist, String albumTitle, String genre) {
+	public Song(String title, String artist, String albumTitle, String genre, String year) {
 		this.title = title;
 		this.artist = artist;
 		this.albumTitle = albumTitle;
 		this.genre = genre;
+		this.year = year;
 	}
 	
 	// methods
 	public String getTitle() {
 		return title;
+	}
+	
+	public String getYear() {
+		return year;
 	}
 	
 	public String getArtist() {
@@ -54,6 +60,11 @@ public class Song {
 				((Song)otherSong).getTitle().equals(title) &&
 				((Song)otherSong).getGenre().equals(genre)) return true;
 		return false;
+	}
+	
+	public String toStringFile() {
+		String content = title + "," + artist + "," + albumTitle + "," + genre + "," + year;
+		return content;
 	}
 
 	

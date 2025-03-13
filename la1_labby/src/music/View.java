@@ -9,16 +9,66 @@ public class View {
 	private static Scanner scn;
 	private static MusicStore mStore;
 	private static LibraryModel libModel;
+	private static String username;
+	private static UserManager userMain; 
 	
-	private View() throws FileNotFoundException {
-		
+	private View() throws FileNotFoundException {}
+	
+	private static void logInPage() {
+		System.out.println("Welcome to the Labby Music Store!\nTo create an account, "
+				+ "input 'c'. To log in, input 'l'.");
+		String result = scn.next();scn.nextLine();
+		if (result.equals("c")) {
+			createAccount();
+			logIn();
+		}
+		else if (result.equals("l")) {
+			logIn();
+		}
+		else {
+			System.out.println("Invalid input.\n");
+			logInPage();
+		}
+		userMain.getUserData(username);
+		start();
+	}
+	
+	private static void createAccount() {
+		System.out.println("Create account below");
+		System.out.print("Enter a username: ");
+		username = scn.next();scn.nextLine();
+		// check for existing username
+		// want to be false
+		System.out.print("Password: ");
+		userMain.addUser(username, scn.next());
+		System.out.println("Your account has been created. Continue to log in page.\n");
+	}
+	
+	private static void logIn() {
+		System.out.println("Log in below.");
+		System.out.print("username: ");
+		username = scn.next();scn.nextLine();
+		System.out.print("Password: ");
+		boolean exists = userMain.checkForExistingUsername(username);
+		boolean correctLogIn = userMain.checkPassword(username, scn.next());
+		if (!exists || !correctLogIn) {
+			System.out.println("Incorrect username or password.");
+			System.out.println("Try again (t) or go back to log in page (l)?");
+			String input = scn.next();scn.nextLine();
+			if (input.equals("t")) logIn();
+			else if (input.equals("l")) logInPage();
+			else {
+				System.out.println("Invalid input. Redirecting to log in page.\n");
+				logInPage();
+			}
+		}
 	}
 	
 	private static void start() {
-		System.out.println("Welcome to the Labbys Music Store!\n To get to "
+		System.out.println("\nWelcome to the Labbys Music Store!\n To get to "
 				+ "this page, input 'home'-- To exit the store, input 'done'"
 				+ " \nWould you like to: \nCreate Playlist(c) \nSearch(s)");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
 		case "c" :
@@ -36,9 +86,9 @@ public class View {
 	
 	private static void createPlaylist() {
 		System.out.println("Input Playlist Name:");
-		String pName = scn.nextLine();
+		String pName = scn.next();scn.nextLine();
 		checkIfDone(pName);
-		if (!libModel.getPlaylist(pName).equals("Not Found")) {
+		if (libModel.getPlaylist(pName).equals("Not Found")) {
 			libModel.createPlaylist(pName);
 			System.out.println("Playlist " + pName + " created.");
 			start();
@@ -51,7 +101,7 @@ public class View {
 	
 	private static void search() {
 		System.out.println("Search Store(s) or Library(l)?");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch(input) {
 		case "s" :
@@ -68,7 +118,7 @@ public class View {
 	
 	private static void searchStore() {
 		System.out.println("Search for Song(s) or Album(a)?");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch(input) {
 		case "a" :
@@ -85,12 +135,12 @@ public class View {
 	
 	private static void searchStoreForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
-		String tOra = scn.nextLine();
+		String tOra = scn.next();scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.nextLine();
+		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
-		ArrayList<Album> albums;
+		ArrayList<Album> albums = new ArrayList<Album>();
 		switch (tOra) {
 		case "a" :
 			albums = mStore.searchStoreAlbumByArtist(name);
@@ -101,20 +151,19 @@ public class View {
 		default :
 			System.out.println("Invalid Input");
 			searchStoreForAlbum();
-			albums = new ArrayList<Album>();
 		}
 		if(albums.size() == 0) { System.out.println("Album not found"); searchStoreForAlbum();}
 		for (Album a : albums) {
 			System.out.println(a);
 		}
 		System.out.println("Add album to library? (y)/(n)");
-		String ifAdd = scn.nextLine();
+		String ifAdd = scn.next();scn.nextLine();
 		checkIfDone(ifAdd);
 		if(ifAdd.equals("y")) {
 			if (albums.size() == 1) libModel.addAlbumToLib(albums.get(0)); 
 			else {
 				System.out.println("Enter the name of the album you would like to add");
-				String input = scn.nextLine();
+				String input = scn.next();scn.nextLine();
 				for(Album a : albums) {
 					if (input.equalsIgnoreCase(a.getTitle())) {
 						libModel.addAlbumToLib(a);
@@ -131,7 +180,7 @@ public class View {
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.nextLine();
+		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
 		switch (tOra) {
@@ -151,7 +200,7 @@ public class View {
 			System.out.println(s);
 		}
 		System.out.println("Add song to library? (y)/(n)");
-		String ifAdd = scn.nextLine();
+		String ifAdd = scn.next();scn.nextLine();
 		checkIfDone(ifAdd);
 		if(ifAdd.equals("y")) {
 			Song toAdd;
@@ -174,7 +223,7 @@ public class View {
 	
 	public static void searchLib() {
 		System.out.println("Search for Specific Information(s) or Get All(a)");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
 		case "s" :
@@ -191,7 +240,7 @@ public class View {
 	
 	public static void getOne() {
 		System.out.println("Search for: \nSong(s) \nAlbum(a) \nPlaylist(p)");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch(input) {
 		case "s" :
@@ -211,10 +260,10 @@ public class View {
 	
 	private static void searchLibForSong() {
 		System.out.println("Search by Artist(a) or Title(t)?");
-		String tOra = scn.nextLine();
+		String tOra = scn.next();scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.nextLine();
+		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
 		switch(tOra) {
@@ -240,7 +289,7 @@ public class View {
 		}
 		if(songs.size() == 0) { System.out.println("No songs found"); searchLibForSong();}
 		System.out.println("Would you like to rate the song?(y)/(n)");
-		String toRate = scn.nextLine();
+		String toRate = scn.next();scn.nextLine();
 		checkIfDone(toRate);
 		if(toRate.equals("y")) {
 			Song songToRate = null;
@@ -274,10 +323,10 @@ public class View {
 	
 	private static void searchLibForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
-		String tOra = scn.nextLine();
+		String tOra = scn.next();scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.nextLine();
+		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
 		switch (tOra) {
 		case "a" :
@@ -294,7 +343,7 @@ public class View {
 	
 	private static void searchForPlaylist() {
 		System.out.println("Playlist name: ");
-		String name = scn.nextLine();
+		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
 		String playlist = libModel.getPlaylist(name);
 		if(playlist.equals("Not Found")) {
@@ -302,7 +351,7 @@ public class View {
 			searchForPlaylist(); }
 		System.out.println(playlist);
 		System.out.println("Edit Playlist? (y)/(n)");
-		String ifEdit = scn.nextLine();
+		String ifEdit = scn.next();scn.nextLine();
 		checkIfDone(ifEdit);
 		if (ifEdit.equals("y")) editPlaylist(name);
 		else start();
@@ -310,7 +359,7 @@ public class View {
 	
 	private static void editPlaylist(String pName) {
 		System.out.println("Add(a) or Remove(r) song?");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
 		case "a" :
@@ -324,10 +373,10 @@ public class View {
 	
 	private static void removeSongFromPlaylist(String pName) {
 		System.out.println("Song TITLE of song to remove:");
-		String title = scn.nextLine();
+		String title = scn.next();scn.nextLine();
 		checkIfDone(title);
 		System.out.println("Song ARTIST of song to remove:");
-		String artist = scn.nextLine();
+		String artist = scn.next();scn.nextLine();
 		checkIfDone(artist);
 		System.out.println(libModel.removeSongFromPlaylist(pName, artist, title));
 		start();
@@ -335,10 +384,10 @@ public class View {
 	
 	private static void addSongToPlaylist(String pName) {
 		System.out.println("Song TITLE of song to add:");
-		String title = scn.nextLine();
+		String title = scn.next();scn.nextLine();
 		checkIfDone(title);
 		System.out.println("Song ARTIST of song to add:");
-		String artist = scn.nextLine();
+		String artist = scn.next();scn.nextLine();
 		checkIfDone(artist);
 		System.out.println(libModel.addSongToPlaylist(pName, artist, title));
 		start();
@@ -347,11 +396,11 @@ public class View {
 	// playlist branch
 	private static void viewPlaylists() {
 		System.out.println(libModel.getPlaylists());
-		System.out.println("Would you like to view a playlist?");
-		String response = scn.nextLine();
+		System.out.println("Would you like to view a playlist? (y/n)");
+		String response = scn.next();scn.nextLine();
 		if (response.equals("y")) {
 			System.out.println("Which one would you like to view? Type in its name");
-			String input = scn.nextLine();
+			String input = scn.next();scn.nextLine();
 			System.out.println(libModel.getPlaylist(input));
 		}
 		start();
@@ -360,7 +409,7 @@ public class View {
 	private static void getAll() {
 		System.out.println("What would you like to search? \nSong Titles(s)"
 				+ " \nArists(r) \nAlbums(l) \nPlaylists(p) \nFavorites(f)");
-		String input = scn.nextLine();
+		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch (input) {
 		case "s" :
@@ -387,16 +436,25 @@ public class View {
 	
 	
 	private static void checkIfDone(String s) {
-		if(s.equals("done")) System.exit(0);
+		if(s.equals("done")) {
+			System.out.println("Would you like to save your data? (y/n)");
+			String input = scn.next();scn.nextLine();
+			if (input.equals("y")) {
+				userMain.turnUserDataIntoFile(username); // save data
+				System.out.println("Data saved. Goodbye.");
+			}
+			scn.close();
+			System.exit(0);
+		}
 		if(s.equals("home")) start();
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		mStore = new MusicStore();
 		libModel = new LibraryModel();
+		userMain = new UserManager(libModel);  // holds user information
 		scn = new Scanner(System.in);
-		start();
-		scn.close();
+		logInPage();
 	}
 
 }

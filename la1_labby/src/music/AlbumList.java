@@ -63,7 +63,15 @@ public class AlbumList {
 		return albums;
 	}
 	
-	
+	public Album getAlbumFromSong(Song song) {
+		// get album
+		for (Album a : alist) {
+			if (a.songInAlbum(song)) {
+				return a;
+			}
+		}
+		return null;  // fix this
+	}
 	
 	public String toString() {
 		String result = "";
