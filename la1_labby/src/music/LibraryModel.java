@@ -14,15 +14,24 @@ public class LibraryModel {
 	// INSTANCE VARIABLES
 	private AlbumList libAlbums;
 	private SongList libSongs;
-	private PlaylistList playlists;
+	private PlaylistManager playlists;
 	
 	
 	// CONSTRUCTOR
 	public LibraryModel() {
 		this.libAlbums = new AlbumList();
 		this.libSongs = new SongList();
-		this.playlists = new PlaylistList(this);	
+		this.playlists = new PlaylistManager(this);	
 		
+	}
+	
+	// for user file
+	public HashMap<Song, Rating> getRatedSongs() {
+		return playlists.getRatedSongs();
+	}
+	
+	public HashMap<String, ArrayList<Song>> getPlaylistsForFile() {
+		return playlists.getPlaylistsForFile();
 	}
 	
 	// SEARCH METHODS
@@ -75,7 +84,7 @@ public class LibraryModel {
 	// RETURNING METHODS
 	// return titles of songs in library
 	public String getLibSongTitles() {
-		if (libSongs.getSongs().isEmpty()) return "No artists in library\n";
+		if (libSongs.getSongs().isEmpty()) return "No songs in library\n";
 		String titles = "";
 		for(Song s : libSongs.getSongs()) {
 			titles += s.getTitle() + "\n";
@@ -92,7 +101,7 @@ public class LibraryModel {
 				artists += s.getArtist() + "\n";
 			}
 		}
-		return artists.substring(artists.length()-1);
+		return artists.substring(0, artists.length()-1);
 	}
 	
 

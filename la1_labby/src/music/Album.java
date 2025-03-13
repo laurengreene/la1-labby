@@ -50,6 +50,11 @@ public class Album {
 		return songlist.getSongs();
 	}
 	
+	public boolean songInAlbum(Song song) {
+		if (songlist.containsSong(song)) return true;
+		return false;
+	}
+	
 	public Album makeCopyAlbum() {  // shallow copy
 		ArrayList<Song> cSonglist = songlist.getSongs();
 		return new Album(artist, title, genre, year, cSonglist);
