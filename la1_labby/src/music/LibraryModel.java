@@ -6,6 +6,7 @@
 
 package music;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,13 +16,15 @@ public class LibraryModel {
 	private AlbumList libAlbums;
 	private SongList libSongs;
 	private PlaylistManager playlists;
+	private MusicStore mStore;
 	
 	
 	// CONSTRUCTOR
-	public LibraryModel() {
+	public LibraryModel() throws FileNotFoundException {
 		this.libAlbums = new AlbumList();
 		this.libSongs = new SongList();
 		this.playlists = new PlaylistManager(this);	
+		this.mStore = new MusicStore();
 		
 	}
 	
@@ -56,7 +59,21 @@ public class LibraryModel {
 	}
 	
 	public String getLibAlbumByArtist(String artist) {
+		//ArrayList<Album> a = libAlbums.getAlbumObjectsByArtist(artist);	
 		return libAlbums.getAlbumByArtist(artist);
+	}
+	
+	
+	
+	private String getSongsInLibAndAlbum(Album album) {
+		ArrayList<Song> songs = album.getSongList();
+		String aString = album.noSongsString();
+		for(Song s : songs) {
+			if(libSongs.containsSong(s)) {
+				aString += s.toString();
+			}
+		}
+		return aString;
 	}
 	
 	// search for a specific playlist
@@ -70,6 +87,8 @@ public class LibraryModel {
 	public void addSongToLib(Song song) {
 		libSongs.addSong(song);
 		playlists.addToGenres(song);
+		// add album, but dont add all songs
+		addAlbumNotSongs(mStore.searchStoreAlbumByTitle(song.getAlbumTitle()).getFirst());
 	}
 	
 	// add album to library, add all songs in album to song library
@@ -78,6 +97,13 @@ public class LibraryModel {
 		ArrayList<Song> aSongs = album.getSongList();
 		for(Song s : aSongs) {
 			addSongToLib(s);
+		}
+	}
+	
+	private void addAlbumNotSongs(Album album) {
+		// only add album if not already in list
+		if(!libAlbums.albumInList(album)) {
+			libAlbums.addAlbum(album);
 		}
 	}
 	
@@ -161,4 +187,6 @@ public class LibraryModel {
 	public ArrayList<Song> getLibrarySongs() {
 		return new ArrayList<Song>(this.libSongs.getSongs());
 	}
+	
+	
 }

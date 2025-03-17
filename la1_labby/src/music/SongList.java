@@ -7,6 +7,7 @@
 package music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SongList {
 	
@@ -124,6 +125,22 @@ public class SongList {
 			result += s.getTitle() + "\n";
 		}
 		return result;
+	}
+	
+	public String sortedSongsByTitle() {
+		ArrayList<String> allSongs = new ArrayList<String>();
+		for(Song s : slist) {
+			for(int i; i < allSongs.size(); i++) {
+				// still workinng on this
+				if (s.getTitle().compareTo(allSongs.get(i)) > ) {
+					allSongs.add(i, s.getTitle());
+				}
+			}
+				
+		}
+		Collections.sort(allSongs);
+		
+		
 	}
 
 }

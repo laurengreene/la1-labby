@@ -1,6 +1,3 @@
-/*
- * Rating.java is an enum used for rating a song
- */
 package music;
 
 public enum Rating {
