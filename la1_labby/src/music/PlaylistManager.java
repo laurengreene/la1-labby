@@ -1,7 +1,10 @@
 package music;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class PlaylistManager {
 	
@@ -11,6 +14,8 @@ public class PlaylistManager {
 	private HashMap<String, Integer> genres;
 	private LibraryModel libMod;
 	private HashMap<Song, Rating> ratedSongs;
+	private ArrayList<Song> recents;
+	private HashMap<Song, Integer> timesPlayed;
 	
 	
 	// CONSTRUCTOR
@@ -19,6 +24,9 @@ public class PlaylistManager {
 		this.genres = new HashMap<String, Integer>();
 		this.ratedSongs = new HashMap<Song, Rating>();
 		this.libMod = libMod;
+		this.recents = new ArrayList<Song>();
+		this.timesPlayed = new HashMap<Song, Integer>();
+		
 	}
 	
 	// METHODS
@@ -174,6 +182,38 @@ public class PlaylistManager {
 		}
 		topRatedPlaylist.setPlaylistName("Top Rated Songs");
 		return topRatedPlaylist;
+	}
+	
+	public void playSong(Song song) {
+		recents.add(song);
+		// only store past 10 songs played
+		if (recents.size() > 10) recents.removeFirst();
+		
+		// update times played
+		Integer played = 1;
+		if (timesPlayed.containsKey(song)) {
+			played = timesPlayed.get(song);
+			}
+		timesPlayed.put(song, played);
+	}
+	
+	public ArrayList<Song> getRecents() {
+		ArrayList<Song> newRecents = new ArrayList<>(recents);
+		return newRecents;
+	}
+	
+	public ArrayList<Song> mostPlayed() {
+		ArrayList<Integer> allNums = new ArrayList<>(timesPlayed.values());
+		Collections.sort(allNums, Collections.reverseOrder());
+		ArrayList<Integer> mostNums = (ArrayList<Integer>) allNums.subList(0, Math.min(10, allNums.size()));
+		ArrayList<Song> mostSongs = new ArrayList<Song>(10);
+		for (HashMap.Entry<Song, Integer> entry : timesPlayed.entrySet()) {
+			if(mostNums.contains(entry.getValue())) {
+				mostSongs.add(mostNums.indexOf(entry.getValue()), entry.getKey());
+				mostNums.set(mostNums.indexOf(entry.getValue()), 0);
+			}
+		}
+		return mostSongs;
 	}
 
 }

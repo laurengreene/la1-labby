@@ -18,7 +18,18 @@ public class AlbumList {
 	
 	// methods
 	public void addAlbum(Album newAlbum) {
-		alist.add(newAlbum.makeCopyAlbum());
+//		alist.add(newAlbum.makeCopyAlbum()); in case we do need copy
+		alist.add(newAlbum);
+	}
+	
+	public Album getAlbumByTitleAndArtist(String title, String artist) {
+		for (Album a : alist) {
+			if (a.getArtist().toLowerCase().equals(artist.toLowerCase()) &&
+					a.getTitle().toLowerCase().equals(title.toLowerCase())) {
+				return a;
+			}
+		}
+		return null;
 	}
 	
 	public String getAlbumByTitle(String title) {
@@ -57,10 +68,14 @@ public class AlbumList {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
 			if (a.getArtist().toLowerCase().equals(artist.toLowerCase())) {
-				albums.add(a.makeCopyAlbum());
+				albums.add(a);
 			}
 		}
 		return albums;
+	}
+	
+	public boolean albumInList(Album album) {
+		return alist.contains(album);
 	}
 	
 	public Album getAlbumFromSong(Song song) {

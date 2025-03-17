@@ -54,10 +54,10 @@ public class Album {
 		if (songlist.containsSong(song)) return true;
 		return false;
 	}
-	
-	public Album makeCopyAlbum() {  // shallow copy
-		ArrayList<Song> cSonglist = songlist.getSongs();
-		return new Album(artist, title, genre, year, cSonglist);
+//	do we need this since album is immutable?
+//	public Album makeCopyAlbum() {  // shallow copy
+//		ArrayList<Song> cSonglist = songlist.getSongs();
+//		return new Album(artist, title, genre, year, cSonglist);
 	}
 	
 	@Override
@@ -74,6 +74,11 @@ public class Album {
 				.equals(title) && ((Album)otherAlbum).getGenre().equals(genre) && 
 				((Album)otherAlbum).getYear().equals(year)) return true;
 		return false;
+	}
+	
+	public String noSongsString() {
+		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
+		return result;
 	}
 	
 	public String toString() {
