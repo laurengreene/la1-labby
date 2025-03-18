@@ -87,7 +87,6 @@ public class View {
 		}
 	}
 	
-	
 	private static void createPlaylist() {
 		System.out.println("Input Playlist Name:");
 		String pName = scn.next();scn.nextLine();
@@ -429,6 +428,44 @@ public class View {
 	}
 	
 	private static void getAll() {
+		System.out.println("Would you like to search for Sorted(s) or Unsorted(u)?");
+		String input = scn.next();scn.nextLine();
+		checkIfDone(input);
+		switch (input) {
+		case "s" :
+			getAllSorted();
+			break;
+		case "u" :
+			getAllUnsorted();
+			break;
+		default :
+			System.out.println("Invalid Input");
+			getAll();
+		}
+	}
+	
+	private static void getAllSorted() {
+		System.out.println("What would you like to sort by? \nSong Titles(t) \nSong Artists(a) \nSong Ratings(r)");
+		String input = scn.next();scn.nextLine();
+		checkIfDone(input);
+		switch (input) {
+		case "t" :
+			System.out.println(libModel.sortedByTitle());
+			break;
+		case "a" :
+			System.out.println(libModel.sortedByArtist());
+			break;
+		case "r" :
+			System.out.println(libModel.sortedbyRating());
+			break;
+		default :
+			System.out.println("Invalid Input");
+			getAllSorted();
+		}
+		start();
+	}
+	
+	private static void getAllUnsorted() {
 		System.out.println("What would you like to search? \nSong Titles(s)"
 				+ " \nArists(r) \nAlbums(l) \nPlaylists(p) \nFavorites(f)");
 		String input = scn.next();scn.nextLine();
@@ -451,7 +488,7 @@ public class View {
 			break;
 		default :
 			System.out.println("Invalid Input");
-			getAll();
+			getAllUnsorted();
 		}
 		start();
 	}

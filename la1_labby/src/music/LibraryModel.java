@@ -93,6 +93,34 @@ public class LibraryModel {
 
 	}
 	
+	// get songs sorted by title
+	public String sortedByTitle() {
+		ArrayList<Song> songs = libSongs.sortedSongsByTitle();
+		if (songs.size() == 0) return "No Songs In Library";
+		String result = "";
+		for(Song s : songs) {
+			result += s.toString();
+		}
+		return result;
+	}
+	
+	// get songs sorted by artist
+	public String sortedByArtist() {
+		ArrayList<Song> songs = libSongs.sortedSongsByArtist();
+		if (songs.size() == 0) return "No Songs In Library";
+		String result = "";
+		for(Song s : songs) {
+			result += s.toString();
+		}
+		return result;
+	}
+	
+	// get songs sorted by rating
+	public String sortedbyRating() {
+		return playlists.sortedSongsByRating();
+	}
+	
+	
 	// ADDING METHODS
 	// add song to library
 	public void addSongToLib(Song song) {
@@ -196,9 +224,10 @@ public class LibraryModel {
 	}
 	
 	public String getAlbumFromSong(Song song) {
-		// get album string, also tells user that album is in library
-		// use get album by title and artist method using song.get stuff
-		return "";
+		Album album = libAlbums.getAlbumByTitleAndArtist(song.getAlbumTitle(), song.getArtist());
+		String result = album.toString();
+		result += "\nAlbum is in Library";
+		return result;
 	}
 	
 	public ArrayList<Song> getLibrarySongs() {
