@@ -128,20 +128,41 @@ public class SongList {
 		return result;
 	}
 	
-//	public String sortedSongsByTitle() {
-//		ArrayList<String> allSongs = new ArrayList<String>();
-//		for(Song s : slist) {
-//			for(int i; i < allSongs.size(); i++) {
-//				// still workinng on this
-//				if (s.getTitle().compareTo(allSongs.get(i)) > ) {
-//					allSongs.add(i, s.getTitle());
-//				}
-//			}
-//				
-//		}
-//		Collections.sort(allSongs);
-//		
-//		
-//	}
-
+	public ArrayList<Song> sortedSongsByTitle() {
+		ArrayList<Song> allSongs = new ArrayList<Song>();
+		for(Song s : slist) {
+			boolean added = false;
+			for(int i = 0; i < allSongs.size(); i++) {
+				if (s.getTitle().compareTo(allSongs.get(i).getTitle()) < 0) {
+					allSongs.add(i, s);
+					added = true;
+					break;
+				}
+			}
+			if(added == false) {
+				allSongs.add(s);
+			}
+				
+		}
+		return allSongs;
+	}
+	
+	public ArrayList<Song> sortedSongsByArtist() {
+		ArrayList<Song> allSongs = new ArrayList<Song>();
+		for(Song s : slist) {
+			boolean added = false;
+			for(int i = 0; i < allSongs.size(); i++) {
+				if (s.getArtist().compareTo(allSongs.get(i).getArtist()) < 0) {
+					allSongs.add(i, s);
+					added = true;
+					break;
+				}
+			}
+			if(added == false) {
+				allSongs.add(s);
+			}
+				
+		}
+		return allSongs;
+	}
 }

@@ -190,7 +190,7 @@ public class PlaylistManager {
 		// update times played
 		Integer played = 1;
 		if (timesPlayed.containsKey(song)) {
-			played = timesPlayed.get(song);
+			played = timesPlayed.get(song) + 1;
 			}
 		timesPlayed.put(song, played);
 	}
@@ -214,6 +214,55 @@ public class PlaylistManager {
 		return mostSongs;
 	}
 	
+	public String sortedSongsByRating() {
+		String result = "";
+		String eachRating = "";
+		for (HashMap.Entry<Song, Rating> entry : ratedSongs.entrySet()) {
+			if (entry.getValue() == Rating.ONE) {
+				eachRating += entry.getKey().toString() + "\n";
+			}
+		}
+		if (eachRating.length() == 0) {result += "No Songs Rated 1\n";}
+		else {result += ("Songs Rated 1: \n" + eachRating);}
+		
+		eachRating = "";
+		for (HashMap.Entry<Song, Rating> entry : ratedSongs.entrySet()) {
+			if (entry.getValue() == Rating.TWO) {
+				eachRating += entry.getKey().toString() + "\n";
+			}
+		}
+		if (eachRating.length() == 0) {result += "No Songs Rated 2\n";}
+		else {result += ("Songs Rated 2: \n" + eachRating);}
+		
+		eachRating = "";
+		for (HashMap.Entry<Song, Rating> entry : ratedSongs.entrySet()) {
+			if (entry.getValue() == Rating.THREE) {
+				eachRating += entry.getKey().toString() + "\n";
+			}
+		}
+		if (eachRating.length() == 0) {result += "No Songs Rated 3\n";}
+		else {result += ("Songs Rated 3: \n" + eachRating);}
+		
+		eachRating = "";
+		for (HashMap.Entry<Song, Rating> entry : ratedSongs.entrySet()) {
+			if (entry.getValue() == Rating.FOUR) {
+				eachRating += entry.getKey().toString() + "\n";
+			}
+		}
+		if (eachRating.length() == 0) {result += "No Songs Rated 4\n";}
+		else {result += ("Songs Rated 4: \n" + eachRating);}
+		
+		eachRating = "";
+		for (HashMap.Entry<Song, Rating> entry : ratedSongs.entrySet()) {
+			if (entry.getValue() == Rating.FIVE) {
+				eachRating += entry.getKey().toString() + "\n";
+			}
+		}
+		if (eachRating.length() == 0) {result += "No Songs Rated 5\n";}
+		else {result += ("Songs Rated 5: \n" + eachRating);}
+		
+		return result;
+	}
 	
 
 }
