@@ -1,3 +1,4 @@
+
 /*
  * SongList.java is an ArrayList of songs. It is used in
  * MusicStore and LibraryModel for a list of songs
@@ -127,20 +128,20 @@ public class SongList {
 		return result;
 	}
 	
-	public String sortedSongsByTitle() {
-		ArrayList<String> allSongs = new ArrayList<String>();
-		for(Song s : slist) {
-			for(int i; i < allSongs.size(); i++) {
-				// still workinng on this
-				if (s.getTitle().compareTo(allSongs.get(i)) > ) {
-					allSongs.add(i, s.getTitle());
-				}
-			}
-				
-		}
-		Collections.sort(allSongs);
-		
-		
-	}
+//	public String sortedSongsByTitle() {
+//		ArrayList<String> allSongs = new ArrayList<String>();
+//		for(Song s : slist) {
+//			for(int i; i < allSongs.size(); i++) {
+//				// still workinng on this
+//				if (s.getTitle().compareTo(allSongs.get(i)) > ) {
+//					allSongs.add(i, s.getTitle());
+//				}
+//			}
+//				
+//		}
+//		Collections.sort(allSongs);
+//		
+//		
+//	}
 
 }

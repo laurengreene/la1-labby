@@ -1,3 +1,4 @@
+
 /*
  * AlbumList.java is an ArrayList of Albums.
  */
