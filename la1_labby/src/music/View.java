@@ -1,4 +1,5 @@
 
+
 package music;
 
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ public class View {
 				+ "input 'c'. To log in, input 'l'.");
 		String result = scn.next();scn.nextLine();
 		if (result.equals("c")) {
+			System.out.println("Create account below");
 			createAccount();
 			logIn();
 		}
@@ -34,11 +36,13 @@ public class View {
 	}
 	
 	private static void createAccount() {
-		System.out.println("Create account below");
 		System.out.print("Enter a username: ");
 		username = scn.next();scn.nextLine();
-		// check for existing username
-		// want to be false
+		if (userMain.usernameExists(username)) {  // username already exists
+			System.out.println("Username taken. Enter a new username below.\n");
+			createAccount();
+			return;
+		}
 		System.out.print("Password: ");
 		userMain.addUser(username, scn.next());
 		System.out.println("Your account has been created. Continue to log in page.\n");
@@ -49,10 +53,10 @@ public class View {
 		System.out.print("username: ");
 		username = scn.next();scn.nextLine();
 		System.out.print("Password: ");
-		boolean exists = userMain.checkForExistingUsername(username);
+		boolean exists = userMain.usernameExists(username);  // want to be true
 		boolean correctLogIn = userMain.checkPassword(username, scn.next());
 		if (!exists || !correctLogIn) {
-			System.out.println("Incorrect username or password.");
+			System.out.println("\nIncorrect username or password.");
 			System.out.println("Try again (t) or go back to log in page (l)?");
 			String input = scn.next();scn.nextLine();
 			if (input.equals("t")) logIn();
@@ -312,6 +316,7 @@ public class View {
 				System.out.println("Invalid rating");
 				System.out.println("Rating out of 5: ");
 				rate = (scn.nextInt());
+				return;  // should fix recursion ***************************************************
 			}
 			libModel.setRatingOfSong(songToRate, rate);
 			System.out.println("Rating saved");
@@ -454,15 +459,23 @@ public class View {
 	
 	private static void checkIfDone(String s) {
 		if(s.equals("done")) {
-			System.out.println("Would you like to save your data? (y/n)");
-			String input = scn.next();scn.nextLine();
-			if (input.equals("y")) {
-				userMain.turnUserDataIntoFile(username); // save data
-				System.out.println("Data saved. Goodbye.");
-			}
-			scn.close();
 			System.exit(0);
 		}
+		// add back when able to read in and out files for users
+//			userMain.turnUserDataIntoFile(username); // save user data in text file
+//			System.out.println("Data saved.");
+//			username = "";
+//			System.out.println("You are logged out. Would you like to go back to the log in page (l) or end this session(e)?");
+//			String input = scn.nextLine();
+//			if (input.equals("e")) {
+//				System.exit(0);
+//			} else {
+//				System.out.println("\nInvalid input. Sending you to the log in page.\n");
+//				logInPage();
+//				return;
+//			}
+//			scn.close();
+//			}
 		if(s.equals("home")) start();
 	}
 	

@@ -58,7 +58,7 @@ public class Album {
 //	public Album makeCopyAlbum() {  // shallow copy
 //		ArrayList<Song> cSonglist = songlist.getSongs();
 //		return new Album(artist, title, genre, year, cSonglist);
-	}
+//	}
 	
 	@Override
 	public int hashCode() {
