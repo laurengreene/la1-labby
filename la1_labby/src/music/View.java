@@ -294,6 +294,7 @@ public class View {
 		if(toRate.equals("y")) {
 			Song songToRate = null;
 			if (songs.size() > 1) {
+				System.out.println("What song would you like to rate?(by number)");
 				int sIndex = (scn.nextInt());
 				if(sIndex > songs.size() + 1) {
 					System.out.println("Invalid number");  // add try again
@@ -316,9 +317,25 @@ public class View {
 			System.out.println("Rating saved");
 			start();
 		} else {
-			start();
+			System.out.println("Would you like to get album information? (y)/(n)");
+			String aInfo = scn.next();scn.nextLine();
+			checkIfDone(aInfo);
+			if (aInfo.equals("y")) {
+				Song getInfo = null;
+				if (songs.size() > 1) {
+					System.out.println("What song would you like to get information for?(by number)");
+					int sIndex = (scn.nextInt());
+					if(sIndex > songs.size() + 1) {
+						System.out.println("Invalid number");  // add try again
+						System.out.println("What song would you like to get information for?(by number)");
+						sIndex = (scn.nextInt());
+					}
+					getInfo = songs.get(sIndex - 1);
+				} else {getInfo = songs.get(0);}
+				System.out.println(libModel.getAlbumFromSong(getInfo));
+			}
 		}
-		
+		start();
 	}
 	
 	private static void searchLibForAlbum() {

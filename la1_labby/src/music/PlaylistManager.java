@@ -3,9 +3,6 @@ package music;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 public class PlaylistManager {
 	
 	// INSTANCE VARIABLES
@@ -215,5 +212,7 @@ public class PlaylistManager {
 		}
 		return mostSongs;
 	}
+	
+	
 
 }
