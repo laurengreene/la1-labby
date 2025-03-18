@@ -55,19 +55,29 @@ public class LibraryModel {
 	}
 	
 	public String getLibAlbumByTitle(String title) {
-		return libAlbums.getAlbumByTitle(title);
+		// only print out songs in library
+				String albumsString = "";
+				ArrayList<Album> albumsList = libAlbums.getAlbumObjectsByTitle(title);	
+				for(Album a: albumsList) {
+					albumsString += (getSongsInLibAndAlbum(a) + "/n");
+				}
+				return albumsString;
 	}
 	
 	public String getLibAlbumByArtist(String artist) {
-		//ArrayList<Album> a = libAlbums.getAlbumObjectsByArtist(artist);	
-		return libAlbums.getAlbumByArtist(artist);
+		// only print out songs in library
+		String albumsString = "";
+		ArrayList<Album> albumsList = libAlbums.getAlbumObjectsByArtist(artist);	
+		for(Album a: albumsList) {
+			albumsString += (getSongsInLibAndAlbum(a) + "/n");
+		}
+		return albumsString;
 	}
-	
-	
 	
 	private String getSongsInLibAndAlbum(Album album) {
 		ArrayList<Song> songs = album.getSongList();
 		String aString = album.noSongsString();
+		// only songs from album that are also in library
 		for(Song s : songs) {
 			if(libSongs.containsSong(s)) {
 				aString += s.toString();
@@ -182,6 +192,12 @@ public class LibraryModel {
 			result += s.toString() + "\n";
 		}
 	return result;
+	}
+	
+	public String getAlbumFromSong(Song song) {
+		// get album string, also tells user that album is in library
+		// use get album by title and artist method using song.get stuff
+		return "";
 	}
 	
 	public ArrayList<Song> getLibrarySongs() {
