@@ -1,5 +1,6 @@
 
 
+
 package music;
 
 import java.io.FileNotFoundException;
@@ -496,23 +497,28 @@ public class View {
 	
 	private static void checkIfDone(String s) {
 		if(s.equals("done")) {
+			userMain.turnUserDataIntoFile(username); // save user data in text file
+			System.out.println("Data saved.");
+			username = "";
+			System.out.println("You are logged out. Would you like to go back to the log in page (l) or end this session(e)?");
+			String input = scn.nextLine();
+			if (input.equals("e")) {
+				System.out.println("Thank you for using Labby Music Store!");
+				System.exit(0);
+			} else if (input.equals("l")) {
+				System.out.println("Sending you to the log in page.");
+				logInPage();
+				return;
+			}
+			else {
+				System.out.println("\nInvalid input. Sending you to the log in page.\n");
+				logInPage();
+				return;
+			}
+			scn.close();
 			System.exit(0);
 		}
-		// add back when able to read in and out files for users
-//			userMain.turnUserDataIntoFile(username); // save user data in text file
-//			System.out.println("Data saved.");
-//			username = "";
-//			System.out.println("You are logged out. Would you like to go back to the log in page (l) or end this session(e)?");
-//			String input = scn.nextLine();
-//			if (input.equals("e")) {
-//				System.exit(0);
-//			} else {
-//				System.out.println("\nInvalid input. Sending you to the log in page.\n");
-//				logInPage();
-//				return;
-//			}
-//			scn.close();
-//			}
+
 		if(s.equals("home")) start();
 	}
 	
