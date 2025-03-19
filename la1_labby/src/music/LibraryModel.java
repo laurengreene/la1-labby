@@ -35,8 +35,8 @@ public class LibraryModel {
 		return playlists.getRatedSongs();
 	}
 	
-	public HashMap<String, ArrayList<Song>> getPlaylistsForFile() {
-		return playlists.getPlaylistsForFile();
+	public ArrayList<SongList> getUserPlaylists() {
+		return playlists.getUserPlaylists();
 	}
 	
 	// SEARCH METHODS
@@ -140,7 +140,7 @@ public class LibraryModel {
 		}
 	}
 	
-	private void addAlbumNotSongs(Album album) {
+	public void addAlbumNotSongs(Album album) {
 		// only add album if not already in list
 		if(!libAlbums.albumInList(album)) {
 			libAlbums.addAlbum(album);
@@ -195,7 +195,7 @@ public class LibraryModel {
 	}
 	
 	public String removeSongFromPlaylist(String pName, String artist, String title) {
-		Song song = libSongs.getSongByTitleAndArtist(artist, title);
+		Song song = libSongs.getSongByTitleAndArtist(artist, title);  // songs in library
 		return playlists.removeSongFromPlaylist(pName, song);
 	}
 	

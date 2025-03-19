@@ -19,7 +19,7 @@ public class View {
 	private static void logInPage() {
 		System.out.println("Welcome to the Labby Music Store!\nTo create an account, "
 				+ "input 'c'. To log in, input 'l'.");
-		String result = scn.next();scn.nextLine();
+		String result = scn.nextLine();
 		if (result.equals("c")) {
 			System.out.println("Create account below");
 			createAccount();
@@ -27,18 +27,19 @@ public class View {
 		}
 		else if (result.equals("l")) {
 			logIn();
+			userMain.getUserData(username);
 		}
 		else {
 			System.out.println("Invalid input.\n");
 			logInPage();
 		}
-		userMain.getUserData(username);
+		
 		start();
 	}
 	
 	private static void createAccount() {
 		System.out.print("Enter a username: ");
-		username = scn.next();scn.nextLine();
+		username = scn.nextLine();
 		if (userMain.usernameExists(username)) {  // username already exists
 			System.out.println("Username taken. Enter a new username below.\n");
 			createAccount();
@@ -59,7 +60,7 @@ public class View {
 		if (!exists || !correctLogIn) {
 			System.out.println("\nIncorrect username or password.");
 			System.out.println("Try again (t) or go back to log in page (l)?");
-			String input = scn.next();scn.nextLine();
+			String input = scn.nextLine();
 			if (input.equals("t")) logIn();
 			else if (input.equals("l")) logInPage();
 			else {
@@ -70,7 +71,7 @@ public class View {
 	}
 	
 	private static void start() {
-		System.out.println("\nWelcome to the Labbys Music Store!\n To get to "
+		System.out.println("\nWelcome to the Labbys Music Store " + username+ "!\nTo get to "
 				+ "this page, input 'home'-- To exit the store, input 'done'"
 				+ " \nWould you like to: \nCreate Playlist(c) \nSearch(s)");
 		String input = scn.next();scn.nextLine();
@@ -395,10 +396,10 @@ public class View {
 	
 	private static void removeSongFromPlaylist(String pName) {
 		System.out.println("Song TITLE of song to remove:");
-		String title = scn.next();scn.nextLine();
+		String title = scn.nextLine();
 		checkIfDone(title);
 		System.out.println("Song ARTIST of song to remove:");
-		String artist = scn.next();scn.nextLine();
+		String artist = scn.nextLine();
 		checkIfDone(artist);
 		System.out.println(libModel.removeSongFromPlaylist(pName, artist, title));
 		start();
@@ -406,10 +407,10 @@ public class View {
 	
 	private static void addSongToPlaylist(String pName) {
 		System.out.println("Song TITLE of song to add:");
-		String title = scn.next();scn.nextLine();
+		String title = scn.nextLine();
 		checkIfDone(title);
 		System.out.println("Song ARTIST of song to add:");
-		String artist = scn.next();scn.nextLine();
+		String artist = scn.nextLine();
 		checkIfDone(artist);
 		System.out.println(libModel.addSongToPlaylist(pName, artist, title));
 		start();

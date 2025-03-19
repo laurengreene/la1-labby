@@ -33,13 +33,17 @@ public class PlaylistManager {
 		return new HashMap<Song, Rating>(ratedSongs);
 	}
 	
-	public HashMap<String, ArrayList<Song>> getPlaylistsForFile() {
-		// needs to return readable format of user playlists to make into file
-		HashMap<String, ArrayList<Song>> plists = new HashMap<String, ArrayList<Song>>();
-		for (SongList s : userPlists) {
-			plists.put(s.getPlaylistName(), s.getSongs());
+	public ArrayList<SongList> getUserPlaylists() {
+		ArrayList<SongList> ulist = new ArrayList<SongList>();
+		for (SongList slist : userPlists) {
+			SongList copyslist = new SongList();
+			for (Song s : slist.getSongs()) {
+				copyslist.setPlaylistName(slist.getPlaylistName());
+				copyslist.addSong(s);
+			}
+			ulist.add(copyslist);
 		}
-		return plists;
+		return ulist;
 	}
 	
 	public void addToGenres(Song song) {
@@ -119,15 +123,12 @@ public class PlaylistManager {
 	
 	public String addSongToPlaylist(String pName, Song song) {
 		for(SongList s : userPlists) {
-			if (s.getPlaylistName().toLowerCase().equals(pName.toLowerCase())) {
-				// find the song in the library and add it
-				try {
+			if (s == null) {
+				return "Not found";
+			}
+			if (s.getPlaylistName().equalsIgnoreCase(pName)) {
 					s.addSong(song);
-					return "Song added";
-				} catch(NullPointerException e) {
-					return "Song not found";
-				}
-					
+					return "Song added";		
 			}
 		}
 		return "Playlist not found";

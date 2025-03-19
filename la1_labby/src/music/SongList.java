@@ -85,8 +85,8 @@ public class SongList {
 
 	public Song getSongByTitleAndArtist(String artist, String title) {
 		for (Song s : slist) {
-			if (s.getArtist().toLowerCase().equals(artist.toLowerCase()) &&
-					s.getTitle().toLowerCase().equals(title.toLowerCase())) {
+			if (s.getArtist().equalsIgnoreCase(artist) &&
+					s.getTitle().equalsIgnoreCase(title)) {
 				return s;
 			}
 		}

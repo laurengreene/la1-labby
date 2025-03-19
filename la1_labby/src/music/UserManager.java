@@ -135,39 +135,55 @@ public class UserManager {
 	
 	
 	
-
-	
-	
-	
 	// SAVING DATA WHEN LOGGING OUT
 	
 	// stores library songs, rated songs, and user made playlists into a text file. each section is split by a '**'
 	public void turnUserDataIntoFile(String username) {
-		String content = getSongData();  // song data that is file ready
-		// add playlist data, rated songs, and played songs
+		String content = readOutSongData();  // song data that is file ready
+		content += "\n**\n";
+		content += readOutUserPlaylists();
+		content += "\n**\n";
+		System.out.println(content);  // ************************************************************************prints out contents of user's file**
 		writeInFile(username + ".txt", content, false);
 	}
 	
-	
-	private String getSongData() {
+	private String readOutSongData() {
 		// song data
 		ArrayList<Song> libSongs = libMod.getLibrarySongs();
 		String songs = "";
 		for (Song s : libSongs) {
 			songs += s.toStringFile() + "\n";  // song attributes are separated by commas
 		}
-		songs = songs.substring(0, songs.length() - 1) + "\n**\n";
-		return songs;
+		if (songs.length() == 0) return "no songs";
+		songs = songs.substring(0, songs.length() - 1);
+		return "songs:\n" + songs;
 	}
+	
+	private String readOutUserPlaylists() {
+		// get user playlists
+		String content = "";
+		ArrayList<SongList> ulists = libMod.getUserPlaylists();
+		for (SongList slist : ulists) {
+			content += slist.getPlaylistName();
+			for (Song s : slist.getSongs()) {
+				content += "," + s.getArtist() + "," + s.getTitle();
+			}
+			content += "\n";
+		}
+		if (content.length() == 0) return "no playlists";
+		content = content.substring(0, content.length() - 1);
+		return "playlists: \n" + content;
+	}
+	
+	
 	
 	// GETTING DATA WHEN LOGGING IN
 	public void getUserData(String username) {
 		File userInfo = new File(username + ".txt");
 		try (Scanner scn = new Scanner(userInfo)) {
-			readInSongs(scn);
-			// albums can be calculated from songs:
-			// add user made playlists to library
-			// create rated songs hashmap
+			readInSongs(scn);  // reads in song, album, genre info
+			readInPlaylists(scn);  // reads in user playlists
+			// read in played songs
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		};
@@ -175,12 +191,54 @@ public class UserManager {
 	
 	private void readInSongs(Scanner scn) {
 		// add songs to library
+		String firstLine = scn.nextLine();
+		if (firstLine.equals("no songs")) {
+			scn.nextLine();
+			return;
+		}
 		while (scn.hasNext()) {
 			String line = scn.nextLine();
 			if (line.equals("**")) break;
 			String[] songInfo = line.split(",");
 			libMod.addSongToLib(new Song(songInfo[0], songInfo[1], 
 					songInfo[2], songInfo[3], songInfo[4]));
+		}
+		readInAlbums();  // only adds albums if there are songs in library
+	}
+	
+	private void readInAlbums() {
+		// find all albums from added songs
+		HashMap<String, SongList> albums = new HashMap<String, SongList>();
+		for (Song s : libMod.getLibrarySongs()) {
+			String albumName = s.getAlbumTitle();
+			if (!albums.containsKey(albumName)) {
+				albums.put(albumName, new SongList());
+			}
+			albums.get(albumName).addSong(s);
+		}
+		
+		// add albums to library and add only songs that were added to the library
+		for (HashMap.Entry<String, SongList> entry : albums.entrySet()) {
+			Song song = entry.getValue().getSongs().get(0);  // get album attributes from song
+			Album album = new Album(song.getArtist(), song.getAlbumTitle(),
+					song.getGenre(), song.getYear(), entry.getValue().getSongs());
+			libMod.addAlbumNotSongs(album);  // add to libMod if not already in libMod
+		}
+	}
+	
+	private void readInPlaylists(Scanner scn) {
+		// need to read in user playlists, but not favorite or top rated
+		String firstLine = scn.nextLine();
+		if (firstLine.equals("no playlists")) {
+			scn.nextLine(); return;
+		}
+		
+		while(scn.hasNext()) {
+			String line = scn.nextLine();
+			if (line.equals("**")) break;
+			String[] playlistInfo = line.split(",");
+			String name = playlistInfo[0];
+			libMod.addSongToPlaylist(name, playlistInfo[1], playlistInfo[2]);
 		}
 	}
 }
