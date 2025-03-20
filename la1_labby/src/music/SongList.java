@@ -1,4 +1,5 @@
 
+
 /*
  * SongList.java is an ArrayList of songs. It is used in
  * MusicStore and LibraryModel for a list of songs
@@ -42,7 +43,7 @@ public class SongList {
 	public String getSongByTitle(String title) {
 		String result = "";
 		for (Song s : slist) {
-			if (s.getTitle().toLowerCase().equals(title.toLowerCase())) {
+			if (s.getTitle().equalsIgnoreCase(title)) {
 				result += s.toString() + "\n";
 			}
 		}

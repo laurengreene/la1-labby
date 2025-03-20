@@ -1,5 +1,6 @@
 
 
+
 package music;
 
 import java.io.FileWriter;
@@ -152,7 +153,7 @@ public class UserManager {
 		ArrayList<Song> libSongs = libMod.getLibrarySongs();
 		String songs = "";
 		for (Song s : libSongs) {
-			songs += s.toStringFile() + "\n";  // song attributes are separated by commas
+			songs += s.toString() + "\n";  // song attributes are separated by commas
 		}
 		if (songs.length() == 0) return "no songs";
 		songs = songs.substring(0, songs.length() - 1);
