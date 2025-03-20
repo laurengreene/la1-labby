@@ -64,11 +64,6 @@ public final class Album {
 				((Album)otherAlbum).getYear().equals(year)) return true;
 		return false;
 	}
-//	
-//	public String noSongsString() {
-//		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
-//		return result;
-//	}
 	
 	public String toString() {
 		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
