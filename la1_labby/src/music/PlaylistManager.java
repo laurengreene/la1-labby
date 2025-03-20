@@ -71,10 +71,14 @@ public class PlaylistManager {
 		for (SongList genrePlaylist : genrePlaylists) {
 			plists += genrePlaylist.getPlaylistName() + "\n";
 		}
+		
+		//recents and frequents will always have the same names
+		plists += "Recents\n Most Played\n";
+		
 		return plists;
 	}
 	
-	private ArrayList<SongList> getGenrePlaylists() {
+	public ArrayList<SongList> getGenrePlaylists() {
 		// find all the genre playlists
 		ArrayList<SongList> newPlaylistList = new ArrayList<SongList>();
 		for (HashMap.Entry<String, Integer> entry : this.genres.entrySet()) {
@@ -88,7 +92,7 @@ public class PlaylistManager {
 		return newPlaylistList;
 	}
 	
-	private SongList getSongsByGenre(String genre) {
+	public SongList getSongsByGenre(String genre) {
 		SongList songlist = new SongList();
 		for (Song s : libMod.getLibrarySongs()) {
 			if (s.getGenre().toLowerCase().equals(genre.toLowerCase())) {

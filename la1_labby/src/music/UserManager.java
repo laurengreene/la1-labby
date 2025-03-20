@@ -191,9 +191,10 @@ public class UserManager {
 	
 	private void readInSongs(Scanner scn) {
 		// add songs to library
-		String firstLine = scn.nextLine();
+		String firstLine = "";
+		if(scn.hasNext()) firstLine = scn.nextLine();
 		if (firstLine.equals("no songs")) {
-			scn.nextLine();
+			if(scn.hasNext())scn.nextLine();
 			return;
 		}
 		while (scn.hasNext()) {
@@ -228,9 +229,10 @@ public class UserManager {
 	
 	private void readInPlaylists(Scanner scn) {
 		// need to read in user playlists, but not favorite or top rated
-		String firstLine = scn.nextLine();
+		String firstLine = "";
+		if(scn.hasNext())firstLine = scn.nextLine();
 		if (firstLine.equals("no playlists")) {
-			scn.nextLine(); return;
+			if(scn.hasNext()) scn.nextLine(); return;
 		}
 		
 		while(scn.hasNext()) {
