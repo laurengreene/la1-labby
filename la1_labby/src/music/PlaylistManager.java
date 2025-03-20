@@ -5,6 +5,7 @@ package music;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 public class PlaylistManager {
 	
 	// INSTANCE VARIABLES
@@ -73,7 +74,7 @@ public class PlaylistManager {
 		}
 		
 		//recents and frequents will always have the same names
-		plists += "Recents\n Most Played\n";
+		plists += "Recents\nMost Played\n";
 		
 		return plists;
 	}
@@ -90,6 +91,15 @@ public class PlaylistManager {
 			}
 		}
 		return newPlaylistList;
+	}
+	
+	public String getAllGenres() {
+		String result = "";
+		Set<String> keys = genres.keySet();
+		for (String k : keys) {
+			result += k + "\n";
+		}
+		return result;
 	}
 	
 	public SongList getSongsByGenre(String genre) {

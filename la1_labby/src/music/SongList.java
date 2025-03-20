@@ -46,16 +46,14 @@ public class SongList {
 				result += s.toString() + "\n";
 			}
 		}
-		if (result.length() == 0) return "Not found";
+		if (result.length() == 0) return "Not found ";
 		return result.substring(0, result.length()-1);
-		
-
 	}
 	
 	public ArrayList<Song> getSongObjectByTitle(String title) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		for (Song s : slist) {
-			if (s.getTitle().toLowerCase().equals(title.toLowerCase())) {
+			if (s.getTitle().toLowerCase().trim().equals(title.toLowerCase().trim())) {
 				songs.add(s);
 			}
 		}

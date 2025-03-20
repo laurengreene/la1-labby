@@ -54,11 +54,6 @@ public final class Album {
 		if (songlist.containsSong(song)) return true;
 		return false;
 	}
-//	do we need this since album is immutable?
-//	public Album makeCopyAlbum() {  // shallow copy
-//		ArrayList<Song> cSonglist = songlist.getSongs();
-//		return new Album(artist, title, genre, year, cSonglist);
-//	}
 	
 	@Override
 	public int hashCode() {

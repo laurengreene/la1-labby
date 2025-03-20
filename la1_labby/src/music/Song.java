@@ -64,16 +64,11 @@ public final class Song {
 		return false;
 	}
 	
-	public String toStringFile() {
+	public String toString() {
 		String content = title + "," + artist + "," + albumTitle + "," + genre + "," + year;
 		return content;
 	}
 
-	
-	public String toString() {
-		return "Song: " + this.title + "; Artist: " + this.artist +
-				"; Album: " + this.albumTitle;
-	}
 	
 	
 }
