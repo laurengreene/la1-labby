@@ -45,6 +45,15 @@ public class AlbumList {
 		return result.substring(0, result.length()-1);
 	}	
 	
+	public Album getAlbumObjectByTitle(String title) {
+		for (Album a : alist) {
+			if (a.getTitle().toLowerCase().equals(title.toLowerCase())) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Album>	getAlbumObjectsByTitle(String title) {
 		ArrayList<Album> albums = new ArrayList<Album>();
 		for (Album a : alist) {
@@ -88,6 +97,10 @@ public class AlbumList {
 			}
 		}
 		return null;  // fix this
+	}
+	
+	public void removeAlbum(Album album) {
+		alist.remove(album);
 	}
 	
 	public String toString() {
