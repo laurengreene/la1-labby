@@ -19,6 +19,7 @@ public class SongList {
 	// constructor
 	public SongList() {
 		this.slist = new ArrayList<Song>();
+		this.name = "";
 	}
 	
 	// methods
@@ -164,5 +165,9 @@ public class SongList {
 				
 		}
 		return allSongs;
+	}
+	
+	public void shuffleSongs() {
+		Collections.shuffle(slist);
 	}
 }

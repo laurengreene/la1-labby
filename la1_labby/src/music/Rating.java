@@ -1,4 +1,3 @@
-
 package music;
 
 public enum Rating {

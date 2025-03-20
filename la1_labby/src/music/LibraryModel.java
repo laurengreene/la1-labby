@@ -10,7 +10,9 @@ package music;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class LibraryModel {
 	
@@ -233,6 +235,39 @@ public class LibraryModel {
 	
 	public ArrayList<Song> getLibrarySongs() {
 		return new ArrayList<Song>(this.libSongs.getSongs());
+	}
+	
+	public void shuffleSongs() {
+		libSongs.shuffleSongs();
+	}
+	
+	public String shufflePlaylist(String pName) {
+		return playlists.shufflePlaylist(pName);
+	}
+	
+	public void removeSong(Song song) {
+		String aName = song.getAlbumTitle();
+		libSongs.removeSong(song);
+		Album album = libAlbums.getAlbumObjectByTitle(aName);
+		ArrayList<Song> songs = album.getSongList();
+		boolean songsLeft = false;
+		for (Song s : songs) {
+			for (Song libS : libSongs.getSongs()) {
+				if (s.equals(libS)) {
+					songsLeft = true;
+				}
+			}
+		}
+		// if there are no songs in the album that are also in library
+		if (songsLeft == false) {
+			libAlbums.removeAlbum(album);
+		}
+		
+	}
+	
+	public void removeAlbum(String aName) {
+		Album album = libAlbums.getAlbumObjectByTitle(aName);
+		libAlbums.removeAlbum(album);
 	}
 	
 	

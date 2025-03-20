@@ -293,6 +293,26 @@ public class View {
 			System.out.println(str);
 		}
 		if(songs.size() == 0) { System.out.println("No songs found"); searchLibForSong();}
+		System.out.println("Would you like to remove the song? (y)/(n)");
+		String toRemove = scn.next();scn.nextLine();
+		checkIfDone(toRemove);
+		if (toRemove.equals("y")) {
+			Song songToRemove = null;
+			if (songs.size() > 1) {
+				System.out.println("What song would you like to remove?(by number)");
+				int sIndex = (scn.nextInt());
+				if(sIndex > songs.size() + 1) {
+					System.out.println("Invalid number");  // add try again
+					System.out.println("What song would you like to remove?(by number)");
+					sIndex = (scn.nextInt());
+				}
+				songToRemove = songs.get(sIndex - 1);
+			} else {
+				songToRemove = songs.get(0);
+			}
+			libModel.removeSong(songToRemove);
+			System.out.println("Song removed");
+		}
 		System.out.println("Would you like to rate the song?(y)/(n)");
 		String toRate = scn.next();scn.nextLine();
 		checkIfDone(toRate);
@@ -351,16 +371,25 @@ public class View {
 		System.out.println("Input Name:");
 		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
+		String album;
 		switch (tOra) {
 		case "a" :
-			System.out.println(libModel.getLibAlbumByArtist(name));
+			album = libModel.getLibAlbumByArtist(name);
 			break;
 		case "t" :
-			System.out.println(libModel.getLibAlbumByTitle(name));
+			album = libModel.getLibAlbumByTitle(name);
 			break;
 		default :
 			System.out.println("Invalid Input");
 			searchLibForAlbum();
+			album = "Invalid Input";
+		}
+		System.out.print(album);
+		System.out.println("Remove Album? (y)/(n)");
+		String ifRemove = scn.next();scn.nextLine();
+		if (ifRemove.equals("y")) {
+			libModel.removeAlbum(name);
+			System.out.println("Album Removed");
 		}
 	}
 	
@@ -373,6 +402,12 @@ public class View {
 			System.out.println("Playlist Not Found"); 
 			searchForPlaylist(); }
 		System.out.println(playlist);
+		System.out.print("Shuffle Playlist? (y)/(n)");
+		String ifShuffle = scn.next();scn.nextLine();
+		if(ifShuffle.equals("y")) {
+			System.out.println(libModel.shufflePlaylist(name));
+			System.out.println(libModel.getPlaylist(name));
+		}
 		System.out.println("Edit Playlist? (y)/(n)");
 		String ifEdit = scn.next();scn.nextLine();
 		checkIfDone(ifEdit);
@@ -391,6 +426,9 @@ public class View {
 		case "r" :
 			removeSongFromPlaylist(pName);
 			break;
+		default :
+			System.out.println("Invalid Input");
+			editPlaylist(pName);
 		}
 	}
 	
@@ -475,6 +513,13 @@ public class View {
 		switch (input) {
 		case "s" :
 			System.out.println(libModel.getLibSongTitles());
+			System.out.println("Shuffle Songs? (y)/(n)");
+			String ifShuffle = scn.next();scn.nextLine();
+			if (ifShuffle.equals("y")) {
+				libModel.shuffleSongs();
+				System.out.println("Songs Shuffled");
+				System.out.println(libModel.getLibSongTitles());
+			}
 			break;
 		case "r" :
 			System.out.println(libModel.getLibArtists());

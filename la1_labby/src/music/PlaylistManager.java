@@ -266,5 +266,16 @@ public class PlaylistManager {
 		return result;
 	}
 	
+	public String shufflePlaylist(String pName) {
+		for(SongList slist: userPlists) {
+			if(slist.getPlaylistName().equals(pName)) {
+				slist.shuffleSongs();
+				return "Playlist Shuffled";
+			}
+		}
+		// if playlist not found, return empty list
+		return "Playlist Not Found";
+	}
+	
 
 }
