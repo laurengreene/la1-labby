@@ -21,11 +21,25 @@ class TestAlbumList {
 	}
 	
 	@Test
+	void testGetAlbumByTitleAndArtist() {
+		// make a list of albums
+		aList.addAlbum(album1);
+		assertEquals(album1, aList.getAlbumByTitleAndArtist("Sigh No More", "Mumford & Sons"));
+		assertNotEquals(null, aList.getAlbumByTitleAndArtist("Sigh No More", "Mumford & Sons"));
+	}
+	
+	@Test
 	void testGetAlbumByTitle() {
 		assertEquals(aList.getAlbumByTitle("Sigh No More"), "Not found");
 		aList.addAlbum(album1);
 		aList.addAlbum(album3);
 		assertEquals(aList.getAlbumByTitle("Sigh No More"), album1.toString());
+	}
+	
+	@Test
+	void testGetAlbumObjectByTitle() {
+		aList.addAlbum(album1);
+		assertEquals(album1, aList.getAlbumObjectByTitle("Sigh No More"));
 	}
 	
 	@Test
@@ -40,8 +54,7 @@ class TestAlbumList {
 	void testGetAlbumByArtist() {
 		aList.addAlbum(album1);
 		aList.addAlbum(album2);
-		assertTrue(aList.getAlbumByArtist("Mumford & Sons").equals(album1.toString() + 
-				"\n" + album2.toString()));
+		assertEquals(aList.getAlbumByArtist("Mumford & Sons"), album1.toString() + "\n\n" + album2.toString());
 	}
 	
 	@Test
@@ -51,7 +64,22 @@ class TestAlbumList {
 		aList.addAlbum(album2);
 		aList.addAlbum(album3);
 		assertEquals(aList.getAlbumObjectsByTitle("nothing").size(), 0);
-		assertTrue(aList.getAlbumObjectsByArtist("Mumford & Sons").size() > 2);
+		assertTrue(aList.getAlbumObjectsByArtist("Mumford & Sons").size() == 2);
+	}
+	
+	@Test
+	void testAlbumInList() {
+		assertFalse(aList.albumInList(album1));
+		aList.addAlbum(album1);
+		assertTrue(aList.albumInList(album1));
+	}
+	
+	@Test
+	void testRemoveAlbum() {
+		aList.addAlbum(album1);
+		assertTrue(aList.toString().length() > 0);
+		aList.removeAlbum(album1);
+		assertTrue(aList.toString().length() == 0);
 	}
 	
 	@Test

@@ -56,12 +56,6 @@ public final class Album {
 	}
 	
 	@Override
-	public int hashCode() {
-		return artist.hashCode() + title.hashCode() +
-				songlist.hashCode() + genre.hashCode() + year.hashCode();
-	}
-	
-	@Override
 	public boolean equals(Object otherAlbum) {
 		if (otherAlbum == null) return false;
 		if (otherAlbum.getClass() != this.getClass()) return false;
@@ -70,11 +64,11 @@ public final class Album {
 				((Album)otherAlbum).getYear().equals(year)) return true;
 		return false;
 	}
-	
-	public String noSongsString() {
-		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
-		return result;
-	}
+//	
+//	public String noSongsString() {
+//		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
+//		return result;
+//	}
 	
 	public String toString() {
 		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
