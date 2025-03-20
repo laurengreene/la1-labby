@@ -230,10 +230,7 @@ public class LibraryModel {
 	
 	public String getGenreNames() {
 		String result = "All Genres in Library:\n";
-		ArrayList<SongList> genrePlaylists = playlists.getGenrePlaylists();
-		for (SongList genrePlaylist : genrePlaylists) {
-			result += genrePlaylist.getPlaylistName() + "\n";
-		}
+		//result += 
 		return result;
 	}
 	
