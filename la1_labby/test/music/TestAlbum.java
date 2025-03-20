@@ -15,7 +15,7 @@ class TestAlbum {
 	@BeforeEach
 	void SetUp() {
 		slist = new ArrayList<Song>();
-		s1 = new Song("Rolling in the Deep", "Adele", "21");
+		s1 = new Song("Rolling in the Deep", "Adele", "21", "Pop", "2010");
 		slist.add(s1);
 		album = new Album("Adele", "21", "Pop", "2011", slist);
 	}
@@ -47,10 +47,10 @@ class TestAlbum {
 	}
 	
 	@Test
-	void testMakeCopyAlbum() {
-		Album cAlbum = album.makeCopyAlbum();
-		assertNotSame(album, cAlbum);
-		assertTrue(album.equals(cAlbum));
+	void testSongInAlbum() {
+		assertTrue(album.songInAlbum(s1));
+		Song s2 = new Song("Rolling Around", "Adele", "21", "Pop", "2010");
+		assertFalse(album.songInAlbum(s2));
 	}
 	
 	@Test

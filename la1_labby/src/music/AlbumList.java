@@ -89,16 +89,6 @@ public class AlbumList {
 		return alist.contains(album);
 	}
 	
-	public Album getAlbumFromSong(Song song) {
-		// get album
-		for (Album a : alist) {
-			if (a.songInAlbum(song)) {
-				return a;
-			}
-		}
-		return null;  // fix this
-	}
-	
 	public void removeAlbum(Album album) {
 		alist.remove(album);
 	}

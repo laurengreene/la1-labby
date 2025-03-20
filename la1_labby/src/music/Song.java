@@ -1,5 +1,3 @@
-
-
 /*
  * Song.java is an immutable class that has attributes
  * like title artist.
@@ -48,32 +46,22 @@ public final class Song {
 	}
 	
 	@Override
-	public int hashCode() {
-		return title.hashCode() + artist.hashCode() + 
-				albumTitle.hashCode() + genre.hashCode();
-	}
-	
-	@Override
 	public boolean equals(Object otherSong) {
 		if (otherSong == null) return false;
 		if (otherSong.getClass() != this.getClass()) return false;
 		if(((Song)otherSong).getAlbumTitle().equals(albumTitle) &&
 				((Song)otherSong).getArtist().equals(artist) &&
 				((Song)otherSong).getTitle().equals(title) &&
-				((Song)otherSong).getGenre().equals(genre)) return true;
+				((Song)otherSong).getGenre().equals(genre) &&
+				((Song) otherSong).getYear().equals(year)) return true;
 		return false;
 	}
 	
-	public String toStringFile() {
+	public String toString() {
 		String content = title + "," + artist + "," + albumTitle + "," + genre + "," + year;
 		return content;
 	}
 
-	
-	public String toString() {
-		return "Song: " + this.title + "; Artist: " + this.artist +
-				"; Album: " + this.albumTitle;
-	}
 	
 	
 }

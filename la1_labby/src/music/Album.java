@@ -54,17 +54,6 @@ public final class Album {
 		if (songlist.containsSong(song)) return true;
 		return false;
 	}
-//	do we need this since album is immutable?
-//	public Album makeCopyAlbum() {  // shallow copy
-//		ArrayList<Song> cSonglist = songlist.getSongs();
-//		return new Album(artist, title, genre, year, cSonglist);
-//	}
-	
-	@Override
-	public int hashCode() {
-		return artist.hashCode() + title.hashCode() +
-				songlist.hashCode() + genre.hashCode() + year.hashCode();
-	}
 	
 	@Override
 	public boolean equals(Object otherAlbum) {
@@ -75,11 +64,11 @@ public final class Album {
 				((Album)otherAlbum).getYear().equals(year)) return true;
 		return false;
 	}
-	
-	public String noSongsString() {
-		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
-		return result;
-	}
+//	
+//	public String noSongsString() {
+//		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";
+//		return result;
+//	}
 	
 	public String toString() {
 		String result = "Album: " + this.title + "; Artist: " + this.artist + "; Year: " + year + "; Genre: " + genre + "; Songs: ";

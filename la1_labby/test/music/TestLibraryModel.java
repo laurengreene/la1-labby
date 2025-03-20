@@ -35,6 +35,11 @@ class TestLibraryModel {
 		 libMod.createPlaylist("playlist1");
 		 
 	}
+	
+	@Test
+	void testGetRatedSongs() {
+		
+	}
 
 	@Test
 	void testGetLibSongByTitle() {

@@ -80,7 +80,9 @@ public class LibraryModel {
 	
 	private String getSongsInLibAndAlbum(Album album) {
 		ArrayList<Song> songs = album.getSongList();
-		String aString = album.noSongsString();
+		String aString = "Album: " + album.getTitle() + "; Artist: " + album.getArtist() 
+		+ "; Year: " + album.getYear() + "; Genre: " + album.getGenre() + "; Songs: ";
+		//String aString = album.noSongsString();
 		// only songs from album that are also in library
 		for(Song s : songs) {
 			if(libSongs.containsSong(s)) {
@@ -228,10 +230,7 @@ public class LibraryModel {
 	
 	public String getGenreNames() {
 		String result = "All Genres in Library:\n";
-		ArrayList<SongList> genrePlaylists = playlists.getGenrePlaylists();
-		for (SongList genrePlaylist : genrePlaylists) {
-			result += genrePlaylist.getPlaylistName() + "\n";
-		}
+		//result += 
 		return result;
 	}
 	

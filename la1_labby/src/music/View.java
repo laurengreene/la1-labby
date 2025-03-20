@@ -1,5 +1,6 @@
 
 
+
 package music;
 
 import java.io.FileNotFoundException;
@@ -142,7 +143,7 @@ public class View {
 		String tOra = scn.next();scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.next();scn.nextLine();
+		String name = scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Album> albums = new ArrayList<Album>();
 		switch (tOra) {
@@ -184,7 +185,7 @@ public class View {
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.next();scn.nextLine();
+		String name = scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
 		switch (tOra) {
@@ -199,6 +200,7 @@ public class View {
 			searchStoreForSong();
 			songs = new ArrayList<Song>();
 		}
+		System.out.println(name);
 		if(songs.size() == 0) { System.out.println("Song not found"); searchStoreForSong();}
 		for (Song s : songs) {
 			System.out.println(s);
@@ -269,7 +271,7 @@ public class View {
 		String tOra = scn.next();scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.next();scn.nextLine();
+		String name = scn.nextLine();
 		checkIfDone(name);
 		ArrayList<Song> songs;
 		switch(tOra) {
@@ -367,7 +369,7 @@ public class View {
 	
 	private static void searchLibForAlbum() {
 		System.out.println("Search by Artist(a) or Title(t)?");
-		String tOra = scn.next();scn.nextLine();
+		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
 		String name = scn.next();scn.nextLine();
@@ -429,7 +431,7 @@ public class View {
 	}
 	
 	private static void automaticPlaylists() {
-		System.out.println("What playlist would you like? /nRecents(r) /nFrequents(q) /nFavorites(f) /nGenres(g) /nTop Rated(t)");
+		System.out.println("What playlist would you like? \nRecents(r) \nFrequents(q) \nFavorites(f) \nGenres(g) \nTop Rated(t)");
 		String input = scn.next();scn.nextLine();
 		switch (input) {
 		case "r" :
@@ -505,7 +507,7 @@ public class View {
 		String response = scn.next();scn.nextLine();
 		if (response.equals("y")) {
 			System.out.println("Which one would you like to view? Type in its name");
-			String input = scn.next();scn.nextLine();
+			String input = scn.nextLine();
 			System.out.println(libModel.getPlaylist(input));
 		}
 		start();
