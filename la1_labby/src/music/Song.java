@@ -8,7 +8,7 @@
 
 package music;
 
-public class Song {
+public final class Song {
 	
 	// instance variables
 	private String title;

@@ -102,7 +102,7 @@ public class LibraryModel {
 		if (songs.size() == 0) return "No Songs In Library";
 		String result = "";
 		for(Song s : songs) {
-			result += s.toString();
+			result += s.toString() + "\n";
 		}
 		return result;
 	}
@@ -113,7 +113,7 @@ public class LibraryModel {
 		if (songs.size() == 0) return "No Songs In Library";
 		String result = "";
 		for(Song s : songs) {
-			result += s.toString();
+			result += s.toString() + "\n";
 		}
 		return result;
 	}
@@ -224,6 +224,51 @@ public class LibraryModel {
 			result += s.toString() + "\n";
 		}
 	return result;
+	}
+	
+	public String getGenreNames() {
+		String result = "All Genres in Library:\n";
+		ArrayList<SongList> genrePlaylists = playlists.getGenrePlaylists();
+		for (SongList genrePlaylist : genrePlaylists) {
+			result += genrePlaylist.getPlaylistName() + "\n";
+		}
+		return result;
+	}
+	
+	public String getSongsByGenre(String genre) {
+		SongList slist = playlists.getSongsByGenre(genre);
+		return slist.toString();
+	}
+	
+	public String getGenres() {
+		String result = "Genre Playlists:\n";
+		ArrayList<SongList> genres = playlists.getGenrePlaylists();
+		for(SongList slist : genres) {
+			result += slist.getPlaylistName() + "Songs: /n";
+			ArrayList<Song> songs = slist.getSongs();
+			for(Song s : songs) {
+				result += s.toString() + "\n";
+			}
+		}
+		return result;
+	}
+	
+	public String getRecents() {
+		String result = "Recently Played Songs:\n";
+		ArrayList<Song> recents = playlists.getRecents();
+		for(Song s : recents) {
+			result += s.toString() + "\n";
+		}
+		return result;
+	}
+	
+	public String getFrequents() {
+		String result = "Most Played Songs:\n";
+		ArrayList<Song> frequents = playlists.mostPlayed();
+		for (Song s : frequents) {
+			result += s.toString() + "\n";
+		}
+		return result;
 	}
 	
 	public String getAlbumFromSong(Song song) {

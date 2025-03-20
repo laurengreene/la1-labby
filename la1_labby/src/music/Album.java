@@ -8,7 +8,7 @@ package music;
 
 import java.util.ArrayList;
 
-public class Album {
+public final class Album {
 	
 	// instance variables
 	private String artist;

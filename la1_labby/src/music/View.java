@@ -1,6 +1,5 @@
 
 
-
 package music;
 
 import java.io.FileNotFoundException;
@@ -244,7 +243,7 @@ public class View {
 	}
 	
 	public static void getOne() {
-		System.out.println("Search for: \nSong(s) \nAlbum(a) \nPlaylist(p)");
+		System.out.println("Search for: \nSong(s) \nAlbum(a) \nPlaylist(p) \nGenre(g)");
 		String input = scn.next();scn.nextLine();
 		checkIfDone(input);
 		switch(input) {
@@ -257,6 +256,8 @@ public class View {
 		case "p" :
 			searchForPlaylist();
 			break;
+		case "g" :
+			searchForGenre();
 		default :
 			System.out.println("Invalid Input");
 			getOne();
@@ -393,7 +394,19 @@ public class View {
 		}
 	}
 	
+	private static void searchForGenre() {
+		System.out.println(libModel.getGenreNames());
+		System.out.println("Which genre would you like to see?");
+		String genre = scn.next();scn.nextLine();
+		System.out.println(libModel.getSongsByGenre(genre));
+		start();
+	}
+	
 	private static void searchForPlaylist() {
+		System.out.println("Would you like to get User Playlist(u) or Automatic Playlist(a)");
+		String uorA = scn.next();scn.nextLine();
+		checkIfDone(uorA);
+		if (uorA.equals("a")) automaticPlaylists();
 		System.out.println("Playlist name: ");
 		String name = scn.next();scn.nextLine();
 		checkIfDone(name);
@@ -414,6 +427,37 @@ public class View {
 		if (ifEdit.equals("y")) editPlaylist(name);
 		else start();
 	}
+	
+	private static void automaticPlaylists() {
+		System.out.println("What playlist would you like? /nRecents(r) /nFrequents(q) /nFavorites(f) /nGenres(g) /nTop Rated(t)");
+		String input = scn.next();scn.nextLine();
+		switch (input) {
+		case "r" :
+			System.out.println(libModel.getRecents());
+			start();
+			break;
+		case "q" :
+			System.out.println(libModel.getFrequents());
+			start();
+			break;
+		case "f" :
+			System.out.println(libModel.getFavorites());
+			start();
+			break;
+		case "g" :
+			System.out.println(libModel.getGenres());
+			start();
+			break;
+		case "t" :
+			System.out.println(libModel.getTopRatedSongs());
+			start();
+			break;
+		default :
+			System.out.println("Invalid Input");
+			automaticPlaylists();
+		}
+	}
+	
 	
 	private static void editPlaylist(String pName) {
 		System.out.println("Add(a) or Remove(r) song?");
