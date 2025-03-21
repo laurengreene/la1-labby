@@ -10,9 +10,7 @@ package music;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class LibraryModel {
 	
@@ -73,7 +71,7 @@ public class LibraryModel {
 		String albumsString = "";
 		ArrayList<Album> albumsList = libAlbums.getAlbumObjectsByArtist(artist);	
 		for(Album a: albumsList) {
-			albumsString += (getSongsInLibAndAlbum(a) + "/n");
+			albumsString += (getSongsInLibAndAlbum(a) + "\n");
 		}
 		return albumsString;
 	}
@@ -230,6 +228,7 @@ public class LibraryModel {
 	
 	public String getGenreNames() {
 		String result = "All Genres in Library:\n";
+		result += playlists.getAllGenres();
 		return result;
 	}
 	
@@ -311,6 +310,11 @@ public class LibraryModel {
 	public void removeAlbum(String aName) {
 		Album album = libAlbums.getAlbumObjectByTitle(aName);
 		libAlbums.removeAlbum(album);
+	}
+	
+	public String playSong(Song song) {
+		playlists.playSong(song);
+		return "Song playing";
 	}
 	
 	

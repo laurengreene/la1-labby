@@ -3,7 +3,6 @@
 package music;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 public class PlaylistManager {
@@ -35,16 +34,16 @@ public class PlaylistManager {
 	}
 	
 	public ArrayList<SongList> getUserPlaylists() {
-		ArrayList<SongList> ulist = new ArrayList<SongList>();
-		for (SongList slist : userPlists) {
-			SongList copyslist = new SongList();
-			for (Song s : slist.getSongs()) {
-				copyslist.setPlaylistName(slist.getPlaylistName());
-				copyslist.addSong(s);
-			}
-			ulist.add(copyslist);
-		}
-		return ulist;
+	    ArrayList<SongList> ulist = new ArrayList<>();
+	    for (SongList slist : userPlists) {
+	        SongList copyslist = new SongList();
+	        copyslist.setPlaylistName(slist.getPlaylistName()); 
+	        for (Song s : slist.getSongs()) {
+	            copyslist.addSong(s); 
+	        }
+	        ulist.add(copyslist);
+	    }
+	    return ulist;
 	}
 	
 	public void addToGenres(Song song) {
@@ -54,8 +53,6 @@ public class PlaylistManager {
 	
 	public String getPlaylists() {
 		String plists = "";
-		//int count = 0;
-		
 		// add favorite playlist
 		plists += getFavoritePlaylist().getPlaylistName() + "\n";
 		
@@ -111,13 +108,6 @@ public class PlaylistManager {
 		}
 	return songlist;
 }
-	
-	public void addToPlaylist(String playlistName, Song song) {
-		// find the playlist
-		for (SongList s : userPlists) {
-			if (s.getPlaylistName().equals(playlistName)) s.addSong(song);
-		}
-	}
 	
 	public void createPlaylist(String name) {
 		SongList playList = new SongList();
@@ -217,18 +207,15 @@ public class PlaylistManager {
 	}
 	
 	public ArrayList<Song> mostPlayed() {
-		ArrayList<Integer> allNums = new ArrayList<>(timesPlayed.values());
-		Collections.sort(allNums, Collections.reverseOrder());
-		ArrayList<Integer> mostNums = (ArrayList<Integer>) allNums.subList(0, Math.min(10, allNums.size()));
-		ArrayList<Song> mostSongs = new ArrayList<Song>(10);
-		for (HashMap.Entry<Song, Integer> entry : timesPlayed.entrySet()) {
-			if(mostNums.contains(entry.getValue())) {
-				mostSongs.add(mostNums.indexOf(entry.getValue()), entry.getKey());
-				mostNums.set(mostNums.indexOf(entry.getValue()), 0);
-			}
-		}
-		return mostSongs;
+	    ArrayList<Song> mostSongs = new ArrayList<>();
+	    ArrayList<HashMap.Entry<Song, Integer>> sorted = new ArrayList<>(timesPlayed.entrySet());
+	    sorted.sort((a, b) -> b.getValue().compareTo(a.getValue())); 
+	    for (int i = 0; i < Math.min(10, sorted.size()); i++) {
+	        mostSongs.add(sorted.get(i).getKey());
+	    }
+	    return mostSongs;
 	}
+
 	
 	public String sortedSongsByRating() {
 		String result = "";

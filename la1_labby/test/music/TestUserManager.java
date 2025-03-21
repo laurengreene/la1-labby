@@ -1,6 +1,8 @@
 package music;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,25 +14,27 @@ import java.io.IOException;
 
 class TestUserManager {
 
-    private LibraryModel libModel;
-    private UserManager userManager;
-    private String username;
-    private String password;
+    private static LibraryModel libModel;
+    private static UserManager userManager;
+    private static String username;
+    private static String password;
 
-    @BeforeEach
-    public void setUp() throws FileNotFoundException {
+    @BeforeAll
+    public static void setUp() throws FileNotFoundException {
         libModel = new LibraryModel();
         userManager = new UserManager(libModel);
-        username = "testUser";
-        password = "testPassword";
+        username = "username";
+        password = "password";
+        userManager.addUser(username, password);
     }
 
     @Test
-    public void testAddUser() {
-        userManager.addUser(username, password);
+    public static void testAddUser() {
         assertTrue(userManager.usernameExists(username));
+        
         File userFile = new File(username + ".txt");
         assertTrue(userFile.exists());
+        
         File userInfoFile = new File("userinfo.txt");
         boolean containsUser = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(userInfoFile))) {
@@ -49,52 +53,41 @@ class TestUserManager {
 
     @Test
     public void testUsernameExists() {
-        userManager.addUser(username, password);
         assertTrue(userManager.usernameExists(username));
         assertFalse(userManager.usernameExists("noUser"));
     }
 
     @Test
     public void testCheckPasswordValid() {
-        String username = "validUser";
-        String password = "correctPassword";
-
-        userManager.addUser(username, password);
         assertTrue(userManager.checkPassword(username, password));
     }
 
     @Test
     public void testCheckPasswordInvalid() {
-        String username = "validUser";
-        String password = "correctPassword";
-        String incorrectPassword = "wrongPassword";
-
-        userManager.addUser(username, password);
-        assertFalse(userManager.checkPassword(username, incorrectPassword));
+        String wrongPassword = "wrongPassword";
+        assertFalse(userManager.checkPassword(username, wrongPassword));
     }
 
     @Test
     public void testTurnUserDataIntoFile() {
-        userManager.addUser(username, password);
         userManager.turnUserDataIntoFile(username);
         File userFile = new File(username + ".txt");
         assertTrue(userFile.exists());
-        String fileContent = "";
+        String content = "";
         try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                fileContent += line + "\n";
+                content += line + "\n";
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertFalse(fileContent.contains("songs:"));
-        assertFalse(fileContent.contains("playlists:"));
+        assertFalse(content.contains("songs:"));
+        assertFalse(content.contains("playlists:"));
     }
 
     @Test
     public void testGetUserData() throws FileNotFoundException {
-        userManager.addUser(username, password);
         userManager.turnUserDataIntoFile(username);
         LibraryModel newLibModel = new LibraryModel();
         UserManager newUserManager = new UserManager(newLibModel);
@@ -105,11 +98,10 @@ class TestUserManager {
     
     @Test
     public void testSaltAndHashPassword() {
-        userManager.addUser(username, password);
-        File userInfoFile = new File("userinfo.txt");
+        File userInfo = new File("userinfo.txt");
         String userSalt = "";
         String hashedPassword = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(userInfoFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(userInfo))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");

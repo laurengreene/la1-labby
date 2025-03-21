@@ -315,6 +315,7 @@ public class View {
 			}
 			libModel.removeSong(songToRemove);
 			System.out.println("Song removed");
+			start();
 		}
 		System.out.println("Would you like to rate the song?(y)/(n)");
 		String toRate = scn.next();scn.nextLine();
@@ -340,7 +341,7 @@ public class View {
 				System.out.println("Invalid rating");
 				System.out.println("Rating out of 5: ");
 				rate = (scn.nextInt());
-				return;  // should fix recursion ***************************************************
+				return; 
 			}
 			libModel.setRatingOfSong(songToRate, rate);
 			System.out.println("Rating saved");
@@ -364,6 +365,22 @@ public class View {
 				System.out.println(libModel.getAlbumFromSong(getInfo));
 			}
 		}
+		System.out.println("Would you like to play a song? (y)/(n)");
+		String ifPlay = scn.next();scn.nextLine();
+		if (ifPlay.equals("y")) {
+			Song toPlay = null;
+			if (songs.size() > 1) {
+				System.out.println("What song would you like to play?(by number)");
+				int sIndex = (scn.nextInt());
+				if(sIndex > songs.size() + 1) {
+					System.out.println("Invalid number");  // add try again
+					System.out.println("What song would you like to play?(by number)");
+					sIndex = (scn.nextInt());
+				}
+				toPlay = songs.get(sIndex - 1);
+			} else {toPlay = songs.get(0);}
+			System.out.println(libModel.playSong(toPlay));
+		}
 		start();
 	}
 	
@@ -372,7 +389,7 @@ public class View {
 		String tOra = scn.nextLine();
 		checkIfDone(tOra);
 		System.out.println("Input Name:");
-		String name = scn.next();scn.nextLine();
+		String name = scn.nextLine();
 		checkIfDone(name);
 		String album;
 		switch (tOra) {
@@ -389,7 +406,7 @@ public class View {
 		}
 		System.out.print(album);
 		System.out.println("Remove Album? (y)/(n)");
-		String ifRemove = scn.next();scn.nextLine();
+		String ifRemove = scn.nextLine();
 		if (ifRemove.equals("y")) {
 			libModel.removeAlbum(name);
 			System.out.println("Album Removed");
