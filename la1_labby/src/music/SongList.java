@@ -47,7 +47,7 @@ public class SongList {
 				result += s.toString() + "\n";
 			}
 		}
-		if (result.length() == 0) return "Not found ";
+		if (result.length() == 0) return "Not found";
 		return result.substring(0, result.length()-1);
 	}
 	

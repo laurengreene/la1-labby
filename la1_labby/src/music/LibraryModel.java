@@ -63,7 +63,7 @@ public class LibraryModel {
 				String albumsString = "";
 				ArrayList<Album> albumsList = libAlbums.getAlbumObjectsByTitle(title);	
 				for(Album a: albumsList) {
-					albumsString += (getSongsInLibAndAlbum(a) + "/n");
+					albumsString += (getSongsInLibAndAlbum(a) + "\n");
 				}
 				return albumsString;
 	}
@@ -230,7 +230,6 @@ public class LibraryModel {
 	
 	public String getGenreNames() {
 		String result = "All Genres in Library:\n";
-		//result += 
 		return result;
 	}
 	
