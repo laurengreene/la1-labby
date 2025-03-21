@@ -2,16 +2,18 @@ package music;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 class TestSongList {
 
 	SongList sList = new SongList();
-	Song song1 = new Song("Darkness", "Leonard Cohen", "Old Ideas");
-	Song song2 = new Song("Going Home", "Leonard Cohen", "Old Ideas");
-	Song song3 = new Song("Little Lion Man", "Mumford & Sons", "Sigh No More");
-	Song song4 = new Song("Lullaby", "Leonard Cohen", "Old Ideas");
-	Song song5 = new Song("Lullaby", "OneRepublic", "Waking Up");
+	Song song1 = new Song("Darkness", "Leonard Cohen", "Old Ideas", "Singer/Songwriter", "2012");
+	Song song2 = new Song("Going Home", "Leonard Cohen", "Old Ideas", "Singer/Songwriter", "2012");
+	Song song3 = new Song("Little Lion Man", "Mumford & Sons", "Sigh No More", "Alternative", "2009");
+	Song song4 = new Song("Lullaby", "Leonard Cohen", "Old Ideas", "Singer/Songwriter", "2012");
+	Song song5 = new Song("Lullaby", "OneRepublic", "Waking Up", "Rock", "2009");
 	
 	@Test
 	void testAddSong() {
@@ -94,12 +96,15 @@ class TestSongList {
 	void testToString() {
 		sList.addSong(song1);
 		sList.addSong(song2);
-		String str = song1.getTitle() + "\n" + song2.getTitle() + "\n";
-		assertEquals(sList.toString(), str);
+		assertEquals(sList.toString(), "Playlist : \n"
+				+ "Darkness\n"
+				+ "Going Home\n");
 		sList.setPlaylistName("name");
-		str = "Playlist " + sList.getPlaylistName() + ": \n" +
+		String str = "Playlist " + sList.getPlaylistName() + ": \n" +
 		song1.getTitle() + "\n" + song2.getTitle() + "\n";
-		assertEquals(sList.toString(), str);
+		assertEquals(sList.toString(), "Playlist name: \n"
+				+ "Darkness\n"
+				+ "Going Home\n");
 	}
 	
 
@@ -109,5 +114,52 @@ class TestSongList {
 		sList.setPlaylistName("PName");
 		assertEquals(sList.getPlaylistName(), "PName");
 	}
+	
+	@Test
+	void testEquals() {
+	    assertTrue(song1.equals(new Song("Darkness", "Leonard Cohen", "Old Ideas", "Singer/Songwriter", "2012")));
+	    assertFalse(song1.equals(song2));
+	    assertFalse(song1.equals(song3));
+	    sList.addSong(song1);
+	    sList.addSong(song2);
+	    sList.addSong(song4);
+	    assertFalse(song1.equals(null));
+	    assertFalse(song1.equals(new SongList()));
+	    assertTrue(song1.equals(song1));
+	    assertFalse(song4.equals(song5));
+	}
+	
+	@Test
+	void testSortedSongsByTitle() {
+	    sList.addSong(song1);
+	    sList.addSong(song2);
+	    sList.addSong(song3);
+	    sList.addSong(song4);
+	    sList.addSong(song5);
+	    ArrayList<Song> sortedSongs = sList.sortedSongsByTitle();
+	    assertEquals(song1, sortedSongs.get(0));
+	    assertEquals(song2, sortedSongs.get(1));
+	    assertEquals(song3, sortedSongs.get(2));
+	    assertEquals(song4, sortedSongs.get(3));
+	    assertEquals(song5, sortedSongs.get(4));
+	}
+	
+	@Test
+	void testSortedSongsByArtist() {
+	    sList.addSong(song1);
+	    sList.addSong(song2);
+	    sList.addSong(song3);
+	    sList.addSong(song4);
+	    sList.addSong(song5);
+
+	    ArrayList<Song> sortedSongs = sList.sortedSongsByArtist();
+
+	    assertEquals(song1, sortedSongs.get(0));
+	    assertEquals(song2, sortedSongs.get(1));
+	    assertEquals(song4, sortedSongs.get(2));
+	    assertEquals(song3, sortedSongs.get(3));
+	    assertEquals(song5, sortedSongs.get(4));
+	}
+
 
 }
