@@ -19,16 +19,14 @@ class TestMusicStore {
 	@Test
 	void testGetStoreSongByTandA() {
 		// get store song from title and artist, returns a string
-		Song song1 = new Song("So Far Away", "Carol King", "Tapestry");
+		Song song1 = new Song("So Far Away", "Carol King", "Tapestry", "Rock", "1971");
 		assertTrue(mStore.getStoreSongByTandA("so far away", "carol king").equals(song1));
 	}
 	
 	@Test
 	void testSearchStoreSongByTitle() {
-		assertEquals(mStore.searchStoreSongByTitle("So Far Away").get(0).toString(), "Song: So Far Away; Artist: "
-				+ "Carol King; Album: Tapestry");
-		assertEquals(mStore.searchStoreSongByTitle("polITIK").get(0).toString(), "Song: Politik; "
-				+ "Artist: Coldplay; Album: A Rush of Blood to the Head");
+		assertEquals(mStore.searchStoreSongByTitle("So Far Away").get(0).toString(), "So Far Away,Carol King,Tapestry,Rock,1971");
+		assertEquals(mStore.searchStoreSongByTitle("polITIK").get(0).toString(), "Politik,Coldplay,A Rush of Blood to the Head,Alternative,2002");
 	}
 	
 	@Test
@@ -39,7 +37,7 @@ class TestMusicStore {
 	@Test
 	void testSearchStoreByArtistTest() {
 		assertEquals(mStore.searchStoreSongByArtist("the HEAVY").get(0).toString(),
-				"Song: Heavy for You; Artist: The Heavy; Album: Sons");
+				"Heavy for You,The Heavy,Sons,Rock,2019");
 	}
 	
 	@Test
