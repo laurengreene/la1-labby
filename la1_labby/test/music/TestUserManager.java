@@ -4,97 +4,127 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
 
 class TestUserManager {
 
-    private UserManager userManager;
     private LibraryModel libModel;
+    private UserManager userManager;
+    private String username;
+    private String password;
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
-        libModel = new LibraryModel();  // Assuming LibraryModel constructor initializes everything.
+    public void setUp() throws FileNotFoundException {
+        libModel = new LibraryModel();
         userManager = new UserManager(libModel);
+        username = "testUser";
+        password = "testPassword";
     }
 
     @Test
-    void testAddUser() {
-        String username = "testUser";
-        String password = "securePassword";
+    public void testAddUser() {
+        userManager.addUser(username, password);
+        assertTrue(userManager.usernameExists(username));
+        File userFile = new File(username + ".txt");
+        assertTrue(userFile.exists());
+        File userInfoFile = new File("userinfo.txt");
+        boolean containsUser = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(userInfoFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith(username)) {
+                    containsUser = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertTrue(containsUser);
+    }
+
+    @Test
+    public void testUsernameExists() {
+        userManager.addUser(username, password);
+        assertTrue(userManager.usernameExists(username));
+        assertFalse(userManager.usernameExists("noUser"));
+    }
+
+    @Test
+    public void testCheckPasswordValid() {
+        String username = "validUser";
+        String password = "correctPassword";
 
         userManager.addUser(username, password);
-
-        assertTrue(userManager.usernameExists(username));
         assertTrue(userManager.checkPassword(username, password));
     }
 
     @Test
-    void testUsernameExists() {
-        String username = "existingUser";
-        String password = "somePassword";
-        
+    public void testCheckPasswordInvalid() {
+        String username = "validUser";
+        String password = "correctPassword";
+        String incorrectPassword = "wrongPassword";
+
         userManager.addUser(username, password);
-        
-        assertTrue(userManager.usernameExists(username));
-        assertFalse(userManager.usernameExists("nonExistentUser"));
+        assertFalse(userManager.checkPassword(username, incorrectPassword));
     }
 
     @Test
-    void testCheckPassword() {
-        String username = "userWithPassword";
-        String password = "password123";
-
-        userManager.addUser(username, password);
-
-        assertTrue(userManager.checkPassword(username, password));
-        assertFalse(userManager.checkPassword(username, "wrongPassword"));
-    }
-
-    @Test
-    void testTurnUserDataIntoFile() throws FileNotFoundException {
-        String username = "testFileUser";
-        String password = "testPassword";
-        
-        userManager.addUser(username, password);
-        
-        // After adding user, we generate a file with their data.
-        userManager.turnUserDataIntoFile(username);
-
-        // Verify file creation and content
-        File userFile = new File(username + ".txt");
-        assertTrue(userFile.exists());
-        
-        Scanner scn = new Scanner(userFile);
-        String content = scn.useDelimiter("\\A").next();  // Read all content
-        scn.close();
-        
-        // We expect the content to contain username (sanity check)
-        assertTrue(content.contains(username));
-    }
-
-    @Test
-    void testGetUserData() throws FileNotFoundException {
-        String username = "testGetDataUser";
-        String password = "testPassword";
-
+    public void testTurnUserDataIntoFile() {
         userManager.addUser(username, password);
         userManager.turnUserDataIntoFile(username);
-
-        // Simulate user login
-        userManager.getUserData(username);
-
-        // Check if the user data is properly loaded
         File userFile = new File(username + ".txt");
         assertTrue(userFile.exists());
-
-        // Ensure we have some songs or playlists data (basic check)
-        Scanner scn = new Scanner(userFile);
-        String content = scn.useDelimiter("\\A").next();  // Read all content
-        scn.close();
-        
-        // Check if it contains expected sections like "songs" or "playlists"
-        assertTrue(content.contains("songs:"));
+        String fileContent = "";
+        try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                fileContent += line + "\n";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertFalse(fileContent.contains("songs:"));
+        assertFalse(fileContent.contains("playlists:"));
     }
+
+    @Test
+    public void testGetUserData() throws FileNotFoundException {
+        userManager.addUser(username, password);
+        userManager.turnUserDataIntoFile(username);
+        LibraryModel newLibModel = new LibraryModel();
+        UserManager newUserManager = new UserManager(newLibModel);
+        newUserManager.getUserData(username);
+        assertTrue(newLibModel.getLibrarySongs().isEmpty());
+        assertTrue(newLibModel.getUserPlaylists().isEmpty());
+    }
+    
+    @Test
+    public void testSaltAndHashPassword() {
+        userManager.addUser(username, password);
+        File userInfoFile = new File("userinfo.txt");
+        String userSalt = "";
+        String hashedPassword = "";
+        try (BufferedReader reader = new BufferedReader(new FileReader(userInfoFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(username)) {
+                    userSalt = parts[1];
+                    hashedPassword = parts[2];
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertFalse(userSalt.isEmpty());
+        assertFalse(hashedPassword.isEmpty());
+    }
+    
+    
 }
